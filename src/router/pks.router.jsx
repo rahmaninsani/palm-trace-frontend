@@ -4,7 +4,7 @@ import { ROLE } from "../config";
 import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
-import { Dashboard, PenawaranKeluarList, PenawaranKeluarAddKontrak, PenawaranKeluarAddDO, PenawaranMasukList } from "../pages/pks";
+import { Dashboard, KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderAdd } from "../pages/pks";
 
 const PksRouter = [
   {
@@ -20,20 +20,20 @@ const PksRouter = [
         element: <Dashboard />,
       },
       {
-        path: "/pks/penawaran-keluar",
-        element: <PenawaranKeluarList />,
+        path: "/pks/kontrak",
+        element: <KontrakList />,
       },
       {
-        path: "/pks/penawaran-keluar/tambah-kontrak",
-        element: <PenawaranKeluarAddKontrak />,
+        path: "/pks/kontrak/tambah",
+        element: <KontrakAdd />,
       },
       {
-        path: "/pks/penawaran-keluar/tambah-do",
-        element: <PenawaranKeluarAddDO />,
+        path: "/pks/kontrak/:nomorKontrak",
+        element: <KontrakDetail />,
       },
       {
-        path: "/pks/penawaran-masuk",
-        element: <PenawaranMasukList />,
+        path: "/pks/kontrak/:nomorKontrak/tambah",
+        element: <DeliveryOrderAdd />,
       },
     ],
   },

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Accordion, useAccordionButton, AccordionContext } from "react-bootstrap";
 
 import { ROLE } from "../../../../config";
-import { Tiles, UpDownArrow, Cart, Paper, User, DropDown } from "../../../elements";
+import { Tiles, KontrakOut, Cart, Paper, User, DropDown } from "../../../elements";
 
 const CustomToggle = ({ children, eventKey, onClick }) => {
   const { activeEventKey } = useContext(AccordionContext);
@@ -69,52 +69,15 @@ const SidebarItem = memo(({ role }) => {
           </Link>
         </li>
 
-        {/* Penawaran */}
-        <Accordion.Item as="li" eventKey="sidebar-penawaran" bsPrefix={`nav-item ${active === "penawaran" ? "active" : ""} `} onClick={() => setActive("penawaran")}>
-          <CustomToggle eventKey="sidebar-penawaran" onClick={(activeKey) => setActiveMenu(activeKey)}>
+        {/* Kontrak */}
+        <li className={`${location.pathname === basename.concat("/kontrak") ? "active" : ""} nav-item `}>
+          <Link className={`${location.pathname === basename.concat("/kontrak") ? "active" : ""} nav-link `} aria-current="page" to={basename.concat("/kontrak")} onClick={() => {}}>
             <i className="icon">
-              <UpDownArrow />
+              <KontrakOut />
             </i>
-            <span className="item-name">Penawaran</span>
-            <i className="right-icon">
-              <DropDown />
-            </i>
-          </CustomToggle>
-
-          <Accordion.Collapse eventKey="sidebar-penawaran">
-            <ul className="sub-nav">
-              {/* Keluar */}
-              <li className="nav-item">
-                <Link className={`${location.pathname === basename.concat("/penawaran-keluar") ? "active" : ""} nav-link`} to={basename.concat("/penawaran-keluar")}>
-                  <i className="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                      <g>
-                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                      </g>
-                    </svg>
-                  </i>
-                  <i className="sidenav-mini-icon"> K </i>
-                  <span className="item-name">Keluar</span>
-                </Link>
-              </li>
-
-              {/* Masuk */}
-              <li className="nav-item">
-                <Link className={`${location.pathname === basename.concat("/penawaran-masuk") ? "active" : ""} nav-link`} to={basename.concat("/penawaran-masuk")}>
-                  <i className="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                      <g>
-                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                      </g>
-                    </svg>
-                  </i>
-                  <i className="sidenav-mini-icon"> M </i>
-                  <span className="item-name">Masuk</span>
-                </Link>
-              </li>
-            </ul>
-          </Accordion.Collapse>
-        </Accordion.Item>
+            <span className="item-name">Kontrak</span>
+          </Link>
+        </li>
 
         {/* Transaksi */}
         <Accordion.Item as="li" eventKey="sidebar-transaksi" bsPrefix={`nav-item ${active === "transaksi" ? "active" : ""} `} onClick={() => setActive("transaksi")}>

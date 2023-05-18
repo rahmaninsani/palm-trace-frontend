@@ -26,7 +26,7 @@ const Table = ({ headings = ["No"], children = {} }) => {
         <Row className="align-items-center">
           <Col md="6">
             <div className="dataTables_info" id="datatable_info" role="status" aria-live="polite">
-              Showing 1 to 10 of 57 entries
+              Menampilkan 1 sampai 10 dari 40 entri
             </div>
           </Col>
           <Col md="6">
@@ -55,16 +55,6 @@ const Table = ({ headings = ["No"], children = {} }) => {
                 <li className="paginate_button page-item ">
                   <Link to="#" aria-controls="datatable" data-dt-idx="3" tabIndex="0" className="page-link">
                     4
-                  </Link>
-                </li>
-                <li className="paginate_button page-item ">
-                  <Link to="#" aria-controls="datatable" data-dt-idx="4" tabIndex="0" className="page-link">
-                    5
-                  </Link>
-                </li>
-                <li className="paginate_button page-item ">
-                  <Link to="#" aria-controls="datatable" data-dt-idx="5" tabIndex="0" className="page-link">
-                    6
                   </Link>
                 </li>
                 <li className="paginate_button page-item next" id="datatable_next">

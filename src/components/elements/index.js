@@ -6,6 +6,8 @@ export { default as Paper } from "./Icons/Paper";
 export { default as User } from "./Icons/User";
 export { default as DropDown } from "./Icons/DropDown";
 export { default as Eye } from "./Icons/Eye";
+export { default as KontrakIn } from "./Icons/KontrakIn";
+export { default as KontrakOut } from "./Icons/KontrakOut";
 
 export { default as Logo } from "./Logo";
 export { default as Loader } from "./Loader";

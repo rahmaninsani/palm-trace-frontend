@@ -4,13 +4,13 @@ import { Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 
 //flatpicker
 import Flatpickr from "react-flatpickr";
-import "../../../../assets/css/flatpickr.min.css";
-import rangePlugin from "../../../../utils/rangePlugin";
+import "../../../assets/css/flatpickr.min.css";
+import rangePlugin from "../../../utils/rangePlugin";
 
-import { Card } from "../../../../components/elements";
+import { Card } from "../../../components/elements";
 
-const PenawaranKeluarAddDO = memo(() => {
-  const pageTitle = "Tambah DO";
+const KontrakAdd = memo(() => {
+  const pageTitle = "Tambah Kontrak";
   const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
 
@@ -38,10 +38,26 @@ const PenawaranKeluarAddDO = memo(() => {
                     </select>
                   </Form.Group>
 
-                  {/* Periode */}
-                  <Form.Group className="col-sm-12 form-group">
-                    <Form.Label htmlFor="periode">Periode</Form.Label>
-                    <Form.Control type="month" id="periode" defaultValue="2023-05" />
+                  {/* Tanggal Mulai */}
+                  <Form.Group className="col-md-6 form-group">
+                    <Form.Label htmlFor="tanggalMulai">Tanggal Mulai</Form.Label>
+                    <Flatpickr
+                      id="tanggalMulai"
+                      className="form-control range_flatpicker"
+                      placeholder="Tanggal Mulai"
+                      options={{
+                        mode: "range",
+                        minDate: "today",
+                        plugins: [new rangePlugin({ input: "#tanggalBerakhir" })],
+                        dateFormat: "d-m-Y",
+                      }}
+                    />
+                  </Form.Group>
+
+                  {/* Tanggal Berakhir */}
+                  <Form.Group className="col-md-6 form-group">
+                    <Form.Label htmlFor="tanggalBerakhir">Tanggal Berakhir</Form.Label>
+                    <Form.Control type="text" id="tanggalBerakhir" placeholder="Tanggal Berakhir" />
                   </Form.Group>
 
                   {/* Kuantitas (kg) */}
@@ -64,7 +80,7 @@ const PenawaranKeluarAddDO = memo(() => {
                 </Row>
               </Card.Body>
               <Card.Footer className="text-center">
-                <Button type="submit" variant="btn btn-primary">
+                <Button type="submit" href={"/pks/penawaran-keluar"} variant="btn btn-primary">
                   Simpan
                 </Button>
               </Card.Footer>
@@ -76,4 +92,4 @@ const PenawaranKeluarAddDO = memo(() => {
   );
 });
 
-export default PenawaranKeluarAddDO;
+export default KontrakAdd;
