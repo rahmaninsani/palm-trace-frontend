@@ -1,9 +1,8 @@
 import React, { useState, useEffect, memo } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
-import { Row, Col, Button, Modal, Tab, Nav } from "react-bootstrap";
+import { Row, Col, Button, Modal } from "react-bootstrap";
 
-import { transactions } from "../../../config";
-import { DeliveryOrderTransaksi } from "../../../components/partials/dashboard";
+import TransaksiList from "./TransaksiList";
 import { Card } from "../../../components/elements";
 
 const DeliveryOrderDetail = memo(() => {
@@ -96,56 +95,7 @@ const DeliveryOrderDetail = memo(() => {
         </Card.Body>
       </Card>
 
-      <Card>
-        <Tab.Container defaultActiveKey="perlu-konfirmasi">
-          <Card.Header>
-            <div className="d-flex flex-wrap align-items-center justify-content-center">
-              <Nav as="ul" className="d-flex nav-pills mb-0 text-center transaksi-tab" data-toggle="slider-tab" id="transaksi-pills-tab" role="tablist">
-                <Nav.Item as="li">
-                  <Nav.Link eventKey="perlu-konfirmasi">Perlu Konfirmasi</Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                  <Nav.Link eventKey="diproses">Diproses</Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                  <Nav.Link eventKey="dikirim">Dikirim</Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                  <Nav.Link eventKey="diterima">Diterima</Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                  <Nav.Link eventKey="selesai">Selesai</Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                  <Nav.Link eventKey="ditolak">Ditolak</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </div>
-          </Card.Header>
-
-          <Card.Body>
-            <Tab.Content className="transaksi-content">
-              {/* Perlu Konfirmasi */}
-              <DeliveryOrderTransaksi tabKey="perlu-konfirmasi" transactions={transactions["perluKonfirmasi"]} />
-
-              {/* Diproses */}
-              <DeliveryOrderTransaksi tabKey="diproses" transactions={transactions["diproses"]} />
-
-              {/* Dikirim */}
-              <DeliveryOrderTransaksi tabKey="dikirim" transactions={transactions["dikirim"]} />
-
-              {/* Diterima */}
-              <DeliveryOrderTransaksi tabKey="diterima" transactions={transactions["diterima"]} />
-
-              {/* Selesai */}
-              <DeliveryOrderTransaksi tabKey="selesai" transactions={transactions["selesai"]} />
-
-              {/* Ditolak */}
-              <DeliveryOrderTransaksi tabKey="ditolak" transactions={transactions["ditolak"]} />
-            </Tab.Content>
-          </Card.Body>
-        </Tab.Container>
-      </Card>
+      <TransaksiList />
     </>
   );
 });

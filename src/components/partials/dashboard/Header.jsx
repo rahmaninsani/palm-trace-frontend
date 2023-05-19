@@ -59,8 +59,8 @@ const Header = memo(() => {
                 <Dropdown.Toggle as={CustomToggle} variant=" nav-link py-0 d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src={avatars1} alt="User-Profile" className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" />
                   <div className="caption ms-3 d-none d-md-block ">
-                    <h6 className="mb-0 caption-title">Rahman Insani</h6>
-                    <p className="mb-0 caption-sub-title">Petani</p>
+                    <h6 className="mb-0 caption-title">PT Sawit Nusantara</h6>
+                    <p className="mb-0 caption-sub-title">Pabrik Kelapa Sawit</p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-end" aria-labelledby="navbarDropdown">

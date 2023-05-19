@@ -3,10 +3,10 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Row, Col, Tab } from "react-bootstrap";
 
-import { Card } from "../../../components/elements";
+import { Card } from "../../elements";
 import { currencyFormat } from "../../../utils";
 
-const DeliveryOrderTransaksi = memo(({ tabKey, transactions }) => {
+const TransaksiCard = memo(({ tabKey, transactions }) => {
   const { pathname } = useLocation();
 
   return (
@@ -80,4 +80,4 @@ const DeliveryOrderTransaksi = memo(({ tabKey, transactions }) => {
   );
 });
 
-export default DeliveryOrderTransaksi;
+export default TransaksiCard;

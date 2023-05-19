@@ -4,7 +4,7 @@ import { ROLE } from "../config";
 import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
-import { Dashboard, KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderAdd, DeliveryOrderDetail } from "../pages/pks";
+import { Dashboard, KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderAdd, DeliveryOrderDetail, TransaksiDetail } from "../pages/pks";
 
 const PksRouter = [
   {
@@ -38,6 +38,10 @@ const PksRouter = [
       {
         path: "/pks/kontrak/:nomorKontrak/:nomorDo",
         element: <DeliveryOrderDetail />,
+      },
+      {
+        path: "/pks/kontrak/:nomorKontrak/:nomorDo/:nomorTransaksi",
+        element: <TransaksiDetail />,
       },
     ],
   },
