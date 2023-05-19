@@ -288,6 +288,46 @@ const TransaksiDetail = memo(() => {
           </Card>
 
           <Card>
+            <Card.Header className="mx-auto">
+              <h5>Pengiriman</h5>
+            </Card.Header>
+
+            <hr className="hr-horizontal" />
+
+            <Card.Body>
+              <Form>
+                <Row>
+                  <Col>
+                    <Form.Group className="form-group">
+                      <Form.Label htmlFor="kendaraan">Kendaraan</Form.Label>
+                      <Form.Control type="text" id="kendaraan" />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group className="form-group">
+                      <Form.Label htmlFor="nomorPolisi">Nomor Polisi</Form.Label>
+                      <Form.Control type="text" id="nomorPolisi" />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group className="form-group">
+                      <Form.Label htmlFor="namaSopir">Nama Sopir</Form.Label>
+                      <Form.Control type="text" id="namaSopir" />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="text-center">
+                    <Button type="submit" variant="primary">
+                      Simpan
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
+
+          <Card>
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center">
                 <h6 className="text-info">Apakah TBS sudah diterima?</h6>
@@ -302,7 +342,7 @@ const TransaksiDetail = memo(() => {
 
           <Card>
             <Card.Header className="mx-auto">
-              <h5>Form Pembayaran</h5>
+              <h5>Pembayaran</h5>
             </Card.Header>
 
             <hr className="hr-horizontal" />
@@ -330,21 +370,27 @@ const TransaksiDetail = memo(() => {
                   </div>
                 </Col>
               </Row>
-              <div className="mt-2">
-                <form>
-                  <Form.Group>
-                    <Form.Label forhtml="buktiBayar" className="h6 custom-file-input">
-                      Unggah Bukti Pembayaran
-                    </Form.Label>
-                    <Form.Control type="file" id="buktiBayar" />
-                  </Form.Group>
-                  <div className="mx-auto mt-4 text-center">
-                    <Button type="submit" variant="primary" className="ms-2">
+
+              <Form>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label forhtml="buktiBayar" className="h6 custom-file-input">
+                        Unggah Bukti Pembayaran
+                      </Form.Label>
+                      <Form.Control type="file" id="buktiBayar" />
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col className="mt-2 text-center">
+                    <Button type="submit" variant="primary">
                       Simpan
                     </Button>
-                  </div>
-                </form>
-              </div>
+                  </Col>
+                </Row>
+              </Form>
             </Card.Body>
           </Card>
         </Col>
