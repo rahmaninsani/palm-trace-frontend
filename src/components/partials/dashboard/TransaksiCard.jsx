@@ -29,14 +29,6 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
                 <h6>Petani</h6>
                 <p>{transaction.petani}</p>
               </div>
-              <div>
-                <h6>Koperasi</h6>
-                <p>{transaction.koperasi}</p>
-              </div>
-              <div>
-                <h6>Pabrik Kelapa Sawit</h6>
-                <p>{transaction.pks}</p>
-              </div>
             </div>
 
             <hr className="hr-vertical" />

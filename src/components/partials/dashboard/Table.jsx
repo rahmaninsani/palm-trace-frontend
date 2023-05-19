@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 const Table = ({ headings = ["No"], children = {} }) => {
   return (
     <>
-      <div className="table-responsive border-bottom my-3">
+      {/* <div className="table-responsive border-bottom my-3"> */}
+      <div className="table-responsive">
         <BootstrapTable responsive striped id="datatable" className="" data-toggle="data-table">
           <thead>
             <tr>
@@ -17,13 +18,33 @@ const Table = ({ headings = ["No"], children = {} }) => {
           <tbody>{children}</tbody>
           <tfoot>
             <tr>
+              <td colSpan="3" className="text-end">
+                <h6>Total Kuantitas</h6>
+              </td>
+              <td>1000 kg</td>
+            </tr>
+            <tr>
+              <td colSpan="3" className="text-end">
+                <h6>Harga Per Kg</h6>
+              </td>
+              <td>Rp2.100</td>
+            </tr>
+            <tr>
+              <td colSpan="3" className="text-end">
+                <h6>Total Harga</h6>
+              </td>
+              <td>Rp1.000.000</td>
+            </tr>
+          </tfoot>
+          {/* <tfoot>
+            <tr>
               {headings?.map((heading) => (
                 <th key={heading}>{heading}</th>
               ))}
             </tr>
-          </tfoot>
+          </tfoot> */}
         </BootstrapTable>
-        <Row className="align-items-center">
+        {/* <Row className="align-items-center">
           <Col md="6">
             <div className="dataTables_info" id="datatable_info" role="status" aria-live="polite">
               Menampilkan 1 sampai 10 dari 40 entri
@@ -65,7 +86,7 @@ const Table = ({ headings = ["No"], children = {} }) => {
               </ul>
             </div>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </>
   );

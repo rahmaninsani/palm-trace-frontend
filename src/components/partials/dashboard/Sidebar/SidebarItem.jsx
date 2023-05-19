@@ -79,69 +79,6 @@ const SidebarItem = memo(({ role }) => {
           </Link>
         </li>
 
-        {/* Transaksi */}
-        <Accordion.Item as="li" eventKey="sidebar-transaksi" bsPrefix={`nav-item ${active === "transaksi" ? "active" : ""} `} onClick={() => setActive("transaksi")}>
-          <CustomToggle eventKey="sidebar-transaksi" onClick={(activeKey) => setActiveMenu(activeKey)}>
-            <i className="icon">
-              <Cart />
-            </i>
-            <span className="item-name">Transaksi</span>
-            <i className="right-icon">
-              <DropDown />
-            </i>
-          </CustomToggle>
-
-          <Accordion.Collapse eventKey="sidebar-transaksi">
-            <ul className="sub-nav">
-              {/* Pengiriman */}
-              {role !== ROLE.PKS && (
-                <li className="nav-item">
-                  <Link className={`${location.pathname === basename.concat("/transaksi-pengiriman") ? "active" : ""} nav-link`} to={basename.concat("/transaksi-pengiriman")}>
-                    <i className="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                        <g>
-                          <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                        </g>
-                      </svg>
-                    </i>
-                    <i className="sidenav-mini-icon"> P </i>
-                    <span className="item-name">Pengiriman</span>
-                  </Link>
-                </li>
-              )}
-              {/* Penerimaan */}
-              <li className="nav-item">
-                <Link className={`${location.pathname === basename.concat("/transaksi-penerimaan") ? "active" : ""} nav-link`} to={basename.concat("/transaksi-penerimaan")}>
-                  <i className="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                      <g>
-                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                      </g>
-                    </svg>
-                  </i>
-                  <i className="sidenav-mini-icon"> P </i>
-                  <span className="item-name">Penerimaan</span>
-                </Link>
-              </li>
-
-              {/* Pembayaran */}
-              <li className="nav-item">
-                <Link className={`${location.pathname === basename.concat("/transaksi-pembayaran") ? "active" : ""} nav-link`} to={basename.concat("/transaksi-pembayaran")}>
-                  <i className="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                      <g>
-                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                      </g>
-                    </svg>
-                  </i>
-                  <i className="sidenav-mini-icon"> P </i>
-                  <span className="item-name">Pembayaran</span>
-                </Link>
-              </li>
-            </ul>
-          </Accordion.Collapse>
-        </Accordion.Item>
-
         {/* Laporan */}
         <li className={`${location.pathname === basename.concat("/laporan") ? "active" : ""} nav-item `}>
           <Link className={`${location.pathname === basename.concat("/laporan") ? "active" : ""} nav-link `} aria-current="page" to={basename.concat("/laporan")} onClick={() => {}}>
