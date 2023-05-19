@@ -1,9 +1,12 @@
 import React, { useState, useEffect, memo } from "react";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
-import { Row, Col, Button, Modal, Form } from "react-bootstrap";
+import { Row, Col, Button, Modal, Form, Image } from "react-bootstrap";
 
 import { Card } from "../../../components/elements";
-import { Table } from "../../../components/partials/dashboard";
+import { DetailTransaksiTable } from "../../../components/partials/dashboard";
+
+import buktiBayar1 from "../../../assets/images/buktibayar1.jpg";
+import buktiBayar2 from "../../../assets/images/buktibayar2.jpg";
 
 const TransaksiDetail = memo(() => {
   const pageTitle = "Detail Transaksi";
@@ -90,7 +93,7 @@ const TransaksiDetail = memo(() => {
                           <Modal.Title as="h5">Info Pembayaran</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <p>Bukti Bayar</p>
+                          <Image src={buktiBayar2} className="img img-fluid rounded" />
                         </Modal.Body>
                       </Modal>
                     </div>
@@ -109,7 +112,7 @@ const TransaksiDetail = memo(() => {
                           <Modal.Title as="h5">Info Pembayaran</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <p>Bukti Bayar</p>
+                          <Image src={buktiBayar1} className="img img-fluid rounded" />
                         </Modal.Body>
                       </Modal>
                     </div>
@@ -139,7 +142,7 @@ const TransaksiDetail = memo(() => {
                         <Modal.Body>
                           <Row>
                             <Col>
-                              <h6 className="mb-1">Mobil</h6>
+                              <h6 className="mb-1">Kendaraan</h6>
                               <p>Truk Daihatsu F8</p>
                             </Col>
                             <Col>
@@ -148,7 +151,7 @@ const TransaksiDetail = memo(() => {
                             </Col>
                             <Col>
                               <h6 className="mb-1">Nama Sopir</h6>
-                              <p>Rendi</p>
+                              <p>David</p>
                             </Col>
                           </Row>
                         </Modal.Body>
@@ -180,7 +183,7 @@ const TransaksiDetail = memo(() => {
                         <Modal.Body>
                           <Row>
                             <Col>
-                              <h6 className="mb-1">Mobil</h6>
+                              <h6 className="mb-1">Kendaraan</h6>
                               <p>Truk Hino A24</p>
                             </Col>
                             <Col>
@@ -189,7 +192,7 @@ const TransaksiDetail = memo(() => {
                             </Col>
                             <Col>
                               <h6 className="mb-1">Nama Sopir</h6>
-                              <p>Yahya</p>
+                              <p>Charlie</p>
                             </Col>
                           </Row>
                         </Modal.Body>
@@ -274,7 +277,7 @@ const TransaksiDetail = memo(() => {
                   <p>Bob</p>
                 </div>
               </div>
-              <Table headings={headings}>
+              <DetailTransaksiTable headings={headings}>
                 {products?.map((item, index) => (
                   <tr key={index}>
                     <td>{item.alamat}</td>
@@ -283,7 +286,7 @@ const TransaksiDetail = memo(() => {
                     <td>{item.kuantitas} kg</td>
                   </tr>
                 ))}
-              </Table>
+              </DetailTransaksiTable>
             </Card.Body>
           </Card>
 
@@ -370,7 +373,6 @@ const TransaksiDetail = memo(() => {
                   </div>
                 </Col>
               </Row>
-
               <Form>
                 <Row>
                   <Col>
