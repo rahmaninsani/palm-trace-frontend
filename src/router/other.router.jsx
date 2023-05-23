@@ -1,11 +1,12 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
-import { Login, NotFound } from "../pages/others";
+import { NotFound } from "../pages/others";
 
 const OtherRouter = [
   {
     path: "/",
-    element: <Login />,
+    element: <Navigate to="/login" replace />,
   },
   {
     path: "*",

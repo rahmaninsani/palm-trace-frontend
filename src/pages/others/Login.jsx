@@ -1,12 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Card } from "../../components/elements";
 
+import { authLogin } from "../../utils";
+
 import auth1 from "../../assets/images/auth/01.png";
 
 const Login = () => {
-  let history = useNavigate();
+  const navigate = useNavigate();
+
+  const [loginValue, setLoginValue] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLoginValue({ ...loginValue, [name]: value });
+  };
+
+  const handleOnSubmit = () => {
+    const { email, password } = loginValue;
+    const role = authLogin(email, password);
+    navigate(role);
+  };
 
   return (
     <>
@@ -23,23 +41,19 @@ const Login = () => {
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
-                            <Form.Label htmlFor="email" className="">
-                              Email
-                            </Form.Label>
-                            <Form.Control type="email" className="" id="email" aria-describedby="email" placeholder=" " />
+                            <Form.Label htmlFor="email">Email</Form.Label>
+                            <Form.Control type="email" id="email" name="email" value={loginValue.email} onChange={handleInputChange} />
                           </Form.Group>
                         </Col>
-                        <Col lg="12" className="">
+                        <Col lg="12">
                           <Form.Group className="form-group">
-                            <Form.Label htmlFor="password" className="">
-                              Password
-                            </Form.Label>
-                            <Form.Control type="password" className="" id="password" aria-describedby="password" placeholder=" " />
+                            <Form.Label htmlFor="password">Password</Form.Label>
+                            <Form.Control type="password" id="password" name="password" value={loginValue.password} onChange={handleInputChange} />
                           </Form.Group>
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-center">
-                        <Button onClick={() => history.push("/dashboard")} type="button" variant="btn btn-primary">
+                        <Button onClick={handleOnSubmit} type="button" variant="btn btn-primary">
                           Masuk
                         </Button>
                       </div>

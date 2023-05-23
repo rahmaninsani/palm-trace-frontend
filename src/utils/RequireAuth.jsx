@@ -11,12 +11,8 @@ const RequireAuth = ({ role, children }) => {
   // const userHasRequiredRole = roles && roles.includes(role) ? true : false;
   const userHasRequiredRole = userRole === role ? true : false;
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !userHasRequiredRole) {
     return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  if (isAuthenticated && !userHasRequiredRole) {
-    return <h1>Access Denied</h1>;
   }
 
   return children;
