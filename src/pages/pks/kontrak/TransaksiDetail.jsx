@@ -267,14 +267,18 @@ const TransaksiDetail = memo(() => {
         <Col xl="8" lg="8">
           <Card>
             <Card.Body>
-              <div className="d-flex">
+              <div className="d-flex justify-content-between align-items-center">
                 <div>
                   <h6 className="mb-1">Nomor</h6>
                   <p>TRX0001</p>
                 </div>
-                <div className="ms-5">
+                <div>
                   <h6 className="mb-1">Nama Petani</h6>
                   <p>Bob</p>
+                </div>
+                <div>
+                  <h6 className="mb-1">Nomor Telepon</h6>
+                  <p>+628123456789</p>
                 </div>
               </div>
               <DetailTransaksiTable headings={headings}>
@@ -297,37 +301,36 @@ const TransaksiDetail = memo(() => {
 
             <hr className="hr-horizontal" />
 
-            <Card.Body>
-              <Form>
+            <Form>
+              <Card.Body>
                 <Row>
-                  <Col>
-                    <Form.Group className="form-group">
-                      <Form.Label htmlFor="kendaraan">Kendaraan</Form.Label>
-                      <Form.Control type="text" id="kendaraan" />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group className="form-group">
-                      <Form.Label htmlFor="nomorPolisi">Nomor Polisi</Form.Label>
-                      <Form.Control type="text" id="nomorPolisi" />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group className="form-group">
-                      <Form.Label htmlFor="namaSopir">Nama Sopir</Form.Label>
-                      <Form.Control type="text" id="namaSopir" />
-                    </Form.Group>
-                  </Col>
+                  <Form.Group className="col-md-6 form-group">
+                    <Form.Label htmlFor="namaSopir">Nama Sopir</Form.Label>
+                    <Form.Control type="text" id="namaSopir" />
+                  </Form.Group>
+
+                  <Form.Group className="col-md-6 form-group">
+                    <Form.Label htmlFor="nomorTeleponSupir">Nomor Telepon</Form.Label>
+                    <Form.Control type="text" id="nomorTeleponSupir" />
+                  </Form.Group>
+
+                  <Form.Group className="col-md-6 form-group">
+                    <Form.Label htmlFor="kendaraan">Kendaraan</Form.Label>
+                    <Form.Control type="text" id="kendaraan" />
+                  </Form.Group>
+
+                  <Form.Group className="col-md-6 form-group">
+                    <Form.Label htmlFor="nomorPolisi">Nomor Polisi</Form.Label>
+                    <Form.Control type="text" id="nomorPolisi" />
+                  </Form.Group>
                 </Row>
-                <Row>
-                  <Col className="text-center">
-                    <Button type="submit" variant="primary">
-                      Simpan
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Card.Body>
+              </Card.Body>
+              <Card.Footer className="text-center">
+                <Button type="submit" variant="btn btn-primary">
+                  Simpan
+                </Button>
+              </Card.Footer>
+            </Form>
           </Card>
 
           <Card>
