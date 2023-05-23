@@ -141,17 +141,21 @@ const TransaksiDetail = memo(() => {
                         </Modal.Header>
                         <Modal.Body>
                           <Row>
-                            <Col>
+                            <Col md="6">
+                              <h6 className="mb-1">Nama Sopir</h6>
+                              <p>David</p>
+                            </Col>
+                            <Col md="6">
+                              <h6 className="mb-1">Nomor Telepon</h6>
+                              <p>+628123456789</p>
+                            </Col>
+                            <Col md="6">
                               <h6 className="mb-1">Kendaraan</h6>
                               <p>Truk Daihatsu F8</p>
                             </Col>
-                            <Col>
+                            <Col md="6">
                               <h6 className="mb-1">Nomor Polisi</h6>
                               <p>D 4592 ZBD</p>
-                            </Col>
-                            <Col>
-                              <h6 className="mb-1">Nama Sopir</h6>
-                              <p>David</p>
                             </Col>
                           </Row>
                         </Modal.Body>
@@ -182,17 +186,21 @@ const TransaksiDetail = memo(() => {
                         </Modal.Header>
                         <Modal.Body>
                           <Row>
-                            <Col>
+                            <Col md="6">
+                              <h6 className="mb-1">Nama Sopir</h6>
+                              <p>Charlie</p>
+                            </Col>
+                            <Col md="6">
+                              <h6 className="mb-1">Nomor Telepon</h6>
+                              <p>+628123456789</p>
+                            </Col>
+                            <Col md="6">
                               <h6 className="mb-1">Kendaraan</h6>
                               <p>Truk Hino A24</p>
                             </Col>
-                            <Col>
+                            <Col md="6">
                               <h6 className="mb-1">Nomor Polisi</h6>
                               <p>D 6290 ZBA</p>
-                            </Col>
-                            <Col>
-                              <h6 className="mb-1">Nama Sopir</h6>
-                              <p>Charlie</p>
                             </Col>
                           </Row>
                         </Modal.Body>
@@ -367,50 +375,52 @@ const TransaksiDetail = memo(() => {
 
             <hr className="hr-horizontal" />
 
-            <Card.Body>
-              <Row>
-                <Col md="4">
-                  <div className="mt-2">
-                    <h6 className="mb-1">Koperasi</h6>
-                    <p>KUD Sawit</p>
-                  </div>
-                </Col>
-
-                <Col md="4">
-                  <div className="mt-2">
-                    <h6 className="mb-1">Nama Bank</h6>
-                    <p>BRI</p>
-                  </div>
-                </Col>
-
-                <Col md="4">
-                  <div className="mt-2">
-                    <h6 className="mb-1">Nomor Rekening</h6>
-                    <p>00000001</p>
-                  </div>
-                </Col>
-              </Row>
-              <Form>
+            <Form>
+              <Card.Body>
                 <Row>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label forhtml="buktiBayar" className="h6 custom-file-input">
-                        Unggah Bukti Pembayaran
-                      </Form.Label>
-                      <Form.Control type="file" id="buktiBayar" />
-                    </Form.Group>
+                  <Col md="4">
+                    <div>
+                      <h6 className="mb-1">Koperasi</h6>
+                      <p>KUD Sawit</p>
+                    </div>
                   </Col>
-                </Row>
 
-                <Row>
-                  <Col className="mt-2 text-center">
-                    <Button type="submit" variant="primary">
-                      Simpan
-                    </Button>
+                  <Col md="4">
+                    <div>
+                      <h6 className="mb-1">Nama Bank</h6>
+                      <p>BRI</p>
+                    </div>
                   </Col>
+
+                  <Col md="4">
+                    <div>
+                      <h6 className="mb-1">Nomor Rekening</h6>
+                      <p>00000001</p>
+                    </div>
+                  </Col>
+
+                  <Form.Group className="col-sm-12 form-group">
+                    <Form.Label htmlFor="jumlahBayar">Jumlah Bayar</Form.Label>
+                    <InputGroup>
+                      <InputGroup.Text>Rp</InputGroup.Text>
+                      <Form.Control type="number" id="jumlahBayar" placeholder="Jumlah Bayar" />
+                    </InputGroup>
+                  </Form.Group>
+
+                  <Form.Group className="col-sm-12 form-group">
+                    <Form.Label htmlFor="buktiBayar" className="custom-file-input">
+                      Bukti Pembayaran
+                    </Form.Label>
+                    <Form.Control type="file" id="buktiBayar" />
+                  </Form.Group>
                 </Row>
-              </Form>
-            </Card.Body>
+              </Card.Body>
+              <Card.Footer className="text-center">
+                <Button type="submit" variant="btn btn-primary">
+                  Simpan
+                </Button>
+              </Card.Footer>
+            </Form>
           </Card>
         </Col>
       </Row>
