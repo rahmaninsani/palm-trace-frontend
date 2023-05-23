@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
-import { Row, Col, Button, Modal, Form, Image } from "react-bootstrap";
+import { Row, Col, Button, Modal, Form, Image, InputGroup } from "react-bootstrap";
 
 import { Card } from "../../../components/elements";
 import { DetailTransaksiTable } from "../../../components/partials/dashboard";
@@ -334,16 +334,30 @@ const TransaksiDetail = memo(() => {
           </Card>
 
           <Card>
-            <Card.Body>
-              <div className="d-flex justify-content-between align-items-center">
-                <h6 className="text-info">Apakah TBS sudah diterima?</h6>
-                <form>
-                  <Button type="submit" variant="primary" className="ms-2">
-                    Terima
-                  </Button>
-                </form>
-              </div>
-            </Card.Body>
+            <Card.Header className="mx-auto">
+              <h5>Penerimaan</h5>
+            </Card.Header>
+
+            <hr className="hr-horizontal" />
+
+            <Form>
+              <Card.Body>
+                <Row>
+                  <Form.Group className="col-sm-12 form-group">
+                    <Form.Label htmlFor="totalKuantitas">Total Kuantitas</Form.Label>
+                    <InputGroup>
+                      <Form.Control type="number" id="totalKuantitas" placeholder="Total Kuantitas" />
+                      <InputGroup.Text>kg</InputGroup.Text>
+                    </InputGroup>
+                  </Form.Group>
+                </Row>
+              </Card.Body>
+              <Card.Footer className="text-center">
+                <Button type="submit" variant="btn btn-primary">
+                  Simpan
+                </Button>
+              </Card.Footer>
+            </Form>
           </Card>
 
           <Card>
