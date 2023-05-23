@@ -1,6 +1,12 @@
 import React, { memo, forwardRef } from "react";
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+//img
+import avatars1 from "../../../assets/images/avatars/01.png";
+
+// logo
+import { Logo } from "../../elements";
 
 const CustomToggle = forwardRef(({ children, variant, onClick }, ref) => (
   <Link
@@ -17,13 +23,13 @@ const CustomToggle = forwardRef(({ children, variant, onClick }, ref) => (
   </Link>
 ));
 
-//img
-import avatars1 from "../../../assets/images/avatars/01.png";
-
-// logo
-import { Logo } from "../../elements";
-
 const Header = memo(() => {
+  const navigate = useNavigate();
+  const handleOnLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   const minisidebar = () => {
     document.getElementsByTagName("ASIDE")[0].classList.toggle("sidebar-mini");
   };
@@ -64,7 +70,7 @@ const Header = memo(() => {
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <Dropdown.Item href="#">Keluar</Dropdown.Item>
+                  <Dropdown.Item onClick={handleOnLogout}>Keluar</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
