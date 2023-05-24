@@ -33,7 +33,7 @@ const SidebarItem = memo(({ role }) => {
   const basename = `/${role}`;
 
   //location
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <>
@@ -47,8 +47,8 @@ const SidebarItem = memo(({ role }) => {
         </li>
 
         {/* Dashboard */}
-        <li className={`${location.pathname === basename ? "active" : ""} nav-item `}>
-          <Link className={`${location.pathname === basename ? "active" : ""} nav-link `} aria-current="page" to={basename} onClick={() => {}}>
+        <li className={`${pathname.includes("/dashboard") && "active"} nav-item `}>
+          <Link className={`${pathname.includes("/dashboard") && "active"} nav-link `} aria-current="page" to={basename} onClick={() => {}}>
             <i className="icon">
               <Tiles />
             </i>
@@ -70,8 +70,8 @@ const SidebarItem = memo(({ role }) => {
         </li>
 
         {/* Kontrak */}
-        <li className={`${location.pathname === basename.concat("/kontrak") ? "active" : ""} nav-item `}>
-          <Link className={`${location.pathname === basename.concat("/kontrak") ? "active" : ""} nav-link `} aria-current="page" to={basename.concat("/kontrak")} onClick={() => {}}>
+        <li className={`${pathname.includes("/kontrak") && "active"} nav-item `}>
+          <Link className={`${pathname.includes("/kontrak") && "active"} nav-link `} aria-current="page" to={basename.concat("/kontrak")} onClick={() => {}}>
             <i className="icon">
               <KontrakOut />
             </i>
@@ -80,8 +80,8 @@ const SidebarItem = memo(({ role }) => {
         </li>
 
         {/* Laporan */}
-        <li className={`${location.pathname === basename.concat("/laporan") ? "active" : ""} nav-item `}>
-          <Link className={`${location.pathname === basename.concat("/laporan") ? "active" : ""} nav-link `} aria-current="page" to={basename.concat("/laporan")} onClick={() => {}}>
+        <li className={`${pathname.includes("/laporan") && "active"} nav-item `}>
+          <Link className={`${pathname.includes("/laporan") && "active"} nav-link `} aria-current="page" to={basename.concat("/laporan")} onClick={() => {}}>
             <i className="icon">
               <Paper />
             </i>
@@ -105,7 +105,7 @@ const SidebarItem = memo(({ role }) => {
             <ul className="sub-nav">
               {/* Profil */}
               <li className="nav-item">
-                <Link className={`${location.pathname === basename.concat("/profil-biodata") ? "active" : ""} nav-link`} to={basename.concat("/profil-biodata")}>
+                <Link className={`${pathname === basename.concat("/profil-biodata") ? "active" : ""} nav-link`} to={basename.concat("/profil-biodata")}>
                   <i className="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                       <g>
@@ -121,7 +121,7 @@ const SidebarItem = memo(({ role }) => {
               {/* Kebun */}
               {role === ROLE.PETANI && (
                 <li className="nav-item">
-                  <Link className={`${location.pathname === basename.concat("/profil-kebun") ? "active" : ""} nav-link`} to={basename.concat("/profil-kebun")}>
+                  <Link className={`${pathname === basename.concat("/profil-kebun") ? "active" : ""} nav-link`} to={basename.concat("/profil-kebun")}>
                     <i className="icon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                         <g>

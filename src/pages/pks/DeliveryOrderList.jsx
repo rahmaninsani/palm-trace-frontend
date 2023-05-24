@@ -28,48 +28,6 @@ const DeliveryOrderList = memo(() => {
       periode: "Maret 2023",
       status: "Ditolak",
     },
-    {
-      nomor: "D0001",
-      tanggal: "2023-01-01",
-      periode: "April 2023",
-      status: "Disetujui",
-    },
-    {
-      nomor: "D0002",
-      tanggal: "2023-01-01",
-      periode: "Mei 2023",
-      status: "Pending",
-    },
-    {
-      nomor: "D0003",
-      tanggal: "2023-01-01",
-      periode: "Juni 2023",
-      status: "Ditolak",
-    },
-    {
-      nomor: "D0001",
-      tanggal: "2023-01-01",
-      periode: "Juli 2023",
-      status: "Disetujui",
-    },
-    {
-      nomor: "D0002",
-      tanggal: "2023-01-01",
-      periode: "Agustus 2023",
-      status: "Pending",
-    },
-    {
-      nomor: "D0003",
-      tanggal: "2023-01-01",
-      periode: "September 2023",
-      status: "Ditolak",
-    },
-    {
-      nomor: "D0001",
-      tanggal: "2023-01-01",
-      periode: "Oktober 2023",
-      status: "Disetujui",
-    },
   ];
 
   return (

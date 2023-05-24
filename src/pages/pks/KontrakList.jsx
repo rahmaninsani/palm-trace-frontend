@@ -25,7 +25,7 @@ const KontrakList = memo(() => {
           <Card>
             <Card.Header className="d-flex justify-content-between align-items-center">
               <div className="header-title">
-                <h4 className="card-title">Kontrak</h4>
+                <h4 className="card-title">Daftar Kontrak</h4>
               </div>
               <div className="card-action">
                 <Button variant="primary" href={`${pathname}/tambah`}>
