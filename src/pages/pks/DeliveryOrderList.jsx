@@ -2,8 +2,8 @@ import React, { memo } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-import { Card } from "../../../components/elements";
-import { Table } from "../../../components/partials/dashboard";
+import { Card } from "../../components/elements";
+import { Table } from "../../components/partials/dashboard";
 
 const DeliveryOrderList = memo(() => {
   const { pathname } = useLocation();

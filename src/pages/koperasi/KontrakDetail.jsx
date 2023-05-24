@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Row, Col, Button, Modal } from "react-bootstrap";
 
-import { Card } from "../../../components/elements";
+import { Card } from "../../components/elements";
 import DeliveryOrderList from "./DeliveryOrderList";
 
 const KontrakDetail = memo(() => {

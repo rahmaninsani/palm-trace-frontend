@@ -2,10 +2,10 @@ import React, { useEffect, memo } from "react";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 
-import { Card } from "../../../components/elements";
-import { Table } from "../../../components/partials/dashboard";
+import { Card } from "../../components/elements";
+import { Table } from "../../components/partials/dashboard";
 
-import { contracts } from "../../../config";
+import { contracts } from "../../config";
 
 const KontrakList = memo(() => {
   const pageTitle = "Kontrak";

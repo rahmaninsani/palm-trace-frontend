@@ -2,11 +2,11 @@ import React, { useState, useEffect, memo } from "react";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import { Row, Col, Button, Modal, Form, Image, InputGroup } from "react-bootstrap";
 
-import { Card } from "../../../components/elements";
-import { DetailTransaksiTable } from "../../../components/partials/dashboard";
+import { Card } from "../../components/elements";
+import { DetailTransaksiTable } from "../../components/partials/dashboard";
 
-import buktiBayar1 from "../../../assets/images/buktibayar1.jpg";
-import buktiBayar2 from "../../../assets/images/buktibayar2.jpg";
+import buktiBayar1 from "../../assets/images/buktibayar1.jpg";
+import buktiBayar2 from "../../assets/images/buktibayar2.jpg";
 
 const TransaksiDetail = memo(() => {
   const pageTitle = "Detail Transaksi";

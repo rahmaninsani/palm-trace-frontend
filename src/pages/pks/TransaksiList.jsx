@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import { Nav, Tab } from "react-bootstrap";
 
-import { transactions } from "../../../config";
-import { TransaksiCard } from "../../../components/partials/dashboard";
-import { Card } from "../../../components/elements";
+import { transactions } from "../../config";
+import { TransaksiCard } from "../../components/partials/dashboard";
+import { Card } from "../../components/elements";
 
 const TransaksiList = memo(() => {
   return (

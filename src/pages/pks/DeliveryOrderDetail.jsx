@@ -3,7 +3,7 @@ import { useLocation, useOutletContext } from "react-router-dom";
 import { Row, Col, Button, Modal } from "react-bootstrap";
 
 import TransaksiList from "./TransaksiList";
-import { Card } from "../../../components/elements";
+import { Card } from "../../components/elements";
 
 const DeliveryOrderDetail = memo(() => {
   const pageTitle = "Detail Delivery Order";

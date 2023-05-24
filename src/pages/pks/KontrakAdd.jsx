@@ -4,10 +4,10 @@ import { Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 
 //flatpicker
 import Flatpickr from "react-flatpickr";
-import "../../../assets/css/flatpickr.min.css";
-import rangePlugin from "../../../utils/rangePlugin";
+import "../../assets/css/flatpickr.min.css";
+import rangePlugin from "../../utils/rangePlugin";
 
-import { Card } from "../../../components/elements";
+import { Card } from "../../components/elements";
 
 const KontrakAdd = memo(() => {
   const pageTitle = "Tambah Kontrak";

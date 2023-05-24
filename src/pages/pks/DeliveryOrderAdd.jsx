@@ -2,7 +2,7 @@ import React, { useEffect, memo } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 import { Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 
-import { Card } from "../../../components/elements";
+import { Card } from "../../components/elements";
 
 const DeliveryOrderAdd = memo(() => {
   const pageTitle = "Tambah Delivery Order";
