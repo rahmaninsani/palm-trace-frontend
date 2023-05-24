@@ -4,7 +4,7 @@ import { ROLE } from "../config";
 import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
-import { Dashboard, KontrakList } from "../pages/koperasi";
+import { Dashboard, KontrakList, KontrakDetail } from "../pages/koperasi";
 
 const role = ROLE.KOPERASI;
 const KoperasiRouter = [
@@ -23,6 +23,10 @@ const KoperasiRouter = [
       {
         path: `/${role}/kontrak`,
         element: <KontrakList />,
+      },
+      {
+        path: `/${role}/kontrak/:nomorKontrak`,
+        element: <KontrakDetail />,
       },
     ],
   },
