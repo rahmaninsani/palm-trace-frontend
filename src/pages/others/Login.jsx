@@ -35,8 +35,7 @@ const Login = () => {
               <Col md="10">
                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                   <Card.Body>
-                    <h2 className="mb-2 text-center">Login</h2>
-                    <p className="text-center">Masuk untuk mengakses dashboard</p>
+                    <h2 className="mb-4 text-center">Login</h2>
                     <Form>
                       <Row>
                         <Col lg="12">

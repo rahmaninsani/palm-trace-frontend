@@ -6,7 +6,7 @@ import { Card } from "../../components/elements";
 import auth5 from "../../assets/images/auth/05.png";
 
 const Register = () => {
-  let history = useNavigate();
+  let navigate = useNavigate();
 
   return (
     <>
@@ -15,66 +15,57 @@ const Register = () => {
           <div className="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
             <Image src={auth5} className="Image-fluid gradient-main animated-scaleX" alt="images" />
           </div>
+
           <Col md="6">
             <Row className="justify-content-center">
-              <Col md="10">
+              <Col>
                 <Card className="card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
                   <Card.Body>
-                    <h2 className="mb-2 text-center">Registrasi</h2>
-                    <p className="text-center">Pembuatan akun</p>
+                    <h2 className="mb-4 text-center">Registrasi</h2>
                     <Form>
                       <Row>
-                        <Col lg="6">
-                          <Form.Group className="form-group">
-                            <Form.Label htmlFor="full-name" className="">
-                              Full Name
-                            </Form.Label>
-                            <Form.Control type="text" className="" id="full-name" placeholder=" " />
-                          </Form.Group>
-                        </Col>
-                        <Col lg="6">
-                          <Form.Group className="form-group">
-                            <Form.Label htmlFor="last-name" className="">
-                              Last Name
-                            </Form.Label>
-                            <Form.Control type="text" className="" id="last-name" placeholder=" " />
-                          </Form.Group>
-                        </Col>
-                        <Col lg="6">
-                          <Form.Group className="form-group">
-                            <Form.Label htmlFor="email" className="">
-                              Email
-                            </Form.Label>
-                            <Form.Control type="email" className="" id="email" placeholder=" " />
-                          </Form.Group>
-                        </Col>
-                        <Col lg="6">
-                          <Form.Group className="form-group">
-                            <Form.Label htmlFor="phone" className="">
-                              Phone No.
-                            </Form.Label>
-                            <Form.Control type="text" className="" id="phone" placeholder=" " />
-                          </Form.Group>
-                        </Col>
-                        <Col lg="6">
-                          <Form.Group className="form-group">
-                            <Form.Label htmlFor="password" className="">
-                              Password
-                            </Form.Label>
-                            <Form.Control type="password" className="" id="password" placeholder=" " />
-                          </Form.Group>
-                        </Col>
-                        <Col lg="6">
-                          <Form.Group className="form-group">
-                            <Form.Label htmlFor="confirm-password" className="">
-                              Confirm Password
-                            </Form.Label>
-                            <Form.Control type="text" className="" id="confirm-password" placeholder=" " />
-                          </Form.Group>
-                        </Col>
+                        <Form.Group className="col-sm-12 form-group">
+                          <Form.Label>Jenis Akun</Form.Label>
+                          <select className="form-select mb-3 shadow-none">
+                            <option defaultValue>Pilih Jenis Akun</option>
+                            <option value={1}>Petani</option>
+                            <option value={2}>Koperasi</option>
+                            <option value={3}>Pabrik Kelapa Sawit</option>
+                          </select>
+                        </Form.Group>
+
+                        <Form.Group className="col-sm-6 form-group">
+                          <Form.Label htmlFor="nikSiup">NIK/Nomor SIUP</Form.Label>
+                          <Form.Control type="text" id="nikSiup" />
+                        </Form.Group>
+
+                        <Form.Group className="col-sm-6 form-group">
+                          <Form.Label htmlFor="namaLengkap">Nama Lengkap</Form.Label>
+                          <Form.Control type="text" id="namaLengkap" />
+                        </Form.Group>
+
+                        <Form.Group className="col-sm-6 form-group">
+                          <Form.Label htmlFor="alamat">Alamat</Form.Label>
+                          <Form.Control type="text" id="alamat" />
+                        </Form.Group>
+
+                        <Form.Group className="col-sm-6 form-group">
+                          <Form.Label htmlFor="nomorTelepon">Nomor Telepon</Form.Label>
+                          <Form.Control type="text" id="nomorTelepon" />
+                        </Form.Group>
+
+                        <Form.Group className="col-sm-6 form-group">
+                          <Form.Label htmlFor="email">Email</Form.Label>
+                          <Form.Control type="email" id="email" />
+                        </Form.Group>
+
+                        <Form.Group className="col-sm-6 form-group">
+                          <Form.Label htmlFor="password">Password</Form.Label>
+                          <Form.Control type="password" id="password" />
+                        </Form.Group>
                       </Row>
                       <div className="d-flex justify-content-center">
-                        <Button onClick={() => history.push("/login")} type="button" variant="primary">
+                        <Button onClick={() => navigate("/login")} type="button" variant="primary">
                           Daftar
                         </Button>
                       </div>
