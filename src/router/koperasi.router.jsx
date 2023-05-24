@@ -4,20 +4,25 @@ import { ROLE } from "../config";
 import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
-import { Dashboard } from "../pages/koperasi";
+import { Dashboard, KontrakList } from "../pages/koperasi";
 
+const role = ROLE.KOPERASI;
 const KoperasiRouter = [
   {
-    path: `/${ROLE.KOPERASI}`,
+    path: `/${role}`,
     element: (
-      <RequireAuth role={ROLE.KOPERASI}>
-        <DashboardLayout role={ROLE.KOPERASI} />
+      <RequireAuth role={role}>
+        <DashboardLayout role={role} />
       </RequireAuth>
     ),
     children: [
       {
-        path: `/${ROLE.KOPERASI}`,
+        path: `/${role}`,
         element: <Dashboard />,
+      },
+      {
+        path: `/${role}/kontrak`,
+        element: <KontrakList />,
       },
     ],
   },
