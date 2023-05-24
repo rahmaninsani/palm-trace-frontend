@@ -336,45 +336,6 @@ const TransaksiDetail = memo(() => {
 
           <Card>
             <Card.Header className="mx-auto">
-              <h5>Pengiriman</h5>
-            </Card.Header>
-
-            <hr className="hr-horizontal" />
-
-            <Form>
-              <Card.Body>
-                <Row>
-                  <Form.Group className="col-md-6 form-group">
-                    <Form.Label htmlFor="namaSopir">Nama Sopir</Form.Label>
-                    <Form.Control type="text" id="namaSopir" />
-                  </Form.Group>
-
-                  <Form.Group className="col-md-6 form-group">
-                    <Form.Label htmlFor="nomorTeleponSupir">Nomor Telepon</Form.Label>
-                    <Form.Control type="text" id="nomorTeleponSupir" />
-                  </Form.Group>
-
-                  <Form.Group className="col-md-6 form-group">
-                    <Form.Label htmlFor="kendaraan">Kendaraan</Form.Label>
-                    <Form.Control type="text" id="kendaraan" />
-                  </Form.Group>
-
-                  <Form.Group className="col-md-6 form-group">
-                    <Form.Label htmlFor="nomorPolisi">Nomor Polisi</Form.Label>
-                    <Form.Control type="text" id="nomorPolisi" />
-                  </Form.Group>
-                </Row>
-              </Card.Body>
-              <Card.Footer className="text-center">
-                <Button type="submit" variant="btn btn-primary">
-                  Simpan
-                </Button>
-              </Card.Footer>
-            </Form>
-          </Card>
-
-          <Card>
-            <Card.Header className="mx-auto">
               <h5>Penerimaan</h5>
             </Card.Header>
 
