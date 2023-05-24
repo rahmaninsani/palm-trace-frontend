@@ -7,7 +7,7 @@ import { Loader } from "../components/elements";
 const DashboardLayout = memo(({ role }) => {
   const [title, setTitle] = useState("");
 
-  const appName = "Kelapa Sawit";
+  const appName = "Palm Safe";
   useEffect(() => {});
 
   return (
@@ -21,7 +21,7 @@ const DashboardLayout = memo(({ role }) => {
       <main className="main-content">
         <div className="position-relative">
           {/* Topbar */}
-          <Header />
+          <Header role={role} />
 
           {/* Banner */}
           <Banner title={title} />

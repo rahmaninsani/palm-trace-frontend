@@ -50,7 +50,7 @@ const Sidebar = memo(({ appName, role }) => {
     <>
       <aside className={"sidebar sidebar-white sidebar-base sidebar-default navs-rounded-all"} data-sidebar="responsive">
         <div className="sidebar-header d-flex align-items-center justify-content-start">
-          <Link to="/dashboard" className="navbar-brand">
+          <Link to={`/${role}`} className="navbar-brand">
             <Logo />
             <h4 className="logo-title">{appName}</h4>
           </Link>

@@ -23,8 +23,11 @@ const CustomToggle = forwardRef(({ children, variant, onClick }, ref) => (
   </Link>
 ));
 
-const Header = memo(() => {
+const Header = memo(({ role }) => {
   const navigate = useNavigate();
+  const nama = localStorage.getItem("nama");
+  const jenis = localStorage.getItem("jenis");
+
   const handleOnLogout = () => {
     localStorage.clear();
     navigate("/login");
@@ -38,9 +41,9 @@ const Header = memo(() => {
     <>
       <Navbar expand="lg" variant="light" className={`nav iq-navbar default`}>
         <Container fluid className="navbar-inner">
-          <Link to="/dashboard" className="navbar-brand">
+          <Link to={`/${role}`} className="navbar-brand">
             <Logo color={true} />
-            <h4 className="logo-title">Kelapa Sawit</h4>
+            <h4 className="logo-title">Palm Safe</h4>
           </Link>
 
           <div className="sidebar-toggle" data-toggle="sidebar" data-active="true" onClick={minisidebar}>
@@ -65,8 +68,8 @@ const Header = memo(() => {
                 <Dropdown.Toggle as={CustomToggle} variant=" nav-link py-0 d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src={avatars1} alt="User-Profile" className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" />
                   <div className="caption ms-3 d-none d-md-block ">
-                    <h6 className="mb-0 caption-title">PT Sawit Nusantara</h6>
-                    <p className="mb-0 caption-sub-title">Pabrik Kelapa Sawit</p>
+                    <h6 className="mb-0 caption-title">{nama}</h6>
+                    <p className="mb-0 caption-sub-title">{jenis}</p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-end" aria-labelledby="navbarDropdown">
