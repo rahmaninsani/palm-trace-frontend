@@ -5,6 +5,7 @@ import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderAdd, DeliveryOrderDetail, TransaksiDetail } from "../pages/pks";
+import { HargaSawit } from "../pages/koperasi";
 
 const PksRouter = [
   {
@@ -42,6 +43,10 @@ const PksRouter = [
       {
         path: "/pks/kontrak/:nomorKontrak/:nomorDo/:nomorTransaksi",
         element: <TransaksiDetail />,
+      },
+      {
+        path: `/pks/harga-sawit`,
+        element: <HargaSawit />,
       },
     ],
   },

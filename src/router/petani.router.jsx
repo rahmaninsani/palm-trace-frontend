@@ -5,6 +5,7 @@ import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail } from "../pages/petani";
+import { HargaSawit } from "../pages/koperasi";
 
 const role = ROLE.PETANI;
 const PetaniRouter = [
@@ -35,6 +36,10 @@ const PetaniRouter = [
       {
         path: `/${role}/kontrak/:nomorKontrak/:nomorDo/:nomorTransaksi`,
         element: <TransaksiDetail />,
+      },
+      {
+        path: `/${role}/harga-sawit`,
+        element: <HargaSawit />,
       },
     ],
   },

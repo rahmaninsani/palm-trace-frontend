@@ -18,6 +18,8 @@ const CheckUser = ({ children }) => {
       return <Navigate to={`/${ROLE.KOPERASI}`} state={{ from: location }} replace />;
     case ROLE.PKS:
       return <Navigate to={`/${ROLE.PKS}`} state={{ from: location }} replace />;
+    case ROLE.DINAS:
+      return <Navigate to={`/${ROLE.DINAS}`} state={{ from: location }} replace />;
   }
 };
 

@@ -4,7 +4,7 @@ import { ROLE } from "../config";
 import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
-import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail } from "../pages/koperasi";
+import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail, HargaSawit } from "../pages/koperasi";
 
 const role = ROLE.KOPERASI;
 const KoperasiRouter = [
@@ -35,6 +35,10 @@ const KoperasiRouter = [
       {
         path: `/${role}/kontrak/:nomorKontrak/:nomorDo/:nomorTransaksi`,
         element: <TransaksiDetail />,
+      },
+      {
+        path: `/${role}/harga-sawit`,
+        element: <HargaSawit />,
       },
     ],
   },

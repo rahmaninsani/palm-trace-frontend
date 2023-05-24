@@ -19,6 +19,12 @@ const authLogin = (email, _) => {
       localStorage.setItem("nama", "PT Sawit Nusantara");
       localStorage.setItem("jenis", "Pabrik Kelapa Sawit");
       return `/${ROLE.PKS}`;
+
+    case "dinas@gmail.com":
+      localStorage.setItem("role", ROLE.DINAS);
+      localStorage.setItem("nama", "BPDPKS");
+      localStorage.setItem("jenis", "Dinas");
+      return `/${ROLE.DINAS}`;
   }
 };
 

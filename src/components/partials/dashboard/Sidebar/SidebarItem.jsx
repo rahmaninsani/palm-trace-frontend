@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Accordion, useAccordionButton, AccordionContext } from "react-bootstrap";
 
 import { ROLE } from "../../../../config";
-import { Tiles, KontrakOut, Cart, Paper, User, DropDown } from "../../../elements";
+import { Tiles, KontrakOut, Paper, User, DropDown, Graph } from "../../../elements";
 
 const CustomToggle = ({ children, eventKey, onClick }) => {
   const { activeEventKey } = useContext(AccordionContext);
@@ -38,56 +38,90 @@ const SidebarItem = memo(({ role }) => {
   return (
     <>
       <Accordion as="ul" className="navbar-nav iq-main-menu">
-        {/* Home Title */}
-        <li className="nav-item static-item">
-          <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-            <span className="default-icon">Home</span>
-            <span className="mini-icon">-</span>
-          </Link>
-        </li>
+        {role === ROLE.DINAS ? (
+          <>
+            {/* Pages Title  */}
+            <li className="nav-item static-item">
+              <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
+                <span className="default-icon">Pages</span>
+                <span className="mini-icon">-</span>
+              </Link>
+            </li>
 
-        {/* Dashboard */}
-        <li className={`${pathname === basename && "active"} nav-item `}>
-          <Link className={`${pathname === basename && "active"} nav-link `} aria-current="page" to={basename} onClick={() => {}}>
-            <i className="icon">
-              <Tiles />
-            </i>
-            <span className="item-name">Dashboard</span>
-          </Link>
-        </li>
+            {/* Harga TBS */}
+            <li className={`${pathname.includes("/harga-sawit") && "active"} nav-item `}>
+              <Link className={`${pathname.includes("/harga-sawit") && "active"} nav-link `} aria-current="page" to={basename.concat("/harga-sawit")}>
+                <i className="icon">
+                  <Graph />
+                </i>
+                <span className="item-name">Harga Sawit</span>
+              </Link>
+            </li>
+          </>
+        ) : (
+          <>
+            {/* Home Title */}
+            <li className="nav-item static-item">
+              <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
+                <span className="default-icon">Home</span>
+                <span className="mini-icon">-</span>
+              </Link>
+            </li>
 
-        {/* Divider */}
-        <li>
-          <hr className="hr-horizontal" />
-        </li>
+            {/* Dashboard */}
+            <li className={`${pathname === basename && "active"} nav-item `}>
+              <Link className={`${pathname === basename && "active"} nav-link `} aria-current="page" to={basename}>
+                <i className="icon">
+                  <Tiles />
+                </i>
+                <span className="item-name">Dashboard</span>
+              </Link>
+            </li>
 
-        {/* Pages Title */}
-        <li className="nav-item static-item">
-          <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-            <span className="default-icon">Pages</span>
-            <span className="mini-icon">-</span>
-          </Link>
-        </li>
+            {/* Divider */}
+            <li>
+              <hr className="hr-horizontal" />
+            </li>
 
-        {/* Kontrak */}
-        <li className={`${pathname.includes("/kontrak") && "active"} nav-item `}>
-          <Link className={`${pathname.includes("/kontrak") && "active"} nav-link `} aria-current="page" to={basename.concat("/kontrak")} onClick={() => {}}>
-            <i className="icon">
-              <KontrakOut />
-            </i>
-            <span className="item-name">Kontrak</span>
-          </Link>
-        </li>
+            {/* Pages Title */}
+            <li className="nav-item static-item">
+              <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
+                <span className="default-icon">Pages</span>
+                <span className="mini-icon">-</span>
+              </Link>
+            </li>
 
-        {/* Laporan */}
-        <li className={`${pathname.includes("/laporan") && "active"} nav-item `}>
-          <Link className={`${pathname.includes("/laporan") && "active"} nav-link `} aria-current="page" to={basename.concat("/laporan")} onClick={() => {}}>
-            <i className="icon">
-              <Paper />
-            </i>
-            <span className="item-name">Laporan</span>
-          </Link>
-        </li>
+            {/* Harga TBS */}
+            <li className={`${pathname.includes("/harga-sawit") && "active"} nav-item `}>
+              <Link className={`${pathname.includes("/harga-sawit") && "active"} nav-link `} aria-current="page" to={basename.concat("/harga-sawit")}>
+                <i className="icon">
+                  <Graph />
+                </i>
+                <span className="item-name">Harga Sawit</span>
+              </Link>
+            </li>
+
+            {/* Kontrak */}
+            <li className={`${pathname.includes("/kontrak") && "active"} nav-item `}>
+              <Link className={`${pathname.includes("/kontrak") && "active"} nav-link `} aria-current="page" to={basename.concat("/kontrak")}>
+                <i className="icon">
+                  <KontrakOut />
+                </i>
+                <span className="item-name">Kontrak</span>
+              </Link>
+            </li>
+
+            {/* Laporan */}
+            <li className={`${pathname.includes("/laporan") && "active"} nav-item `}>
+              <Link className={`${pathname.includes("/laporan") && "active"} nav-link `} aria-current="page" to={basename.concat("/laporan")}>
+                <i className="icon">
+                  <Paper />
+                </i>
+                <span className="item-name">Laporan</span>
+              </Link>
+            </li>
+          </>
+        )}
 
         {/* Profil */}
         <Accordion.Item as="li" eventKey="sidebar-profil" bsPrefix={`nav-item ${active === "profil" ? "active" : ""} `} onClick={() => setActive("profil")}>
