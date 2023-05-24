@@ -1,16 +1,15 @@
 import React, { useState, useEffect, memo } from "react";
 import { useLocation, useOutletContext, useNavigate } from "react-router-dom";
-import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Row, Col, Button, Modal, Form } from "react-bootstrap";
 
 import TransaksiList from "./TransaksiList";
 import { Card } from "../../components/elements";
 
 const DeliveryOrderDetail = memo(() => {
   const pageTitle = "Detail Delivery Order";
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
-
-  const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
