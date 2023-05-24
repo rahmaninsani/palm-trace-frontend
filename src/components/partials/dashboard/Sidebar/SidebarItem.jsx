@@ -47,8 +47,8 @@ const SidebarItem = memo(({ role }) => {
         </li>
 
         {/* Dashboard */}
-        <li className={`${pathname.includes("/dashboard") && "active"} nav-item `}>
-          <Link className={`${pathname.includes("/dashboard") && "active"} nav-link `} aria-current="page" to={basename} onClick={() => {}}>
+        <li className={`${pathname === basename && "active"} nav-item `}>
+          <Link className={`${pathname === basename && "active"} nav-link `} aria-current="page" to={basename} onClick={() => {}}>
             <i className="icon">
               <Tiles />
             </i>
