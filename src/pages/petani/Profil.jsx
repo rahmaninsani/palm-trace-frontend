@@ -88,6 +88,12 @@ const Profil = memo(() => {
               <Form.Label htmlFor="password">Password</Form.Label>
               <Form.Control type="password" id="password" />
             </Form.Group>
+
+            {/* Koperasi */}
+            <Form.Group className="col-sm-12 form-group">
+              <Form.Label htmlFor="keanggotaanKoperasi">Keanggotaan Koperasi</Form.Label>
+              <Form.Control type="text" id="keanggotaanKoperasi" value="Koperasi I" disabled />
+            </Form.Group>
           </Row>
         </Card.Body>
 

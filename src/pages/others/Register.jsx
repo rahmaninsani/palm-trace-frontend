@@ -34,6 +34,16 @@ const Register = () => {
                           </select>
                         </Form.Group>
 
+                        <Form.Group className="col-sm-12 form-group">
+                          <Form.Label>Keanggotaan Koperasi</Form.Label>
+                          <select className="form-select mb-3 shadow-none">
+                            <option defaultValue>Pilih Koperasi</option>
+                            <option value={1}>Koperasi I</option>
+                            <option value={2}>Koperasi II</option>
+                            <option value={3}>Koperasi III</option>
+                          </select>
+                        </Form.Group>
+
                         <Form.Group className="col-sm-6 form-group">
                           <Form.Label htmlFor="nikSiup">NIK/Nomor SIUP</Form.Label>
                           <Form.Control type="text" id="nikSiup" />
