@@ -124,53 +124,14 @@ const SidebarItem = memo(({ role }) => {
         )}
 
         {/* Profil */}
-        <Accordion.Item as="li" eventKey="sidebar-profil" bsPrefix={`nav-item ${active === "profil" ? "active" : ""} `} onClick={() => setActive("profil")}>
-          <CustomToggle eventKey="sidebar-profil" onClick={(activeKey) => setActiveMenu(activeKey)}>
+        <li className={`${pathname.includes("/profil") && "active"} nav-item `}>
+          <Link className={`${pathname.includes("/profil") && "active"} nav-link `} aria-current="page" to={basename.concat("/profil")}>
             <i className="icon">
               <User />
             </i>
             <span className="item-name">Profil</span>
-            <i className="right-icon">
-              <DropDown />
-            </i>
-          </CustomToggle>
-
-          <Accordion.Collapse eventKey="sidebar-profil">
-            <ul className="sub-nav">
-              {/* Profil */}
-              <li className="nav-item">
-                <Link className={`${pathname === basename.concat("/profil-biodata") ? "active" : ""} nav-link`} to={basename.concat("/profil-biodata")}>
-                  <i className="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                      <g>
-                        <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                      </g>
-                    </svg>
-                  </i>
-                  <i className="sidenav-mini-icon"> B </i>
-                  <span className="item-name">Biodata</span>
-                </Link>
-              </li>
-
-              {/* Kebun */}
-              {role === ROLE.PETANI && (
-                <li className="nav-item">
-                  <Link className={`${pathname === basename.concat("/profil-kebun") ? "active" : ""} nav-link`} to={basename.concat("/profil-kebun")}>
-                    <i className="icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                        <g>
-                          <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                        </g>
-                      </svg>
-                    </i>
-                    <i className="sidenav-mini-icon"> K </i>
-                    <span className="item-name">Kebun</span>
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </Accordion.Collapse>
-        </Accordion.Item>
+          </Link>
+        </li>
       </Accordion>
     </>
   );
