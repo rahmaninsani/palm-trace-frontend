@@ -4,7 +4,7 @@ import { ROLE } from "../config";
 import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
-import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail, TransaksiAdd, Profil } from "../pages/petani";
+import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail, TransaksiAdd, Laporan, Profil } from "../pages/petani";
 import { HargaSawit } from "../pages/koperasi";
 
 const role = ROLE.PETANI;
@@ -47,7 +47,7 @@ const PetaniRouter = [
       },
       {
         path: `/${role}/laporan`,
-        element: <HargaSawit />,
+        element: <Laporan />,
       },
       {
         path: `/${role}/profil`,
