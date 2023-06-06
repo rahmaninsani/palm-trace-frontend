@@ -8,3 +8,6 @@ export { default as DeliveryOrderAdd } from "./DeliveryOrderAdd";
 export { default as DeliveryOrderDetail } from "./DeliveryOrderDetail";
 
 export { default as TransaksiDetail } from "./TransaksiDetail";
+
+export { default as Laporan } from "./Laporan";
+export { default as Profil } from "./Profil";
