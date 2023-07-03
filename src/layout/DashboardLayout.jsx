@@ -17,7 +17,7 @@ const DashboardLayout = memo(({ role }) => {
 
   useEffect(() => {
     dispatch(GetMe());
-  }, [dispatch]);
+  }, [dispatch, isError, navigate]);
 
   useEffect(() => {
     if (isError) {

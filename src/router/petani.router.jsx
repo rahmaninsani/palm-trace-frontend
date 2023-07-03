@@ -1,7 +1,6 @@
 import React from "react";
 
 import { ROLE } from "../config";
-import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail, TransaksiAdd, Laporan, Profil } from "../pages/petani";

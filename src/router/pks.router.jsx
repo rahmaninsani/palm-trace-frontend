@@ -1,7 +1,6 @@
 import React from "react";
 
 import { ROLE } from "../config";
-import { RequireAuth } from "../utils";
 
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderAdd, DeliveryOrderDetail, TransaksiDetail, Laporan, Profil } from "../pages/pks";
@@ -10,11 +9,7 @@ import { HargaSawit } from "../pages/koperasi";
 const PksRouter = [
   {
     path: "/pks",
-    element: (
-      <RequireAuth role={ROLE.PKS}>
-        <DashboardLayout role={ROLE.PKS} />
-      </RequireAuth>
-    ),
+    element: <DashboardLayout role={ROLE.PKS} />,
     children: [
       {
         path: "/pks",
