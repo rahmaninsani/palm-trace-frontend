@@ -1,6 +1,9 @@
 import React, { memo, forwardRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+
+import { LogoutUser, reset } from "../../../features/authSlice";
 
 //img
 import avatars1 from "../../../assets/images/avatars/01.png";
@@ -25,11 +28,15 @@ const CustomToggle = forwardRef(({ children, variant, onClick }, ref) => (
 
 const Header = memo(({ role }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   const nama = localStorage.getItem("nama");
   const jenis = localStorage.getItem("jenis");
 
   const handleOnLogout = () => {
-    localStorage.clear();
+    dispatch(LogoutUser());
+    dispatch(reset());
     navigate("/login");
   };
 
