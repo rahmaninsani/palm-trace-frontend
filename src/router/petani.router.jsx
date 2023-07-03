@@ -5,12 +5,17 @@ import { ROLE } from "../config";
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail, TransaksiAdd, Laporan, Profil } from "../pages/petani";
 import { HargaSawit } from "../pages/koperasi";
+import { RequireAuth } from "../utils";
 
 const role = ROLE.PETANI;
 const PetaniRouter = [
   {
     path: `/${role}`,
-    element: <DashboardLayout role={role} />,
+    element: (
+      <RequireAuth role={role}>
+        <DashboardLayout role={role} />
+      </RequireAuth>
+    ),
     children: [
       {
         path: `/${role}`,

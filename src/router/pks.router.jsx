@@ -5,11 +5,17 @@ import { ROLE } from "../config";
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderAdd, DeliveryOrderDetail, TransaksiDetail, Laporan, Profil } from "../pages/pks";
 import { HargaSawit } from "../pages/koperasi";
+import { RequireAuth } from "../utils";
 
+const role = ROLE.PKS;
 const PksRouter = [
   {
     path: "/pks",
-    element: <DashboardLayout role={ROLE.PKS} />,
+    element: (
+      <RequireAuth role={role}>
+        <DashboardLayout role={role} />
+      </RequireAuth>
+    ),
     children: [
       {
         path: "/pks",

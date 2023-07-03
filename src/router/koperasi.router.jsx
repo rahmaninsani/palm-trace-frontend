@@ -4,12 +4,17 @@ import { ROLE } from "../config";
 
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard, KontrakList, KontrakDetail, DeliveryOrderDetail, TransaksiDetail, HargaSawit, Laporan, Profil } from "../pages/koperasi";
+import { RequireAuth } from "../utils";
 
 const role = ROLE.KOPERASI;
 const KoperasiRouter = [
   {
     path: `/${role}`,
-    element: <DashboardLayout role={role} />,
+    element: (
+      <RequireAuth role={role}>
+        <DashboardLayout role={role} />
+      </RequireAuth>
+    ),
     children: [
       {
         path: `/${role}`,

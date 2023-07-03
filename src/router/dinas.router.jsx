@@ -5,12 +5,17 @@ import { ROLE } from "../config";
 
 import DashboardLayout from "../layout/DashboardLayout";
 import { HargaSawit, Profil } from "../pages/dinas";
+import { RequireAuth } from "../utils";
 
 const role = ROLE.DINAS;
 const DinasRouter = [
   {
     path: `/${role}`,
-    element: <DashboardLayout role={role} />,
+    element: (
+      <RequireAuth role={role}>
+        <DashboardLayout role={role} />
+      </RequireAuth>
+    ),
     children: [
       {
         path: `/${role}`,

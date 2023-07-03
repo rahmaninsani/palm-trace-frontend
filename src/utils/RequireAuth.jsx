@@ -1,19 +1,27 @@
-// import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { GetMe } from "../features/authSlice";
 
 const RequireAuth = ({ role, children }) => {
-  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isError } = useSelector((state) => state.auth);
 
-  // const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const isAuthenticated = true;
-  const userRole = localStorage.getItem("role");
+  useEffect(() => {
+    dispatch(GetMe());
+  }, [dispatch, isError, navigate]);
 
-  // const userHasRequiredRole = roles && roles.includes(role) ? true : false;
-  const userHasRequiredRole = userRole === role ? true : false;
+  useEffect(() => {
+    if (isError) {
+      navigate("/login");
+    }
 
-  if (!isAuthenticated || !userHasRequiredRole) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
+    if (user && user.role !== role) {
+      navigate(`/${user.role}`);
+    }
+  }, [isError, navigate, user, role]);
 
   return children;
 };
