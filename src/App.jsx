@@ -9,11 +9,7 @@ import "./assets/scss/customizer.scss";
 import router from "./router";
 
 const App = () => {
-  return (
-    // <Provider store={store}>
-    <RouterProvider router={router} />
-    // </Provider>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { Row, Col, Image, Form, Button } from "react-bootstrap";
+
+import { LoginUser, reset } from "../../features/authSlice";
 import { Card } from "../../components/elements";
 
 import { authLogin } from "../../utils";
@@ -9,6 +12,8 @@ import auth1 from "../../assets/images/auth/01.png";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isSuccess, isError, message } = useSelector((state) => state.auth);
 
   const [loginValue, setLoginValue] = useState({
     email: "",
@@ -26,6 +31,18 @@ const Login = () => {
     navigate(role);
   };
 
+  useEffect(() => {
+    if (user || isSuccess) {
+      navigate(`/${user.role}`);
+    }
+    dispatch(reset());
+  }, [user, isSuccess, navigate, dispatch]);
+
+  const Auth = (e) => {
+    e.preventDefault();
+    dispatch(LoginUser(loginValue));
+  };
+
   return (
     <>
       <section className="login-content">
@@ -36,7 +53,8 @@ const Login = () => {
                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                   <Card.Body>
                     <h2 className="mb-4 text-center">Login</h2>
-                    <Form>
+                    <Form onSubmit={Auth}>
+                      {isError && <p className="text-danger text-center">{message}</p>}
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
@@ -52,8 +70,8 @@ const Login = () => {
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-center">
-                        <Button onClick={handleOnSubmit} type="button" variant="btn btn-primary">
-                          Masuk
+                        <Button type="submit" variant="btn btn-primary">
+                          {isLoading ? "Loading..." : "Masuk"}
                         </Button>
                       </div>
 

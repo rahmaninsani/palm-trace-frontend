@@ -11,11 +11,7 @@ const role = ROLE.PETANI;
 const PetaniRouter = [
   {
     path: `/${role}`,
-    element: (
-      <RequireAuth role={role}>
-        <DashboardLayout role={role} />
-      </RequireAuth>
-    ),
+    element: <DashboardLayout role={role} />,
     children: [
       {
         path: `/${role}`,

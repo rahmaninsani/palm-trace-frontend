@@ -1,14 +1,29 @@
 import { useState, useEffect, memo } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Header, Banner, Sidebar, Footer } from "../components/partials/dashboard";
 import { Loader } from "../components/elements";
 
+import { GetMe } from "../features/authSlice";
+
 const DashboardLayout = memo(({ role }) => {
   const [title, setTitle] = useState("");
-
   const appName = "Palm Safe";
-  useEffect(() => {});
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(GetMe());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/login");
+    }
+  }, [isError, navigate]);
 
   return (
     <>
