@@ -6,8 +6,6 @@ import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { LoginUser, reset } from "../../features/authSlice";
 import { Card } from "../../components/elements";
 
-import { authLogin } from "../../utils";
-
 import auth1 from "../../assets/images/auth/01.png";
 
 const Login = () => {
@@ -25,10 +23,9 @@ const Login = () => {
     setLoginValue({ ...loginValue, [name]: value });
   };
 
-  const handleOnSubmit = () => {
-    const { email, password } = loginValue;
-    const role = authLogin(email, password);
-    navigate(role);
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(LoginUser(loginValue));
   };
 
   useEffect(() => {
@@ -37,11 +34,6 @@ const Login = () => {
     }
     dispatch(reset());
   }, [user, isSuccess, navigate, dispatch]);
-
-  const Auth = (e) => {
-    e.preventDefault();
-    dispatch(LoginUser(loginValue));
-  };
 
   return (
     <>
@@ -53,7 +45,7 @@ const Login = () => {
                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                   <Card.Body>
                     <h2 className="mb-4 text-center">Login</h2>
-                    <Form onSubmit={Auth}>
+                    <Form onSubmit={handleOnSubmit}>
                       {isError && <p className="text-danger text-center">{message}</p>}
                       <Row>
                         <Col lg="12">

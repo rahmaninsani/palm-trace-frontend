@@ -1,12 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { Card } from "../../components/elements";
+import { useSelector } from "react-redux";
 
+import axios from "axios";
+
+import { Card } from "../../components/elements";
 import auth5 from "../../assets/images/auth/05.png";
 
 const Register = () => {
   let navigate = useNavigate();
+  const { isLoading } = useSelector((state) => state.auth);
+  const [msg, setMsg] = useState("");
+  const options = [
+    {
+      id: "petani",
+      value: "Petani",
+    },
+    {
+      id: "koperasi",
+      value: "Koperasi",
+    },
+    {
+      id: "pks",
+      value: "Pabrik Kelapa Sawit",
+    },
+  ];
+  const [registerValue, setRegisterValue] = useState({
+    role: "",
+    nama: "",
+    alamat: "",
+    nomorTelepon: "",
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterValue({ ...registerValue, [name]: value });
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:9999/api/users", registerValue);
+      navigate("/login");
+    } catch (error) {
+      if (error.response) {
+        setMsg(error.response.data.errors);
+      }
+    }
+  };
 
   return (
     <>
@@ -22,61 +66,49 @@ const Register = () => {
                 <Card className="card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
                   <Card.Body>
                     <h2 className="mb-4 text-center">Registrasi</h2>
-                    <Form>
+                    <p className="text-danger text-center">{msg}</p>
+                    <Form onSubmit={handleOnSubmit}>
                       <Row>
                         <Form.Group className="col-sm-12 form-group">
                           <Form.Label>Jenis Akun</Form.Label>
-                          <select className="form-select mb-3 shadow-none">
+                          <select className="form-select mb-3 shadow-none" name="role" value={registerValue.role} onChange={handleInputChange}>
                             <option defaultValue>Pilih Jenis Akun</option>
-                            <option value={1}>Petani</option>
-                            <option value={2}>Koperasi</option>
-                            <option value={3}>Pabrik Kelapa Sawit</option>
+                            {options.map((value) => (
+                              <option value={value.id} key={value.value}>
+                                {value.value}
+                              </option>
+                            ))}
                           </select>
                         </Form.Group>
 
                         <Form.Group className="col-sm-12 form-group">
-                          <Form.Label>Keanggotaan Koperasi</Form.Label>
-                          <select className="form-select mb-3 shadow-none">
-                            <option defaultValue>Pilih Koperasi</option>
-                            <option value={1}>Koperasi I</option>
-                            <option value={2}>Koperasi II</option>
-                            <option value={3}>Koperasi III</option>
-                          </select>
+                          <Form.Label htmlFor="nama">Nama</Form.Label>
+                          <Form.Control type="text" name="nama" value={registerValue.nama} onChange={handleInputChange} />
                         </Form.Group>
 
-                        <Form.Group className="col-sm-6 form-group">
-                          <Form.Label htmlFor="nikSiup">NIK/Nomor SIUP</Form.Label>
-                          <Form.Control type="text" id="nikSiup" />
-                        </Form.Group>
-
-                        <Form.Group className="col-sm-6 form-group">
-                          <Form.Label htmlFor="namaLengkap">Nama Lengkap</Form.Label>
-                          <Form.Control type="text" id="namaLengkap" />
-                        </Form.Group>
-
-                        <Form.Group className="col-sm-6 form-group">
+                        <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="alamat">Alamat</Form.Label>
-                          <Form.Control type="text" id="alamat" />
+                          <Form.Control type="text" name="alamat" value={registerValue.alamat} onChange={handleInputChange} />
                         </Form.Group>
 
-                        <Form.Group className="col-sm-6 form-group">
+                        <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="nomorTelepon">Nomor Telepon</Form.Label>
-                          <Form.Control type="text" id="nomorTelepon" />
+                          <Form.Control type="text" name="nomorTelepon" value={registerValue.nomorTelepon} onChange={handleInputChange} />
                         </Form.Group>
 
-                        <Form.Group className="col-sm-6 form-group">
+                        <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="email">Email</Form.Label>
-                          <Form.Control type="email" id="email" />
+                          <Form.Control type="email" name="email" value={registerValue.email} onChange={handleInputChange} />
                         </Form.Group>
 
-                        <Form.Group className="col-sm-6 form-group">
+                        <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="password">Password</Form.Label>
-                          <Form.Control type="password" id="password" />
+                          <Form.Control type="password" name="password" value={registerValue.password} onChange={handleInputChange} />
                         </Form.Group>
                       </Row>
                       <div className="d-flex justify-content-center">
-                        <Button onClick={() => navigate("/login")} type="button" variant="primary">
-                          Daftar
+                        <Button type="submit" variant="btn btn-primary">
+                          {isLoading ? "Loading..." : "Daftar"}
                         </Button>
                       </div>
                       <p className="mt-3 text-center">
