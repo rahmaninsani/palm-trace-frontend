@@ -26,13 +26,19 @@ const CustomToggle = forwardRef(({ children, variant, onClick }, ref) => (
   </Link>
 ));
 
-const Header = memo(({ role }) => {
+const Header = memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const nama = localStorage.getItem("nama");
-  const jenis = localStorage.getItem("jenis");
+  const nama = user && user.nama;
+  const role = user && user.role;
+  const roleDisplay = {
+    petani: "Petani",
+    koperasi: "Koperasi",
+    pks: "Pabrik Kelapa Sawit",
+    dinas: "Dinas ",
+  };
 
   const handleOnLogout = () => {
     dispatch(LogoutUser());
@@ -76,7 +82,7 @@ const Header = memo(({ role }) => {
                   <img src={avatars1} alt="User-Profile" className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded" />
                   <div className="caption ms-3 d-none d-md-block ">
                     <h6 className="mb-0 caption-title">{nama}</h6>
-                    <p className="mb-0 caption-sub-title">{jenis}</p>
+                    <p className="mb-0 caption-sub-title">{roleDisplay[role]}</p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-end" aria-labelledby="navbarDropdown">
