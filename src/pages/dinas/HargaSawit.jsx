@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { useOutletContext, useLocation } from "react-router-dom";
+import { useOutletContext, useLocation, Link } from "react-router-dom";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 
 import { Card } from "../../components/elements";
@@ -10,18 +10,22 @@ import { ReferensiHarga } from "../../services";
 
 const HargaSawit = memo(() => {
   const pageTitle = "Harga Sawit";
-  const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
 
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
 
+  const [showModalRiwayat, setShowModalRiwayat] = useState(false);
+
+  const [riwayatHarga, setRiwayatHarga] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+
   useEffect(() => {
     setTitle(pageTitle);
   }, [setTitle]);
 
-  const headings = ["Tanggal Pembaruan", "Umur Tanam", "Harga"];
+  const headings = ["Tanggal Pembaruan", "Umur Tanam", "Harga", ""];
   const handleOnSubmit = () => {
     handleCloseModal();
   };
@@ -35,6 +39,46 @@ const HargaSawit = memo(() => {
     const palmPrices = await ReferensiHarga.getAll();
     sePalmPrices(palmPrices.data.data);
   };
+
+  useEffect(() => {
+    if (showModalRiwayat) {
+      getRiwayatHarga();
+    }
+  }, [showModalRiwayat]);
+
+  const getRiwayatHarga = async () => {
+    if (selectedId) {
+      const palmPriceHistory = await ReferensiHarga.getHistoryById(selectedId);
+      setRiwayatHarga(palmPriceHistory.data.data);
+    }
+  };
+
+  const handleShowModalRiwayat = (id) => {
+    setSelectedId(id);
+    setShowModalRiwayat(true);
+  };
+
+  const handleCloseModalRiwayat = (id) => {
+    setSelectedId(null);
+    setShowModalRiwayat(false);
+  };
+
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+
+  const handleCopyToClipboard = async () => {
+    if (selectedTransactionId) {
+      try {
+        await navigator.clipboard.writeText(selectedTransactionId);
+        alert("Berhasil menyalin ID Transaksi Blockchain!");
+      } catch (error) {
+        console.error("Gagal menyalin: ", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleCopyToClipboard();
+  }, [selectedTransactionId]);
 
   return (
     <>
@@ -56,11 +100,11 @@ const HargaSawit = memo(() => {
                   <Form.Label>Umur Tanam</Form.Label>
                   <select className="form-select mb-3 shadow-none">
                     <option defaultValue>Pilih Umur Tanam</option>
-                    {/* {hargaSawit?.map((item, index) => (
-                      <option key={index + 3} value={index + 3}>
-                        {item.umurTanam} Tahun
+                    {palmPrices?.map((palmPrice) => (
+                      <option key={palmPrice.id} value={palmPrice.umurTanam}>
+                        {palmPrice.umurTanam} Tahun
                       </option>
-                    ))} */}
+                    ))}
                   </select>
                 </Form.Group>
 
@@ -90,9 +134,37 @@ const HargaSawit = memo(() => {
                 <td>{formatTime(palmPrice.tanggalPembaruan)}</td>
                 <td>{palmPrice.umurTanam} Tahun</td>
                 <td>Rp{formatCurrency(palmPrice.harga)}</td>
+                <td>
+                  <Button variant="link" onClick={() => handleShowModalRiwayat(palmPrice.id)}>
+                    Riwayat
+                  </Button>
+                </td>
               </tr>
             ))}
           </Table>
+          <Modal size="lg" scrollable={true} show={showModalRiwayat} backdrop="static" keyboard={false} onHide={handleCloseModalRiwayat}>
+            <Modal.Header closeButton>
+              <Modal.Title as="h5">Riwayat Harga Sawit</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {riwayatHarga.length > 0 && (
+                <Table headings={["Tanggal Pembaruan", "Umur Tanam", "Harga", ""]}>
+                  {riwayatHarga?.map((riwayat) => (
+                    <tr key={riwayat.idTransaksiBlockchain}>
+                      <td>{formatTime(riwayat.tanggalPembaruan)}</td>
+                      <td>{riwayat.umurTanam} Tahun</td>
+                      <td>Rp{formatCurrency(riwayat.harga)}</td>
+                      <td>
+                        <Button size="sm" variant="primary mt-2" onClick={() => setSelectedTransactionId(riwayat.idTransaksiBlockchain)}>
+                          Salin ID Transaksi
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </Table>
+              )}
+            </Modal.Body>
+          </Modal>
         </Card.Body>
       </Card>
     </>
