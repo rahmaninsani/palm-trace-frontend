@@ -5,8 +5,8 @@ import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 import { Card } from "../../components/elements";
 import { HargaSawitTable as Table } from "../../components/partials/dashboard";
 
-import { hargaSawit } from "../../config";
-import { currencyFormat } from "../../utils";
+import { formatCurrency, formatTime } from "../../utils";
+import { ReferensiHarga } from "../../services";
 
 const HargaSawit = memo(() => {
   const pageTitle = "Harga Sawit";
@@ -24,6 +24,16 @@ const HargaSawit = memo(() => {
   const headings = ["Tanggal Pembaruan", "Umur Tanam", "Harga"];
   const handleOnSubmit = () => {
     handleCloseModal();
+  };
+
+  const [palmPrices, sePalmPrices] = useState([]);
+  useEffect(() => {
+    getPalmPrices();
+  }, []);
+
+  const getPalmPrices = async () => {
+    const palmPrices = await ReferensiHarga.getAll();
+    sePalmPrices(palmPrices.data.data);
   };
 
   return (
@@ -46,11 +56,11 @@ const HargaSawit = memo(() => {
                   <Form.Label>Umur Tanam</Form.Label>
                   <select className="form-select mb-3 shadow-none">
                     <option defaultValue>Pilih Umur Tanam</option>
-                    {hargaSawit?.map((item, index) => (
+                    {/* {hargaSawit?.map((item, index) => (
                       <option key={index + 3} value={index + 3}>
                         {item.umurTanam} Tahun
                       </option>
-                    ))}
+                    ))} */}
                   </select>
                 </Form.Group>
 
@@ -75,11 +85,11 @@ const HargaSawit = memo(() => {
         </Card.Header>
         <Card.Body>
           <Table headings={headings}>
-            {hargaSawit?.map((item, index) => (
-              <tr key={index}>
-                <td>{item.tanggalPembaruan}</td>
-                <td>{item.umurTanam} Tahun</td>
-                <td>Rp{currencyFormat(item.harga)}</td>
+            {palmPrices?.map((palmPrice) => (
+              <tr key={palmPrice.id}>
+                <td>{formatTime(palmPrice.tanggalPembaruan)}</td>
+                <td>{palmPrice.umurTanam} Tahun</td>
+                <td>Rp{formatCurrency(palmPrice.harga)}</td>
               </tr>
             ))}
           </Table>

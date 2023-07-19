@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, Tab } from "react-bootstrap";
 
 import { Card } from "../../elements";
-import { currencyFormat } from "../../../utils";
+import { formatCurrency } from "../../../utils";
 
 const TransaksiCard = memo(({ tabKey, transactions }) => {
   const { pathname } = useLocation();
@@ -48,7 +48,7 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
                     <h6>Harga Per Kg</h6>
                   </Col>
                   <Col sm="6">
-                    <p>Rp{currencyFormat(transaction.harga)}</p>
+                    <p>Rp{formatCurrency(transaction.harga)}</p>
                   </Col>
                 </Row>
                 <Row>
@@ -56,7 +56,7 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
                     <h6>Total Harga</h6>
                   </Col>
                   <Col sm="6">
-                    <p>Rp{currencyFormat(transaction.totalHarga)}</p>
+                    <p>Rp{formatCurrency(transaction.totalHarga)}</p>
                   </Col>
                 </Row>
               </Col>

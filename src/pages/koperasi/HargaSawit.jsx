@@ -5,7 +5,7 @@ import { Card } from "../../components/elements";
 import { HargaSawitTable as Table } from "../../components/partials/dashboard";
 
 import { hargaSawit } from "../../config";
-import { currencyFormat } from "../../utils";
+import { formatCurrency } from "../../utils";
 
 const HargaSawit = memo(() => {
   const pageTitle = "Harga Sawit";
@@ -31,7 +31,7 @@ const HargaSawit = memo(() => {
               <tr key={index}>
                 <td>{item.tanggalPembaruan}</td>
                 <td>{item.umurTanam} Tahun</td>
-                <td>Rp{currencyFormat(item.harga)}</td>
+                <td>Rp{formatCurrency(item.harga)}</td>
               </tr>
             ))}
           </Table>

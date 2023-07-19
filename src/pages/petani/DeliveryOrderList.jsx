@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { Card } from "../../components/elements";
 import { Table } from "../../components/partials/dashboard";
 
-import { currencyFormat } from "../../utils";
+import { formatCurrency } from "../../utils";
 
 const DeliveryOrderList = memo(() => {
   const { pathname } = useLocation();
@@ -36,7 +36,7 @@ const DeliveryOrderList = memo(() => {
               <td>{item.tanggal}</td>
               <td>{item.periode}</td>
               <td>{item.kuantitas}</td>
-              <td>{currencyFormat(item.harga)}</td>
+              <td>{formatCurrency(item.harga)}</td>
               <td>
                 <Link to={`${pathname}/${item.nomor}`}>Detail</Link>
               </td>
