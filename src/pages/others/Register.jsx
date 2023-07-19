@@ -3,7 +3,7 @@ import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import axios from "axios";
+import { AuthService } from "../../services";
 
 import { Card } from "../../components/elements";
 import auth5 from "../../assets/images/auth/05.png";
@@ -43,7 +43,7 @@ const Register = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:9999/api/users", registerValue);
+      await AuthService.register(registerValue);
       navigate("/login");
     } catch (error) {
       if (error.response) {
