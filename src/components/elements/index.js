@@ -9,6 +9,7 @@ export { default as Eye } from "./Icons/Eye";
 export { default as KontrakIn } from "./Icons/KontrakIn";
 export { default as KontrakOut } from "./Icons/KontrakOut";
 export { default as Graph } from "./Icons/Graph";
+export { default as Copy } from "./Icons/Copy";
 
 export { default as Logo } from "./Logo";
 export { default as Loader } from "./Loader";

@@ -1,6 +1,5 @@
 import React from "react";
-import { Row, Col, Table as BootstrapTable } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Table as BootstrapTable } from "react-bootstrap";
 
 const HargaSawitTable = ({ headings = ["No"], children = {} }) => {
   return (
@@ -15,13 +14,6 @@ const HargaSawitTable = ({ headings = ["No"], children = {} }) => {
             </tr>
           </thead>
           <tbody>{children}</tbody>
-          <tfoot>
-            <tr>
-              {headings?.map((heading) => (
-                <th key={heading}>{heading}</th>
-              ))}
-            </tr>
-          </tfoot>
         </BootstrapTable>
       </div>
     </>
