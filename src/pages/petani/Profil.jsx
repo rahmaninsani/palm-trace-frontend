@@ -1,33 +1,72 @@
 import React, { useState, useEffect, memo } from "react";
-import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
-import { Row, Col, Button, Form, Modal, InputGroup } from "react-bootstrap";
-
+import { useOutletContext } from "react-router-dom";
+import { Row, Button, Form, Modal, InputGroup } from "react-bootstrap";
 import { Card } from "../../components/elements";
 import { TableKebun } from "../../components/partials/dashboard";
+import { UserService } from "../../services";
+import { formatTime } from "../../utils";
 
 const Profil = memo(() => {
   const pageTitle = "Profil";
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
+  const [kebun, setKebun] = useState([]);
+
+  const [showModalAddKebun, setShowModalAddKebun] = useState(false);
+  const [addKebunValue, setAddKebunValue] = useState({
+    alamat: "",
+    latitude: "",
+    longitude: "",
+    luas: 0,
+    nomorRspo: "",
+    sertifikatRspo: "",
+  });
 
   useEffect(() => {
     setTitle(pageTitle);
-  }, [setTitle]);
+    findAllKebun();
+  }, []);
 
-  const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = () => setShowModal(true);
+  const findAllKebun = async () => {
+    try {
+      const response = await UserService.kebunFindAll();
 
-  const handleOnSimpan = () => {
-    handleCloseModal();
+      if (!response.data.data) return setKebun([]);
+
+      setKebun(response.data.data);
+    } catch (error) {
+      console.error("Gagal mengambil data kebun: ", error);
+    }
   };
 
-  const handleOnSubmit = () => {
-    navigate(-1);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setAddKebunValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  const headings = ["Alamat Kebun", "Luas Kebun", "Umur Tanam", "Aksi"];
+  const handleOnAddKebun = async (e) => {
+    e.preventDefault();
+    try {
+      await UserService.kebunCreate(addKebunValue);
+      setAddKebunValue({
+        alamat: "",
+        latitude: "",
+        longitude: "",
+        luas: 0,
+        nomorRspo: "",
+        sertifikatRspo: "",
+      });
+      setShowModalAddKebun(false);
+      findAllKebun();
+    } catch (error) {
+      console.error("Gagal menambahkan kebun: ", error);
+    }
+  };
+
+  const headings = ["Alamat", "Luas", "Nomor RSPO", ""];
 
   return (
     <>
@@ -98,52 +137,63 @@ const Profil = memo(() => {
         </Card.Body>
 
         <Card.Footer>
-          <Button variant="btn btn-primary" onClick={handleOnSubmit}>
-            Simpan
-          </Button>
+          <Button variant="btn btn-primary">Simpan</Button>
         </Card.Footer>
       </Card>
 
+      {/* Kebun */}
       <Card>
         <Card.Header>
           <div className="header-title">
             <h4 className="card-title">Kebun</h4>
           </div>
           <div className="card-action">
-            <Button variant="primary mt-2" onClick={handleShowModal}>
+            <Button variant="primary mt-2" onClick={() => setShowModalAddKebun(true)}>
               Tambah
             </Button>
-            <Modal scrollable={true} show={showModal} backdrop="static" keyboard={false} onHide={handleCloseModal}>
+            <Modal scrollable={true} show={showModalAddKebun} backdrop="static" keyboard={false} onHide={() => setShowModalAddKebun(false)}>
               <Modal.Header closeButton>
                 <Modal.Title as="h5">Tambah Kebun</Modal.Title>
               </Modal.Header>
 
               <Modal.Body>
                 <Form.Group className="col-sm-12 form-group">
-                  <Form.Label htmlFor="luasKebun">Luas Kebun</Form.Label>
+                  <Form.Label htmlFor="luas">Luas</Form.Label>
                   <InputGroup>
-                    <Form.Control type="number" id="luasKebun" />
+                    <Form.Control type="number" id="luas" name="luas" value={addKebunValue.luas} onChange={handleInputChange} />
                     <InputGroup.Text>Ha</InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
 
                 <Form.Group className="col-sm-12 form-group">
-                  <Form.Label htmlFor="umurTanam">Umur Tanam</Form.Label>
-                  <InputGroup>
-                    <Form.Control type="number" id="umurTanam" />
-                    <InputGroup.Text>Tahun</InputGroup.Text>
-                  </InputGroup>
+                  <Form.Label htmlFor="alamatKebun">Alamat</Form.Label>
+                  <Form.Control as="textarea" rows={4} name="alamat" value={addKebunValue.alamat} onChange={handleInputChange} />
                 </Form.Group>
 
                 <Form.Group className="col-sm-12 form-group">
-                  <Form.Label htmlFor="alamatKebun">Alamat Kebun</Form.Label>
-                  <Form.Control as="textarea" rows={4} id="alamatKebun" />
+                  <Form.Label htmlFor="latitude">Latitude</Form.Label>
+                  <Form.Control type="text" id="latitude" name="latitude" value={addKebunValue.latitude} onChange={handleInputChange} />
+                </Form.Group>
+
+                <Form.Group className="col-sm-12 form-group">
+                  <Form.Label htmlFor="longitude">Longitude</Form.Label>
+                  <Form.Control type="text" id="longitude" name="longitude" value={addKebunValue.longitude} onChange={handleInputChange} />
+                </Form.Group>
+
+                <Form.Group className="col-sm-12 form-group">
+                  <Form.Label htmlFor="nomorRspo">Nomor RSPO</Form.Label>
+                  <Form.Control type="text" id="nomorRspo" name="nomorRspo" value={addKebunValue.nomorRspo} onChange={handleInputChange} />
+                </Form.Group>
+
+                <Form.Group className="col-sm-12 form-group">
+                  <Form.Label htmlFor="sertifikatRspo">Sertifikat RSPO</Form.Label>
+                  <Form.Control type="text" id="sertifikatRspo" name="sertifikatRspo" value={addKebunValue.sertifikatRspo} onChange={handleInputChange} />
                 </Form.Group>
               </Modal.Body>
 
               <Modal.Footer>
                 <div className="mx-auto">
-                  <Button variant="btn btn-primary" onClick={handleOnSimpan}>
+                  <Button variant="btn btn-primary" onClick={handleOnAddKebun}>
                     Simpan
                   </Button>
                 </div>
@@ -154,30 +204,18 @@ const Profil = memo(() => {
 
         <Card.Body>
           <TableKebun headings={headings}>
-            <tr>
-              <td>Jl Sawit I</td>
-              <td>4 Ha</td>
-              <td>2 Tahun</td>
-              <td>
-                <Button variant="link" onClick={handleShowModal}>
-                  Ubah
-                </Button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jl Sawit II</td>
-              <td>2 Ha</td>
-              <td>10 Tahun</td>
-              <td>
-                <Button variant="link" onClick={handleShowModal}>
-                  Ubah
-                </Button>
-              </td>
-            </tr>
+            {kebun.map((item) => (
+              <tr key={item.id}>
+                <td>{item.alamat}</td>
+                <td>{item.luas} Ha</td>
+                <td>{item.nomorRspo}</td>
+                <td>
+                  <Button variant="link">Detail</Button>
+                </td>
+              </tr>
+            ))}
           </TableKebun>
         </Card.Body>
-
-        <Card.Footer></Card.Footer>
       </Card>
     </>
   );
