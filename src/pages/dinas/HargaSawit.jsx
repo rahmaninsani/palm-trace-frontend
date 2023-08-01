@@ -27,7 +27,7 @@ const HargaSawit = memo(() => {
   const getPalmPrices = async () => {
     try {
       const response = await referensiHarga.getAll();
-      setPalmPrices(response.data.data);
+      setPalmPrices(response.data);
     } catch (error) {
       console.error("Gagal mengambil data harga sawit: ", error);
     }
@@ -43,7 +43,7 @@ const HargaSawit = memo(() => {
     try {
       if (selectedId) {
         const response = await referensiHarga.getHistoryById(selectedId);
-        setRiwayatHarga(response.data.data);
+        setRiwayatHarga(response.data);
       }
     } catch (error) {
       console.error("Gagal mengambil riwayat harga sawit: ", error);

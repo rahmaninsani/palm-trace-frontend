@@ -30,9 +30,9 @@ const Profil = memo(() => {
     try {
       const response = await kebunService.findAll();
 
-      if (!response.data.data) return setKebun([]);
+      if (!response.data) return setKebun([]);
 
-      setKebun(response.data.data);
+      setKebun(response.data);
     } catch (error) {
       console.error("Gagal mengambil data kebun: ", error);
     }
@@ -204,16 +204,17 @@ const Profil = memo(() => {
 
         <Card.Body>
           <TableKebun headings={headings}>
-            {kebun.map((item) => (
-              <tr key={item.id}>
-                <td>{item.alamat}</td>
-                <td>{item.luas} Ha</td>
-                <td>{item.nomorRspo}</td>
-                <td>
-                  <Button variant="link">Detail</Button>
-                </td>
-              </tr>
-            ))}
+            {kebun &&
+              kebun.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.alamat}</td>
+                  <td>{item.luas} Ha</td>
+                  <td>{item.nomorRspo}</td>
+                  <td>
+                    <Button variant="link">Detail</Button>
+                  </td>
+                </tr>
+              ))}
           </TableKebun>
         </Card.Body>
       </Card>

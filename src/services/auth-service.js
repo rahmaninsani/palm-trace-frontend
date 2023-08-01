@@ -1,22 +1,26 @@
 import { api } from "../config";
 
 const register = async (user) => {
-  return await api.post("/users", user);
+  const result = await api.post("/users", user);
+  return result.data;
 };
 
 const login = async (user) => {
-  return await api.post("/users/login", {
+  const result = await api.post("/users/login", {
     email: user.email,
     password: user.password,
   });
+  return result.data;
 };
 
 const getMe = async () => {
-  return await api.get("/users/me");
+  const result = await api.get("/users/me");
+  return result.data;
 };
 
 const logout = async () => {
-  return await api.delete("/users/logout");
+  const result = await api.delete("/users/logout");
+  return result.data;
 };
 
 export default { register, login, getMe, logout };

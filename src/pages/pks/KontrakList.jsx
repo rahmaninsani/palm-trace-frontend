@@ -7,8 +7,6 @@ import { Table } from "../../components/partials/dashboard";
 
 import { kontrakService } from "../../services";
 
-import { formatTime } from "../../utils";
-
 const KontrakList = memo(() => {
   const pageTitle = "Kontrak";
   const { pathname } = useLocation();
@@ -23,7 +21,7 @@ const KontrakList = memo(() => {
   const findAllKontrak = async () => {
     try {
       const response = await kontrakService.findAll();
-      setKontrak(response.data.data);
+      setKontrak(response.data);
     } catch (error) {
       console.error("Gagal mengambil data kontrak: ", error);
     }

@@ -2,12 +2,13 @@ import { api } from "../config";
 
 const create = async (payload) => {
   payload.luas = parseFloat(payload.luas);
-
-  return await api.post("/users/kebun", payload);
+  const result = await api.post("/users/kebun", payload);
+  return result.data;
 };
 
 const findAll = async () => {
-  return await api.get("/users/kebun");
+  const result = await api.get("/users/kebun");
+  return result.data;
 };
 
 const kebunService = {

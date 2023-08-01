@@ -1,11 +1,13 @@
 import { api } from "../config";
 
 const findAll = async (payload) => {
-  return await api.get("/users", {
+  const result = await api.get("/users", {
     params: {
       userType: payload.userType,
     },
   });
+
+  return result.data;
 };
 
 const userService = {

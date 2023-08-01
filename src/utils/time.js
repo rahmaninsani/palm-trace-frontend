@@ -3,9 +3,11 @@ import moment from "moment/min/moment-with-locales";
 moment.locale("id");
 
 const formatTime = (datetime) => {
-  const gmt = datetime.split("+")[1];
+  const gmt = datetime?.split("+")[1];
 
-  let timeZone;
+  if (!gmt) return moment(datetime).format("DD MMMM YYYY");
+
+  let timeZone = "";
   switch (gmt) {
     case "07:00":
       timeZone = "WIB";

@@ -12,7 +12,7 @@ const initialState = {
 export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAPI) => {
   try {
     const response = await authService.login(user);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       const errorMessage = error.response.data.errors;
@@ -24,7 +24,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAP
 export const GetMe = createAsyncThunk("user/GetMe", async (_, thunkAPI) => {
   try {
     const response = await authService.getMe();
-    return response.data.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       const errorMessage = error.response.data.errors;

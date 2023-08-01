@@ -1,18 +1,21 @@
 import { api } from "../config";
 
 const getAll = async () => {
-  return await api.get("/referensi-harga");
+  const result = await api.get("/referensi-harga");
+  return result.data;
 };
 
 const getHistoryById = async (id) => {
-  return await api.get(`/referensi-harga/${id}`);
+  const result = await api.get(`/referensi-harga/${id}`);
+  return result.data;
 };
 
 const update = async (id, payload) => {
-  return await api.put(`/referensi-harga/${id}`, {
+  const result = await api.put(`/referensi-harga/${id}`, {
     umurTanam: parseInt(payload.umurTanam),
     harga: parseFloat(payload.harga),
   });
+  return result.data;
 };
 
 export default { getAll, getHistoryById, update };

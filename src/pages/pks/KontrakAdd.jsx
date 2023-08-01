@@ -41,7 +41,7 @@ const KontrakAdd = memo(() => {
   const findAllKoperasi = async () => {
     try {
       const response = await userService.findAll({ userType: "koperasi" });
-      setKoperasi(response.data.data);
+      setKoperasi(response.data);
     } catch (error) {
       console.log(error);
     }
