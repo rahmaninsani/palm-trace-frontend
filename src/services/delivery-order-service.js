@@ -5,6 +5,11 @@ const create = async (payload) => {
   return result.data;
 };
 
+const confirm = async (payload) => {
+  const result = await api.put(`/kontrak/${payload.idKontrak}/delivery-order/${payload.idDeliveryOrder}`, payload.formValue);
+  return result.data;
+};
+
 const findAll = async (payload) => {
   const result = await api.get(`/kontrak/${payload.idKontrak}/delivery-order`);
   return result.data;
@@ -17,6 +22,7 @@ const findOne = async (payload) => {
 
 const deliveryOrderService = {
   create,
+  confirm,
   findAll,
   findOne,
 };

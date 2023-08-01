@@ -1,20 +1,28 @@
 import React, { useState, useEffect, memo } from "react";
+import { useSelector } from "react-redux";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
-import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 
 import TransaksiList from "./TransaksiList";
 import { Card, Progress } from "../components/elements";
-import { formatTime, formatCurrency } from "../utils";
 
+import endpoint from "../constants/endpoint";
+import role from "../constants/role";
+import { formatTime, formatCurrency } from "../utils";
 import { deliveryOrderService } from "../services";
 
 const DeliveryOrderDetail = memo(() => {
   const pageTitle = "Detail Delivery Order";
   const navigate = useNavigate();
-  const { idKontrak, idDeliveryOrder } = useParams();
   const { setTitle } = useOutletContext();
+  const { user, isError } = useSelector((state) => state.auth);
+  const { idKontrak, idDeliveryOrder } = useParams();
   const [deliveryOrderDetail, setDeliveryOrderDetail] = useState({});
   const [showModalPesan, setShowModalPesan] = useState(false);
+  const [formValue, setFormValue] = useState({
+    status: -1,
+    pesan: "",
+  });
 
   useEffect(() => {
     setTitle(pageTitle);
@@ -30,9 +38,25 @@ const DeliveryOrderDetail = memo(() => {
     }
   };
 
-  useEffect(() => {
-    setTitle(pageTitle);
-  }, [setTitle]);
+  const onInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormValue((prevState) => ({
+      ...prevState,
+      [name]: name === "status" && value > 0 ? parseFloat(value) : value,
+    }));
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await deliveryOrderService.confirm({ idKontrak, idDeliveryOrder, formValue });
+      navigate(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const pemenuhanPercentage = (deliveryOrderDetail?.kuantitasTerpenuhi / deliveryOrderDetail?.kuantitas) * 100;
 
@@ -144,6 +168,43 @@ const DeliveryOrderDetail = memo(() => {
           </Card.Footer>
         )}
       </Card>
+
+      {/* Konfirmasi */}
+      {user && user.role === role.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && (
+        <Card>
+          <Card.Header className="mx-auto">
+            <h5>Konfirmasi</h5>
+          </Card.Header>
+
+          <hr className="hr-horizontal" />
+
+          <Form onSubmit={onSubmit}>
+            <Card.Body>
+              <Row>
+                <Form.Group className="col-sm-12 form-group">
+                  <Form.Label htmlFor="status">Status</Form.Label>
+                  <select className="form-select mb-3 shadow-none" id="status" name="status" value={formValue.status} onChange={onInputChange}>
+                    <option defaultValue>Pilih Status</option>
+                    <option value={1}>Setuju</option>
+                    <option value={2}>Tolak</option>
+                  </select>
+                </Form.Group>
+
+                <Form.Group className="col-sm-12 form-group">
+                  <Form.Label htmlFor="pesan">Pesan</Form.Label>
+                  <Form.Control as="textarea" rows={4} id="pesan" name="pesan" value={formValue.pesan} onChange={onInputChange} />
+                </Form.Group>
+              </Row>
+            </Card.Body>
+
+            <Card.Footer className="text-center">
+              <Button type="submit" variant="btn btn-primary">
+                Simpan
+              </Button>
+            </Card.Footer>
+          </Form>
+        </Card>
+      )}
 
       {/* Daftar Transaksi */}
       {deliveryOrderDetail?.status === "Disetujui" && <TransaksiList />}
