@@ -21,19 +21,19 @@ const KontrakRouter = [
         element: <KontrakList />,
       },
       {
-        path: "/kontrak/tambah",
+        path: endpoint.kontrakTambah,
         element: <KontrakAdd />,
       },
       {
-        path: "/kontrak/:idKontrak",
+        path: endpoint.kontrakDetail,
         element: <KontrakDetail />,
       },
       {
-        path: "/kontrak/:idKontrak/tambah",
+        path: endpoint.deliveryOrderTambah,
         element: <DeliveryOrderAdd />,
       },
       {
-        path: "/kontrak/:idKontrak/:idDeliveryOrder",
+        path: endpoint.deliveryOrderDetail,
         element: <DeliveryOrderDetail />,
       },
     ],

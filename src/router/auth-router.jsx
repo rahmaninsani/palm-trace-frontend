@@ -1,11 +1,12 @@
 import React from "react";
-import { CheckUser } from "../utils";
 
+import endpoint from "../constants/endpoint";
+import { CheckUser } from "../utils";
 import { Register, Login } from "../pages";
 
 const AuthRouter = [
   {
-    path: "/register",
+    path: endpoint.register,
     element: (
       <CheckUser>
         <Register />
@@ -13,7 +14,7 @@ const AuthRouter = [
     ),
   },
   {
-    path: "/login",
+    path: endpoint.login,
     element: (
       <CheckUser>
         <Login />
