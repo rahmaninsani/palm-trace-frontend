@@ -38,11 +38,11 @@ const PksRouter = [
         element: <DeliveryOrderAdd />,
       },
       {
-        path: "/pks/kontrak/:idKontrak/:idDo",
+        path: "/pks/kontrak/:idKontrak/:idDeliveryOrder",
         element: <DeliveryOrderDetail />,
       },
       {
-        path: "/pks/kontrak/:idKontrak/:idDo/:idTransaksi",
+        path: "/pks/kontrak/:idKontrak/:idDeliveryOrder/:idTransaksi",
         element: <TransaksiDetail />,
       },
       {
