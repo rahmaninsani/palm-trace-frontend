@@ -3,13 +3,13 @@ import { responseInterceptor, errorInterceptor } from "./interceptors";
 
 axios.defaults.withCredentials = true;
 
-const Api = axios.create({
+const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-Api.interceptors.response.use(
+api.interceptors.response.use(
   (response) => responseInterceptor(response),
   (error) => errorInterceptor(error)
 );
 
-export default Api;
+export default api;

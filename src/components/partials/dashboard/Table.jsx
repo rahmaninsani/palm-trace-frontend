@@ -17,13 +17,13 @@ const Table = ({ headings = ["No"], children = {} }) => {
           <tbody>{children}</tbody>
           <tfoot>
             <tr>
-              {headings?.map((heading) => (
+              {/* {headings?.map((heading) => (
                 <th key={heading}>{heading}</th>
-              ))}
+              ))} */}
             </tr>
           </tfoot>
         </BootstrapTable>
-        <Row className="align-items-center">
+        {/* <Row className="align-items-center">
           <Col md="6">
             <div className="dataTables_info" id="datatable_info" role="status" aria-live="polite">
               Menampilkan 1 sampai 10 dari 40 entri
@@ -65,7 +65,7 @@ const Table = ({ headings = ["No"], children = {} }) => {
               </ul>
             </div>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </>
   );

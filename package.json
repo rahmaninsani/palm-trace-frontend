@@ -44,7 +44,6 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-dropzone-uploader": "^2.11.0",
-    "react-flatpickr": "^3.10.13",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
     "react-masonry-css": "^1.0.16",

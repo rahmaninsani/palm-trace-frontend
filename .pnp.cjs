@@ -73,7 +73,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:18.2.0"],\
             ["react-dropzone", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:14.2.3"],\
             ["react-dropzone-uploader", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:2.11.0"],\
-            ["react-flatpickr", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:3.10.13"],\
             ["react-icons", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:4.8.0"],\
             ["react-leaflet", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:4.2.1"],\
             ["react-masonry-css", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:1.0.16"],\
@@ -10258,15 +10257,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["flatpickr", [\
-        ["npm:4.6.13", {\
-          "packageLocation": "./.yarn/cache/flatpickr-npm-4.6.13-06399933fc-2cca1b8dc9.zip/node_modules/flatpickr/",\
-          "packageDependencies": [\
-            ["flatpickr", "npm:4.6.13"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["flatted", [\
         ["npm:3.2.7", {\
           "packageLocation": "./.yarn/cache/flatted-npm-3.2.7-0da10b7c56-427633049d.zip/node_modules/flatted/",\
@@ -14047,7 +14037,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:18.2.0"],\
             ["react-dropzone", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:14.2.3"],\
             ["react-dropzone-uploader", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:2.11.0"],\
-            ["react-flatpickr", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:3.10.13"],\
             ["react-icons", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:4.8.0"],\
             ["react-leaflet", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:4.2.1"],\
             ["react-masonry-css", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:1.0.16"],\
@@ -16672,30 +16661,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/react-error-overlay-npm-6.0.11-021cdeaa92-ce7b44c38f.zip/node_modules/react-error-overlay/",\
           "packageDependencies": [\
             ["react-error-overlay", "npm:6.0.11"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["react-flatpickr", [\
-        ["npm:3.10.13", {\
-          "packageLocation": "./.yarn/cache/react-flatpickr-npm-3.10.13-7b7e315610-d84c24c8ef.zip/node_modules/react-flatpickr/",\
-          "packageDependencies": [\
-            ["react-flatpickr", "npm:3.10.13"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:3.10.13", {\
-          "packageLocation": "./.yarn/__virtual__/react-flatpickr-virtual-ba08b8c8fe/0/cache/react-flatpickr-npm-3.10.13-7b7e315610-d84c24c8ef.zip/node_modules/react-flatpickr/",\
-          "packageDependencies": [\
-            ["react-flatpickr", "virtual:710760cdb0024555df1288244f07c6957c265bea329c0f22c249f2c3b1f9eeded78dc9a41bc70231a06d7fb004843ac54470d75c0fb5a6287b6e5a30e19c8b38#npm:3.10.13"],\
-            ["@types/react", "npm:18.2.6"],\
-            ["flatpickr", "npm:4.6.13"],\
-            ["prop-types", "npm:15.8.1"],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/react",\
-            "react"\
           ],\
           "linkType": "HARD"\
         }]\

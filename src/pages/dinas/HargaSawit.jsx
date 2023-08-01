@@ -4,7 +4,7 @@ import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 import { Card } from "../../components/elements";
 import { HargaSawitTable as Table } from "../../components/partials/dashboard";
 import { formatCurrency, formatTime } from "../../utils";
-import { ReferensiHarga } from "../../services";
+import { referensiHarga } from "../../services";
 import { Copy } from "../../components/elements";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -26,7 +26,7 @@ const HargaSawit = memo(() => {
 
   const getPalmPrices = async () => {
     try {
-      const response = await ReferensiHarga.getAll();
+      const response = await referensiHarga.getAll();
       setPalmPrices(response.data.data);
     } catch (error) {
       console.error("Gagal mengambil data harga sawit: ", error);
@@ -42,7 +42,7 @@ const HargaSawit = memo(() => {
   const getRiwayatHarga = async () => {
     try {
       if (selectedId) {
-        const response = await ReferensiHarga.getHistoryById(selectedId);
+        const response = await referensiHarga.getHistoryById(selectedId);
         setRiwayatHarga(response.data.data);
       }
     } catch (error) {
@@ -95,7 +95,7 @@ const HargaSawit = memo(() => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      await ReferensiHarga.update(selectedId, updateValue);
+      await referensiHarga.update(selectedId, updateValue);
       setSelectedId(null);
       setUpdateValue({ umurTanam: 0, harga: 0 });
       setShowModal(false);

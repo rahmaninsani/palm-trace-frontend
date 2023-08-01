@@ -15,3 +15,4 @@ export { default as Logo } from "./Logo";
 export { default as Loader } from "./Loader";
 export { default as RoundedAvatar } from "./RoundedAvatar";
 export { default as Card } from "./Card";
+export { default as Progress } from "./Progress";

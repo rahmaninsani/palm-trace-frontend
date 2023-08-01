@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AuthService } from "../services";
+import { authService } from "../services";
 
 const initialState = {
   user: null,
@@ -11,7 +11,7 @@ const initialState = {
 
 export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAPI) => {
   try {
-    const response = await AuthService.login(user);
+    const response = await authService.login(user);
     return response.data.data;
   } catch (error) {
     if (error.response) {
@@ -23,7 +23,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAP
 
 export const GetMe = createAsyncThunk("user/GetMe", async (_, thunkAPI) => {
   try {
-    const response = await AuthService.getMe();
+    const response = await authService.getMe();
     return response.data.data;
   } catch (error) {
     if (error.response) {
@@ -34,7 +34,7 @@ export const GetMe = createAsyncThunk("user/GetMe", async (_, thunkAPI) => {
 });
 
 export const LogoutUser = createAsyncThunk("user/LogoutUser", async () => {
-  await AuthService.logout();
+  await authService.logout();
 });
 
 export const authSlice = createSlice({

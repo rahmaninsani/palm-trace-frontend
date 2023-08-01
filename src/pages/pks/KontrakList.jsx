@@ -1,22 +1,35 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect, memo, useState } from "react";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 
-import { Card } from "../../components/elements";
+import { Card, Progress } from "../../components/elements";
 import { Table } from "../../components/partials/dashboard";
 
-import { contracts } from "../../config";
+import { kontrakService } from "../../services";
+
+import { formatTime } from "../../utils";
 
 const KontrakList = memo(() => {
   const pageTitle = "Kontrak";
   const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
+  const [kontrak, setKontrak] = useState([]);
 
   useEffect(() => {
     setTitle(pageTitle);
-  }, [setTitle]);
+    findAllKontrak();
+  }, []);
 
-  const headings = ["Nomor", "Tanggal Pembuatan", "Mitra", "Status", "Aksi"];
+  const findAllKontrak = async () => {
+    try {
+      const response = await kontrakService.findAll();
+      setKontrak(response.data.data);
+    } catch (error) {
+      console.error("Gagal mengambil data kontrak: ", error);
+    }
+  };
+
+  const headings = ["Nomor", "Mitra", "Status", "Kuantitas", "Pemenuhan", ""];
 
   return (
     <>
@@ -35,14 +48,20 @@ const KontrakList = memo(() => {
             </Card.Header>
             <Card.Body>
               <Table headings={headings}>
-                {contracts?.map((item, index) => (
-                  <tr key={index}>
+                {kontrak?.map((item) => (
+                  <tr key={item.id}>
                     <td>{item.nomor}</td>
-                    <td>{item.tanggalPembuatan}</td>
-                    <td>{item.mitraPenerima}</td>
-                    <td className={`text-${item.status === "Tertunda" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
+                    <td>{item.namaKoperasi}</td>
+                    <td className={`text-${item.status === "Menunggu Konfirmasi" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
+                    <td>{item.kuantitas} kg</td>
                     <td>
-                      <Link to={`${pathname}/${item.nomor}`}>Detail</Link>
+                      <div className="mb-2 d-flex align-items-center">
+                        <h6>{(item.kuantitasTerpenuhi / item.kuantitas) * 100}%</h6>
+                      </div>
+                      <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={(item.kuantitasTerpenuhi / item.kuantitas) * 100} minvalue={0} maxvalue={100} style={{ height: "4px" }} />
+                    </td>
+                    <td>
+                      <Link to={`${pathname}/${item.id}`}>Detail</Link>
                     </td>
                   </tr>
                 ))}

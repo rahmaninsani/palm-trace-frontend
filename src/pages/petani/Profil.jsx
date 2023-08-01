@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { Row, Button, Form, Modal, InputGroup } from "react-bootstrap";
 import { Card } from "../../components/elements";
 import { TableKebun } from "../../components/partials/dashboard";
-import { UserService } from "../../services";
+import { kebunService } from "../../services";
 import { formatTime } from "../../utils";
 
 const Profil = memo(() => {
@@ -28,7 +28,7 @@ const Profil = memo(() => {
 
   const findAllKebun = async () => {
     try {
-      const response = await UserService.kebunFindAll();
+      const response = await kebunService.findAll();
 
       if (!response.data.data) return setKebun([]);
 
@@ -50,7 +50,7 @@ const Profil = memo(() => {
   const handleOnAddKebun = async (e) => {
     e.preventDefault();
     try {
-      await UserService.kebunCreate(addKebunValue);
+      await kebunService.create(addKebunValue);
       setAddKebunValue({
         alamat: "",
         latitude: "",
