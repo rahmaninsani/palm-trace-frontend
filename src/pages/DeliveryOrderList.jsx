@@ -1,16 +1,18 @@
 import React, { useEffect, memo, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 import { Card, Progress } from "../components/elements";
 import { Table } from "../components/partials/dashboard";
 
+import endpoint from "../constants/endpoint";
 import { formatTime } from "../utils";
-
 import { deliveryOrderService } from "../services";
 
 const DeliveryOrderList = memo(() => {
   const { pathname } = useLocation();
+  const { user, isError } = useSelector((state) => state.auth);
   const { idKontrak } = useParams();
   const [deliveryOrder, setDeliveryOrder] = useState([]);
 
@@ -36,11 +38,13 @@ const DeliveryOrderList = memo(() => {
           <h4 className="card-title">Daftar Delivery Order</h4>
         </div>
 
-        <div className="card-action">
-          <Button variant="primary" href={`${pathname}/tambah`}>
-            Tambah
-          </Button>
-        </div>
+        {user && user.role === "pks" && (
+          <div className="card-action">
+            <Button variant="primary" href={endpoint.deliveryOrderTambah}>
+              Tambah
+            </Button>
+          </div>
+        )}
       </Card.Header>
       <Card.Body>
         <Table headings={headings}>

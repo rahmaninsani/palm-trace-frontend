@@ -1,4 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
+import { useSelector } from "react-redux";
 import { useOutletContext } from "react-router-dom";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 import { Card } from "../components/elements";
@@ -11,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 const ReferensiHarga = memo(() => {
   const pageTitle = "Harga Sawit";
   const { setTitle } = useOutletContext();
+  const { user, isError } = useSelector((state) => state.auth);
   const [showModal, setShowModal] = useState(false);
   const [showModalRiwayat, setShowModalRiwayat] = useState(false);
   const [riwayatHarga, setRiwayatHarga] = useState([]);
@@ -111,14 +113,57 @@ const ReferensiHarga = memo(() => {
       {/* Main */}
       <Card>
         <Card.Header className="d-flex justify-content-between align-items-center">
-          <div className="header-title">
-            <h4 className="card-title">Referensi Harga Sawit</h4>
-          </div>
-          <div className="card-action">
-            <Button variant="primary mt-2" onClick={() => setShowModal(true)}>
-              Ubah
-            </Button>
-          </div>
+          <>
+            <div className="header-title">
+              <h4 className="card-title">Referensi Harga Sawit</h4>
+            </div>
+
+            {user && user.role === "dinas" && (
+              <>
+                <div className="card-action">
+                  <Button variant="primary mt-2" onClick={() => setShowModal(true)}>
+                    Ubah
+                  </Button>
+                </div>
+
+                {/* Modal Update */}
+                <Modal scrollable={true} show={showModal} backdrop="static" keyboard={false} onHide={() => setShowModal(false)}>
+                  <Modal.Header closeButton>
+                    <Modal.Title as="h5">Ubah Harga Sawit</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form.Group className="col-sm-12 form-group">
+                      <Form.Label>Umur Tanam</Form.Label>
+                      <select className="form-select mb-3 shadow-none" name="umurTanam" value={updateValue.umurTanam} onChange={handleInputChange}>
+                        <option defaultValue>Pilih Umur Tanam</option>
+                        {palmPrices.map((palmPrice) => (
+                          <option key={palmPrice.id} value={palmPrice.umurTanam}>
+                            {palmPrice.umurTanam} Tahun
+                          </option>
+                        ))}
+                      </select>
+                    </Form.Group>
+
+                    <Form.Group className="col-sm-12 form-group">
+                      <Form.Label htmlFor="harga">Harga Per Kilogram</Form.Label>
+                      <InputGroup>
+                        <InputGroup.Text>Rp</InputGroup.Text>
+                        <Form.Control type="number" name="harga" value={updateValue.harga} onChange={handleInputChange} placeholder="Harga" />
+                      </InputGroup>
+                    </Form.Group>
+                  </Modal.Body>
+
+                  <Modal.Footer>
+                    <div className="mx-auto">
+                      <Button variant="btn btn-primary" onClick={handleOnSubmit}>
+                        Simpan
+                      </Button>
+                    </div>
+                  </Modal.Footer>
+                </Modal>
+              </>
+            )}
+          </>
         </Card.Header>
         <Card.Body>
           <Table headings={["Tanggal Pembaruan", "Umur Tanam", "Harga", ""]}>
@@ -137,42 +182,6 @@ const ReferensiHarga = memo(() => {
           </Table>
         </Card.Body>
       </Card>
-
-      {/* Modal Update */}
-      <Modal scrollable={true} show={showModal} backdrop="static" keyboard={false} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title as="h5">Ubah Harga Sawit</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group className="col-sm-12 form-group">
-            <Form.Label>Umur Tanam</Form.Label>
-            <select className="form-select mb-3 shadow-none" name="umurTanam" value={updateValue.umurTanam} onChange={handleInputChange}>
-              <option defaultValue>Pilih Umur Tanam</option>
-              {palmPrices.map((palmPrice) => (
-                <option key={palmPrice.id} value={palmPrice.umurTanam}>
-                  {palmPrice.umurTanam} Tahun
-                </option>
-              ))}
-            </select>
-          </Form.Group>
-
-          <Form.Group className="col-sm-12 form-group">
-            <Form.Label htmlFor="harga">Harga Per Kilogram</Form.Label>
-            <InputGroup>
-              <InputGroup.Text>Rp</InputGroup.Text>
-              <Form.Control type="number" name="harga" value={updateValue.harga} onChange={handleInputChange} placeholder="Harga" />
-            </InputGroup>
-          </Form.Group>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <div className="mx-auto">
-            <Button variant="btn btn-primary" onClick={handleOnSubmit}>
-              Simpan
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
 
       {/* Modal Riwayat */}
       <Modal size="lg" scrollable={true} show={showModalRiwayat} backdrop="static" keyboard={false} onHide={handleCloseModalRiwayat}>

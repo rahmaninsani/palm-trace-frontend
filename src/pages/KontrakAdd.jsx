@@ -127,6 +127,7 @@ const KontrakAdd = memo(() => {
               </Form.Group>
             </Row>
           </Card.Body>
+
           <Card.Footer className="text-center">
             <Button type="submit" variant="btn btn-primary">
               Simpan

@@ -137,14 +137,15 @@ const DeliveryOrderDetail = memo(() => {
           </Row>
         </Card.Body>
 
-        <Card.Footer>
-          <h6 className="mb-3">Pemenuhan {pemenuhanPercentage}%</h6>
-          <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={pemenuhanPercentage} minvalue={0} maxvalue={100} style={{ height: "6px" }} />
-        </Card.Footer>
+        {deliveryOrderDetail?.status === "Disetujui" && (
+          <Card.Footer>
+            <h6 className="mb-3">Pemenuhan {pemenuhanPercentage}%</h6>
+            <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={pemenuhanPercentage} minvalue={0} maxvalue={100} style={{ height: "6px" }} />
+          </Card.Footer>
+        )}
       </Card>
 
       {/* Daftar Transaksi */}
-
       {deliveryOrderDetail?.status === "Disetujui" && <TransaksiList />}
     </>
   );

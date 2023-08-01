@@ -1,16 +1,19 @@
 import React, { useEffect, memo, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 
 import { Card, Progress } from "../components/elements";
 import { Table } from "../components/partials/dashboard";
 
+import endpoint from "../constants/endpoint";
 import { kontrakService } from "../services";
 
 const KontrakList = memo(() => {
   const pageTitle = "Kontrak";
   const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
+  const { user, isError } = useSelector((state) => state.auth);
   const [kontrak, setKontrak] = useState([]);
 
   useEffect(() => {
@@ -38,11 +41,13 @@ const KontrakList = memo(() => {
               <div className="header-title">
                 <h4 className="card-title">Daftar Kontrak</h4>
               </div>
-              <div className="card-action">
-                <Button variant="primary" href={`${pathname}/tambah`}>
-                  Tambah
-                </Button>
-              </div>
+              {user && user.role === "pks" && (
+                <div className="card-action">
+                  <Button variant="primary" href={endpoint.kontrakTambah}>
+                    Tambah
+                  </Button>
+                </div>
+              )}
             </Card.Header>
             <Card.Body>
               <Table headings={headings}>
