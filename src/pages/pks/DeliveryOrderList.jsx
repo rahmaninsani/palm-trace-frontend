@@ -1,34 +1,33 @@
-import React, { memo } from "react";
-import { useLocation, Link } from "react-router-dom";
+import React, { useEffect, memo, useState } from "react";
+import { useLocation, Link, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-import { Card } from "../../components/elements";
+import { Card, Progress } from "../../components/elements";
 import { Table } from "../../components/partials/dashboard";
+
+import { formatTime } from "../../utils";
+
+import { deliveryOrderService } from "../../services";
 
 const DeliveryOrderList = memo(() => {
   const { pathname } = useLocation();
+  const { idKontrak } = useParams();
+  const [deliveryOrder, setDeliveryOrder] = useState([]);
 
-  const headings = ["Nomor", "Tanggal Pembuatan", "Periode", "Status", "Aksi"];
-  const dataDO = [
-    {
-      nomor: "D0001",
-      tanggal: "2023-01-01",
-      periode: "Januari 2023",
-      status: "Disetujui",
-    },
-    {
-      nomor: "D0002",
-      tanggal: "2023-01-01",
-      periode: "Februari 2023",
-      status: "Pending",
-    },
-    {
-      nomor: "D0003",
-      tanggal: "2023-01-01",
-      periode: "Maret 2023",
-      status: "Ditolak",
-    },
-  ];
+  useEffect(() => {
+    findAllDeliveryOrder();
+  }, []);
+
+  const findAllDeliveryOrder = async () => {
+    try {
+      const response = await deliveryOrderService.findAll({ idKontrak });
+      setDeliveryOrder(response.data);
+    } catch (error) {
+      console.error("Gagal mengambil data DO: ", error);
+    }
+  };
+
+  const headings = ["Nomor", "Periode", "Mitra", "Status", "Kuantitas", "Pemenuhan", ""];
 
   return (
     <Card>
@@ -36,6 +35,7 @@ const DeliveryOrderList = memo(() => {
         <div className="header-title">
           <h4 className="card-title">Daftar Delivery Order</h4>
         </div>
+
         <div className="card-action">
           <Button variant="primary" href={`${pathname}/tambah`}>
             Tambah
@@ -44,14 +44,21 @@ const DeliveryOrderList = memo(() => {
       </Card.Header>
       <Card.Body>
         <Table headings={headings}>
-          {dataDO?.map((item, index) => (
-            <tr key={index}>
+          {deliveryOrder?.map((item) => (
+            <tr key={item.id}>
               <td>{item.nomor}</td>
-              <td>{item.tanggal}</td>
-              <td>{item.periode}</td>
-              <td className={`text-${item.status === "Pending" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
+              <td>{formatTime(item.periode)}</td>
+              <td>{item.namaKoperasi}</td>
+              <td className={`text-${item.status === "Menunggu Konfirmasi" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
+              <td>{item.kuantitas} kg</td>
               <td>
-                <Link to={`${pathname}/${item.nomor}`}>Detail</Link>
+                <div className="mb-2 d-flex align-items-center">
+                  <h6>{(item.kuantitasTerpenuhi / item.kuantitas) * 100}%</h6>
+                </div>
+                <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={(item.kuantitasTerpenuhi / item.kuantitas) * 100} minvalue={0} maxvalue={100} style={{ height: "4px" }} />
+              </td>
+              <td>
+                <Link to={`${pathname}/${item.id}`}>Detail</Link>
               </td>
             </tr>
           ))}

@@ -7,7 +7,7 @@ import DeliveryOrderList from "./DeliveryOrderList";
 
 import { formatTime, formatCurrency } from "../../utils";
 
-import { userService, kontrakService } from "../../services";
+import { kontrakService } from "../../services";
 
 const KontrakDetail = memo(() => {
   const pageTitle = "Detail Kontrak";
@@ -141,7 +141,7 @@ const KontrakDetail = memo(() => {
       </Card>
 
       {/* Daftar Delivery Order */}
-      <DeliveryOrderList />
+      {kontrakDetail?.status === "Disetujui" && <DeliveryOrderList status={kontrakDetail?.status} />}
     </>
   );
 });

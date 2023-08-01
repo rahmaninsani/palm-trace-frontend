@@ -3,8 +3,9 @@ import moment from "moment/min/moment-with-locales";
 moment.locale("id");
 
 const formatTime = (datetime) => {
-  const gmt = datetime?.split("+")[1];
+  if (datetime?.split("-").length === 2) return moment(datetime).format("MMM YYYY");
 
+  const gmt = datetime?.split("+")[1];
   if (!gmt) return moment(datetime).format("DD MMMM YYYY");
 
   let timeZone = "";
