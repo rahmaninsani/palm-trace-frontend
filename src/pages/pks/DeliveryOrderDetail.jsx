@@ -131,7 +131,7 @@ const DeliveryOrderDetail = memo(() => {
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Tanggal Konfirmasi</h6>
-                <p>{deliveryOrderDetail?.tanggalKonfirmasi !== undefined ? formatTime(deliveryOrderDetail?.tanggalKonfirmasi) : "-"}</p>
+                <p>{deliveryOrderDetail?.tanggalKonfirmasi === undefined || deliveryOrderDetail?.tanggalKonfirmasi === "" ? "-" : formatTime(deliveryOrderDetail?.tanggalKonfirmasi)}</p>
               </div>
             </Col>
           </Row>
@@ -144,7 +144,8 @@ const DeliveryOrderDetail = memo(() => {
       </Card>
 
       {/* Daftar Transaksi */}
-      <TransaksiList />
+
+      {deliveryOrderDetail?.status === "Disetujui" && <TransaksiList />}
     </>
   );
 });
