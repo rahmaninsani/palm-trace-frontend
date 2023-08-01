@@ -2,12 +2,12 @@ import React, { useState, useEffect, memo } from "react";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Button, Modal } from "react-bootstrap";
 
-import { Card, Progress } from "../../components/elements";
+import { Card, Progress } from "../components/elements";
 import DeliveryOrderList from "./DeliveryOrderList";
 
-import { formatTime, formatCurrency } from "../../utils";
+import { formatTime, formatCurrency } from "../utils";
 
-import { kontrakService } from "../../services";
+import { kontrakService } from "../services";
 
 const KontrakDetail = memo(() => {
   const pageTitle = "Detail Kontrak";

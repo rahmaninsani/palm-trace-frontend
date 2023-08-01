@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckUser } from "../utils";
 
-import { Register, Login } from "../pages/others";
+import { Register, Login } from "../pages";
 
 const AuthRouter = [
   {

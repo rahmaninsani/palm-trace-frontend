@@ -4,9 +4,8 @@ import { Outlet } from "react-router-dom";
 import { Header, Banner, Sidebar, Footer } from "../components/partials/dashboard";
 import { Loader } from "../components/elements";
 
-const DashboardLayout = memo(({ role }) => {
+const DashboardLayout = memo(() => {
   const [title, setTitle] = useState("");
-  const appName = "Palm Safe";
 
   return (
     <>
@@ -14,12 +13,12 @@ const DashboardLayout = memo(({ role }) => {
       <Loader />
 
       {/* Sidebar */}
-      <Sidebar appName={appName} role={role} />
+      <Sidebar />
 
       <main className="main-content">
         <div className="position-relative">
           {/* Topbar */}
-          <Header role={role} />
+          <Header />
 
           {/* Banner */}
           <Banner title={title} />

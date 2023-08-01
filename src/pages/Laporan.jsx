@@ -1,10 +1,10 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useEffect, memo } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
-import { Row, Col, Button, Form, Modal, InputGroup } from "react-bootstrap";
+import { Row, Button, Form } from "react-bootstrap";
 
-import { Card } from "../../components/elements";
+import { Card } from "../components/elements";
 
-const Laporan = () => {
+const Laporan = memo(() => {
   const pageTitle = "Laporan Transaksi";
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -32,6 +32,6 @@ const Laporan = () => {
       </Card>
     </>
   );
-};
+});
 
 export default Laporan;

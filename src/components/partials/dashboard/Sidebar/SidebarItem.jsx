@@ -1,139 +1,71 @@
-import React, { useState, useContext, memo } from "react";
+import React, { memo } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { Accordion, useAccordionButton, AccordionContext } from "react-bootstrap";
+import { Accordion } from "react-bootstrap";
 
-import { ROLE } from "../../../../config";
-import { Tiles, KontrakOut, Paper, User, DropDown, Graph } from "../../../elements";
+import { Tiles, KontrakOut, Paper, User, Graph } from "../../../elements";
+import role from "../../../../constants/role";
+import endpoint from "../../../../constants/endpoint";
 
-const CustomToggle = ({ children, eventKey, onClick }) => {
-  const { activeEventKey } = useContext(AccordionContext);
-
-  const decoratedOnClick = useAccordionButton(eventKey, (active) => onClick({ state: !active, eventKey: eventKey }));
-
-  const isCurrentEventKey = activeEventKey === eventKey;
-
-  return (
-    <Link
-      to="#"
-      aria-expanded={isCurrentEventKey ? "true" : "false"}
-      className="nav-link"
-      role="button"
-      onClick={(e) => {
-        decoratedOnClick(isCurrentEventKey);
-      }}
-    >
-      {children}
-    </Link>
-  );
-};
-
-const SidebarItem = memo(({ role }) => {
-  const [activeMenu, setActiveMenu] = useState(false);
-  const [active, setActive] = useState("");
-  const basename = `/${role}`;
-
-  //location
+const SidebarItem = memo(() => {
   const { pathname } = useLocation();
+  const { user, isError } = useSelector((state) => state.auth);
+  const allowedRolesRantaiPasok = [role.pks, role.koperasi, role.petani];
 
   return (
-    <>
-      <Accordion as="ul" className="navbar-nav iq-main-menu">
-        {role === ROLE.DINAS ? (
-          <>
-            {/* Pages Title  */}
-            <li className="nav-item static-item">
-              <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-                <span className="default-icon">Pages</span>
-                <span className="mini-icon">-</span>
-              </Link>
-            </li>
-
-            {/* Harga TBS */}
-            <li className={`${pathname.includes("/harga-sawit") && "active"} nav-item `}>
-              <Link className={`${pathname.includes("/harga-sawit") && "active"} nav-link `} aria-current="page" to={basename.concat("/harga-sawit")}>
-                <i className="icon">
-                  <Graph />
-                </i>
-                <span className="item-name">Harga Sawit</span>
-              </Link>
-            </li>
-          </>
-        ) : (
-          <>
-            {/* Home Title */}
-            <li className="nav-item static-item">
-              <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-                <span className="default-icon">Home</span>
-                <span className="mini-icon">-</span>
-              </Link>
-            </li>
-
-            {/* Dashboard */}
-            <li className={`${pathname === basename && "active"} nav-item `}>
-              <Link className={`${pathname === basename && "active"} nav-link `} aria-current="page" to={basename}>
-                <i className="icon">
-                  <Tiles />
-                </i>
-                <span className="item-name">Dashboard</span>
-              </Link>
-            </li>
-
-            {/* Divider */}
-            <li>
-              <hr className="hr-horizontal" />
-            </li>
-
-            {/* Pages Title */}
-            <li className="nav-item static-item">
-              <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-                <span className="default-icon">Pages</span>
-                <span className="mini-icon">-</span>
-              </Link>
-            </li>
-
-            {/* Harga TBS */}
-            <li className={`${pathname.includes("/harga-sawit") && "active"} nav-item `}>
-              <Link className={`${pathname.includes("/harga-sawit") && "active"} nav-link `} aria-current="page" to={basename.concat("/harga-sawit")}>
-                <i className="icon">
-                  <Graph />
-                </i>
-                <span className="item-name">Harga Sawit</span>
-              </Link>
-            </li>
-
-            {/* Kontrak */}
-            <li className={`${pathname.includes("/kontrak") && "active"} nav-item `}>
-              <Link className={`${pathname.includes("/kontrak") && "active"} nav-link `} aria-current="page" to={basename.concat("/kontrak")}>
-                <i className="icon">
-                  <KontrakOut />
-                </i>
-                <span className="item-name">Kontrak</span>
-              </Link>
-            </li>
-
-            {/* Laporan */}
-            <li className={`${pathname.includes("/laporan") && "active"} nav-item `}>
-              <Link className={`${pathname.includes("/laporan") && "active"} nav-link `} aria-current="page" to={basename.concat("/laporan")}>
-                <i className="icon">
-                  <Paper />
-                </i>
-                <span className="item-name">Laporan</span>
-              </Link>
-            </li>
-          </>
-        )}
-
-        {/* Profil */}
-        <li className={`${pathname.includes("/profil") && "active"} nav-item `}>
-          <Link className={`${pathname.includes("/profil") && "active"} nav-link `} aria-current="page" to={basename.concat("/profil")}>
+    <Accordion as="ul" className="navbar-nav iq-main-menu">
+      {user && allowedRolesRantaiPasok.includes(user.role) && (
+        <li className={`${pathname === endpoint.dashboard && "active"} nav-item `}>
+          <Link className={`${pathname === endpoint.dashboard && "active"} nav-link `} aria-current="page" to={endpoint.dashboard}>
             <i className="icon">
-              <User />
+              <Tiles />
             </i>
-            <span className="item-name">Profil</span>
+            <span className="item-name">Dashboard</span>
           </Link>
         </li>
-      </Accordion>
-    </>
+      )}
+
+      {/* Referensi Harga */}
+      <li className={`${pathname === endpoint.referensiHarga && "active"} nav-item `}>
+        <Link className={`${pathname === endpoint.referensiHarga && "active"} nav-link `} aria-current="page" to={endpoint.referensiHarga}>
+          <i className="icon">
+            <Graph />
+          </i>
+          <span className="item-name">Referensi Harga</span>
+        </Link>
+      </li>
+
+      {user && allowedRolesRantaiPasok.includes(user.role) && (
+        <>
+          <li className={`${pathname === endpoint.kontrak && "active"} nav-item `}>
+            <Link className={`${pathname === endpoint.kontrak && "active"} nav-link `} aria-current="page" to={endpoint.kontrak}>
+              <i className="icon">
+                <KontrakOut />
+              </i>
+              <span className="item-name">Kontrak</span>
+            </Link>
+          </li>
+
+          <li className={`${pathname === endpoint.laporan && "active"} nav-item `}>
+            <Link className={`${pathname === endpoint.laporan && "active"} nav-link `} aria-current="page" to={endpoint.laporan}>
+              <i className="icon">
+                <Paper />
+              </i>
+              <span className="item-name">Laporan</span>
+            </Link>
+          </li>
+        </>
+      )}
+
+      <li className={`${pathname === endpoint.profil && "active"} nav-item `}>
+        <Link className={`${pathname === endpoint.profil && "active"} nav-link `} aria-current="page" to={"/profil"}>
+          <i className="icon">
+            <User />
+          </i>
+          <span className="item-name">Profil</span>
+        </Link>
+      </li>
+    </Accordion>
   );
 });
 

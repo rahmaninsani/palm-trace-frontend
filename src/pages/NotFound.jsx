@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Image, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import error404 from "../../assets/images/error/404.png";
+import error404 from "../assets/images/error/404.png";
 
 const NotFound = () => {
   const navigate = useNavigate();

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 
-import { LoginUser, reset } from "../../features/authSlice";
-import { Card } from "../../components/elements";
+import { LoginUser, reset } from "../features/authSlice";
+import { Card } from "../components/elements";
 
-import auth1 from "../../assets/images/auth/01.png";
+import auth1 from "../assets/images/auth/01.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user || isSuccess) {
-      navigate(`/${user.role}`);
+      navigate(`/dashboard`);
     }
     dispatch(reset());
   }, [user, isSuccess, navigate, dispatch]);

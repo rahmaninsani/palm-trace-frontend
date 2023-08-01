@@ -3,10 +3,10 @@ import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Button, Modal } from "react-bootstrap";
 
 import TransaksiList from "./TransaksiList";
-import { Card, Progress } from "../../components/elements";
-import { formatTime, formatCurrency } from "../../utils";
+import { Card, Progress } from "../components/elements";
+import { formatTime, formatCurrency } from "../utils";
 
-import { deliveryOrderService } from "../../services";
+import { deliveryOrderService } from "../services";
 
 const DeliveryOrderDetail = memo(() => {
   const pageTitle = "Detail Delivery Order";

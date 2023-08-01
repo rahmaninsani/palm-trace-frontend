@@ -3,10 +3,10 @@ import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { authService } from "../../services";
+import { authService } from "../services";
 
-import { Card } from "../../components/elements";
-import auth5 from "../../assets/images/auth/05.png";
+import { Card } from "../components/elements";
+import auth5 from "../assets/images/auth/05.png";
 
 const Register = () => {
   let navigate = useNavigate();

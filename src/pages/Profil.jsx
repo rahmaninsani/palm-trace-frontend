@@ -1,8 +1,8 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useEffect, memo } from "react";
 import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Button, Form } from "react-bootstrap";
 
-import { Card } from "../../components/elements";
+import { Card } from "../components/elements";
 
 const Profil = memo(() => {
   const pageTitle = "Profil";

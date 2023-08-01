@@ -7,7 +7,9 @@ import Scrollbar from "smooth-scrollbar";
 
 import { Logo } from "../../../elements";
 
-const Sidebar = memo(({ appName, role }) => {
+const Sidebar = memo(() => {
+  const appName = "Palm Safe";
+
   const minisidebar = () => {
     document.getElementsByTagName("ASIDE")[0].classList.toggle("sidebar-mini");
   };
@@ -50,7 +52,7 @@ const Sidebar = memo(({ appName, role }) => {
     <>
       <aside className={"sidebar sidebar-white sidebar-base sidebar-default navs-rounded-all"} data-sidebar="responsive">
         <div className="sidebar-header d-flex align-items-center justify-content-start">
-          <Link to={`/${role}`} className="navbar-brand">
+          <Link to={"/"} className="navbar-brand">
             <Logo />
             <h4 className="logo-title">{appName}</h4>
           </Link>
@@ -67,7 +69,7 @@ const Sidebar = memo(({ appName, role }) => {
         <div className="pt-0 sidebar-body data-scrollbar" data-scroll="1" id="my-scrollbar">
           {/* Sidebar Item */}
           <div className="sidebar-list navbar-collapse" id="sidebar">
-            <SidebarItem role={role} />
+            <SidebarItem />
           </div>
         </div>
       </aside>

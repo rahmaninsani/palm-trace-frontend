@@ -2,12 +2,12 @@ import React, { useEffect, memo, useState } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-import { Card, Progress } from "../../components/elements";
-import { Table } from "../../components/partials/dashboard";
+import { Card, Progress } from "../components/elements";
+import { Table } from "../components/partials/dashboard";
 
-import { formatTime } from "../../utils";
+import { formatTime } from "../utils";
 
-import { deliveryOrderService } from "../../services";
+import { deliveryOrderService } from "../services";
 
 const DeliveryOrderList = memo(() => {
   const { pathname } = useLocation();

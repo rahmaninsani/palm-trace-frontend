@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { GetMe } from "../features/authSlice";
 
-const RequireAuth = ({ role, children }) => {
+const RequireAuth = ({ allowedRoles, children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isError } = useSelector((state) => state.auth);
@@ -18,10 +18,10 @@ const RequireAuth = ({ role, children }) => {
       navigate("/login");
     }
 
-    if (user && user.role !== role) {
-      navigate(`/${user.role}`);
+    if (user && !allowedRoles.includes(user.role)) {
+      navigate(`/`);
     }
-  }, [isError, navigate, user, role]);
+  }, [isError, navigate, user, allowedRoles]);
 
   return children;
 };

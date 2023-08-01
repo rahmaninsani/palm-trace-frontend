@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-import { NotFound } from "../pages/others";
+import { NotFound } from "../pages";
 
 const OtherRouter = [
   {
