@@ -1,6 +1,6 @@
 import React, { useEffect, memo, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, Link, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 import { Card, Progress } from "../components/elements";

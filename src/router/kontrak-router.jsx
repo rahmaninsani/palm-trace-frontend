@@ -4,7 +4,7 @@ import role from "../constants/role";
 import endpoint from "../constants/endpoint";
 import { RequireAuth } from "../utils";
 import DashboardLayout from "../layout/DashboardLayout";
-import { KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderDetail, DeliveryOrderAdd } from "../pages";
+import { KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderDetail, DeliveryOrderAdd, TransaksiAdd, TransaksiDetail } from "../pages";
 
 const allowedRoles = [role.pks, role.koperasi, role.petani];
 const KontrakRouter = [
@@ -35,6 +35,14 @@ const KontrakRouter = [
       {
         path: endpoint.deliveryOrderDetail,
         element: <DeliveryOrderDetail />,
+      },
+      {
+        path: endpoint.transaksiTambah,
+        element: <TransaksiAdd />,
+      },
+      {
+        path: endpoint.transaksiDetail,
+        element: <TransaksiDetail />,
       },
     ],
   },

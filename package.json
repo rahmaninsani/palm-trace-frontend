@@ -25,6 +25,7 @@
     "fslightbox-react": "^1.7.4",
     "fullcalendar-interaction": "^5.3.3",
     "immutability-helper": "^3.1.1",
+    "joi": "^17.9.2",
     "jquery": "^3.7.0",
     "leaflet": "^1.9.3",
     "lodash": "^4.17.21",

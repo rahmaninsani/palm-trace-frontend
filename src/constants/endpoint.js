@@ -14,6 +14,9 @@ const endpoint = {
   deliveryOrderTambah: "/kontrak/:idKontrak/tambah",
   deliveryOrderDetail: "/kontrak/:idKontrak/:idDeliveryOrder",
 
+  transaksiTambah: "/kontrak/:idKontrak/:idDeliveryOrder/tambah",
+  transaksiDetail: "/kontrak/:idKontrak/:idDeliveryOrder/:idTransaksi",
+
   laporan: "/laporan",
 
   profil: "/profil",
