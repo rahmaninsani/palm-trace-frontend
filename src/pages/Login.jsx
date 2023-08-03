@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { authSchema } from "../validations";
 
+import role from "../constants/role";
+import endpoint from "../constants/endpoint";
 import { LoginUser, reset } from "../features/authSlice";
-import { Card } from "../components/elements";
+import { Card, ButtonLoading } from "../components/elements";
 
 import auth1 from "../assets/images/auth/01.png";
 
@@ -13,25 +18,27 @@ const Login = () => {
   const dispatch = useDispatch();
   const { user, isLoading, isSuccess, isError, message } = useSelector((state) => state.auth);
 
-  const [loginValue, setLoginValue] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ resolver: joiResolver(authSchema.login) });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLoginValue({ ...loginValue, [name]: value });
-  };
-
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    dispatch(LoginUser(loginValue));
+  const onSubmit = (data) => {
+    dispatch(LoginUser(data));
   };
 
   useEffect(() => {
-    if (user || isSuccess) {
-      navigate(`/dashboard`);
+    if (user && isSuccess) {
+      let home = endpoint.dashboard;
+
+      if (user.role === role.dinas) {
+        home = endpoint.referensiHarga;
+      }
+
+      navigate(home, { replace: true });
     }
+
     dispatch(reset());
   }, [user, isSuccess, navigate, dispatch]);
 
@@ -45,26 +52,32 @@ const Login = () => {
                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                   <Card.Body>
                     <h2 className="mb-4 text-center">Login</h2>
-                    <Form onSubmit={handleOnSubmit}>
+                    <Form onSubmit={handleSubmit(onSubmit)}>
                       {isError && <p className="text-danger text-center">{message}</p>}
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
                             <Form.Label htmlFor="email">Email</Form.Label>
-                            <Form.Control type="email" id="email" name="email" value={loginValue.email} onChange={handleInputChange} />
+                            <Form.Control type="email" id="email" isInvalid={!!errors.email} {...register("email")} />
+                            {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
                           </Form.Group>
                         </Col>
                         <Col lg="12">
                           <Form.Group className="form-group">
                             <Form.Label htmlFor="password">Password</Form.Label>
-                            <Form.Control type="password" id="password" name="password" value={loginValue.password} onChange={handleInputChange} />
+                            <Form.Control type="password" id="password" isInvalid={!!errors.password} {...register("password")} />
+                            {errors.password && <Form.Control.Feedback type="invalid">{errors.password.message}</Form.Control.Feedback>}
                           </Form.Group>
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-center">
-                        <Button type="submit" variant="btn btn-primary">
-                          {isLoading ? "Loading..." : "Masuk"}
-                        </Button>
+                        {isLoading ? (
+                          <ButtonLoading />
+                        ) : (
+                          <Button type="submit" variant="btn btn-primary" disabled={!isValid}>
+                            Masuk
+                          </Button>
+                        )}
                       </div>
 
                       <p className="mt-3 text-center">

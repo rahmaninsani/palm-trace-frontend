@@ -15,8 +15,8 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAP
     return response.data;
   } catch (error) {
     if (error.response) {
-      const errorMessage = error.response.data.errors;
-      return thunkAPI.rejectWithValue(errorMessage);
+      const { message } = error.response.data;
+      return thunkAPI.rejectWithValue(message);
     }
   }
 });
@@ -27,8 +27,8 @@ export const GetMe = createAsyncThunk("user/GetMe", async (_, thunkAPI) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      const errorMessage = error.response.data.errors;
-      return thunkAPI.rejectWithValue(errorMessage);
+      const { message } = error.response.data;
+      return thunkAPI.rejectWithValue(message);
     }
   }
 });

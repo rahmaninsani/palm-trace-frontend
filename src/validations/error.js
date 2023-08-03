@@ -1,0 +1,23 @@
+const schemaError = (errors) => {
+  errors.forEach((err) => {
+    switch (err.code) {
+      case "string.empty":
+        err.message = `${err.local.label} tidak boleh kosong`;
+        break;
+      case "string.min":
+        err.message = `Panjang ${err.local.label.toLowerCase()} paling sedikit ${err.local.limit} karakter`;
+        break;
+      case "string.max":
+        err.message = `Panjang ${err.local.label.toLowerCase()} paling banyak ${err.local.limit} karakter`;
+        break;
+      case "string.email":
+        err.message = `${err.local.label} tidak valid`;
+        break;
+      default:
+        break;
+    }
+  });
+  return errors;
+};
+
+export default schemaError;
