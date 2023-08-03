@@ -3,11 +3,9 @@ import { useSelector } from "react-redux";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 
+import { roleConstant } from "../constants";
 import { Card, Progress } from "../components/elements";
 import DeliveryOrderList from "./DeliveryOrderList";
-
-import endpoint from "../constants/endpoint";
-import role from "../constants/role";
 import { formatTime, formatCurrency } from "../utils";
 import { kontrakService } from "../services";
 
@@ -15,7 +13,7 @@ const KontrakDetail = memo(() => {
   const pageTitle = "Detail Kontrak";
   const navigate = useNavigate();
   const { setTitle } = useOutletContext();
-  const { user, isError } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { idKontrak } = useParams();
   const [kontrakDetail, setKontrakDetail] = useState({});
   const [showModalPesan, setShowModalPesan] = useState(false);
@@ -170,7 +168,7 @@ const KontrakDetail = memo(() => {
       </Card>
 
       {/* Konfirmasi */}
-      {user && user.role === role.koperasi && kontrakDetail?.status === "Menunggu Konfirmasi" && (
+      {user && user.role === roleConstant.koperasi && kontrakDetail?.status === "Menunggu Konfirmasi" && (
         <Card>
           <Card.Header className="mx-auto">
             <h5>Konfirmasi</h5>

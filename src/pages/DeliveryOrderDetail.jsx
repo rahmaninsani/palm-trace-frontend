@@ -3,11 +3,9 @@ import { useSelector } from "react-redux";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
 
+import { roleConstant } from "../constants";
 import TransaksiList from "./TransaksiList";
 import { Card, Progress } from "../components/elements";
-
-import endpoint from "../constants/endpoint";
-import role from "../constants/role";
 import { formatTime, formatCurrency } from "../utils";
 import { deliveryOrderService } from "../services";
 
@@ -170,7 +168,7 @@ const DeliveryOrderDetail = memo(() => {
       </Card>
 
       {/* Konfirmasi */}
-      {user && user.role === role.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && (
+      {user && user.role === roleConstant.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && (
         <Card>
           <Card.Header className="mx-auto">
             <h5>Konfirmasi</h5>

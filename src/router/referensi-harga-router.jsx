@@ -1,23 +1,22 @@
 import React from "react";
 
-import role from "../constants/role";
-import endpoint from "../constants/endpoint";
-import { RequireAuth } from "../utils";
+import { roleConstant, endpointConstant } from "../constants";
+import { AuthMiddleware } from "../middlewares";
 import DashboardLayout from "../layout/DashboardLayout";
 import { ReferensiHarga } from "../pages";
 
-const allowedRoles = [role.pks, role.koperasi, role.petani];
+const allowedRoles = [roleConstant.dinas, roleConstant.pks, roleConstant.koperasi, roleConstant.petani];
 const ReferensiHargaRouter = [
   {
-    path: endpoint.referensiHarga,
+    path: endpointConstant.referensiHarga,
     element: (
-      <RequireAuth allowedRoles={allowedRoles}>
+      <AuthMiddleware allowedRoles={allowedRoles}>
         <DashboardLayout />
-      </RequireAuth>
+      </AuthMiddleware>
     ),
     children: [
       {
-        path: endpoint.referensiHarga,
+        path: endpointConstant.referensiHarga,
         element: <ReferensiHarga />,
       },
     ],

@@ -3,17 +3,16 @@ import { useSelector } from "react-redux";
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 
+import { endpointConstant } from "../constants";
 import { Card, Progress } from "../components/elements";
 import { Table } from "../components/partials/dashboard";
-
-import endpoint from "../constants/endpoint";
 import { kontrakService } from "../services";
 
 const KontrakList = memo(() => {
   const pageTitle = "Kontrak";
   const { pathname } = useLocation();
   const { setTitle } = useOutletContext();
-  const { user, isError } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const [kontrak, setKontrak] = useState([]);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const KontrakList = memo(() => {
               </div>
               {user && user.role === "pks" && (
                 <div className="card-action">
-                  <Button variant="primary" href={endpoint.kontrakTambah}>
+                  <Button variant="primary" href={endpointConstant.kontrakTambah}>
                     Tambah
                   </Button>
                 </div>

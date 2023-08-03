@@ -3,20 +3,19 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
 
+import { roleConstant, endpointConstant } from "../../../../constants";
 import { Tiles, KontrakOut, Paper, User, Graph } from "../../../elements";
-import role from "../../../../constants/role";
-import endpoint from "../../../../constants/endpoint";
 
 const SidebarItem = memo(() => {
   const { pathname } = useLocation();
-  const { user, isError } = useSelector((state) => state.auth);
-  const allowedRolesRantaiPasok = [role.pks, role.koperasi, role.petani];
+  const { user } = useSelector((state) => state.auth);
+  const allowedRolesRantaiPasok = [roleConstant.pks, roleConstant.koperasi, roleConstant.petani];
 
   return (
     <Accordion as="ul" className="navbar-nav iq-main-menu">
       {user && allowedRolesRantaiPasok.includes(user.role) && (
-        <li className={`${pathname === endpoint.dashboard && "active"} nav-item `}>
-          <Link className={`${pathname === endpoint.dashboard && "active"} nav-link `} aria-current="page" to={endpoint.dashboard}>
+        <li className={`${pathname === endpointConstant.dashboard && "active"} nav-item `}>
+          <Link className={`${pathname === endpointConstant.dashboard && "active"} nav-link `} aria-current="page" to={endpointConstant.dashboard}>
             <i className="icon">
               <Tiles />
             </i>
@@ -26,8 +25,8 @@ const SidebarItem = memo(() => {
       )}
 
       {/* Referensi Harga */}
-      <li className={`${pathname === endpoint.referensiHarga && "active"} nav-item `}>
-        <Link className={`${pathname === endpoint.referensiHarga && "active"} nav-link `} aria-current="page" to={endpoint.referensiHarga}>
+      <li className={`${pathname === endpointConstant.referensiHarga && "active"} nav-item `}>
+        <Link className={`${pathname === endpointConstant.referensiHarga && "active"} nav-link `} aria-current="page" to={endpointConstant.referensiHarga}>
           <i className="icon">
             <Graph />
           </i>
@@ -37,8 +36,8 @@ const SidebarItem = memo(() => {
 
       {user && allowedRolesRantaiPasok.includes(user.role) && (
         <>
-          <li className={`${pathname === endpoint.kontrak && "active"} nav-item `}>
-            <Link className={`${pathname === endpoint.kontrak && "active"} nav-link `} aria-current="page" to={endpoint.kontrak}>
+          <li className={`${pathname === endpointConstant.kontrak && "active"} nav-item `}>
+            <Link className={`${pathname === endpointConstant.kontrak && "active"} nav-link `} aria-current="page" to={endpointConstant.kontrak}>
               <i className="icon">
                 <KontrakOut />
               </i>
@@ -46,8 +45,8 @@ const SidebarItem = memo(() => {
             </Link>
           </li>
 
-          <li className={`${pathname === endpoint.laporan && "active"} nav-item `}>
-            <Link className={`${pathname === endpoint.laporan && "active"} nav-link `} aria-current="page" to={endpoint.laporan}>
+          <li className={`${pathname === endpointConstant.laporan && "active"} nav-item `}>
+            <Link className={`${pathname === endpointConstant.laporan && "active"} nav-link `} aria-current="page" to={endpointConstant.laporan}>
               <i className="icon">
                 <Paper />
               </i>
@@ -57,8 +56,8 @@ const SidebarItem = memo(() => {
         </>
       )}
 
-      <li className={`${pathname === endpoint.profil && "active"} nav-item `}>
-        <Link className={`${pathname === endpoint.profil && "active"} nav-link `} aria-current="page" to={"/profil"}>
+      <li className={`${pathname === endpointConstant.profil && "active"} nav-item `}>
+        <Link className={`${pathname === endpointConstant.profil && "active"} nav-link `} aria-current="page" to={"/profil"}>
           <i className="icon">
             <User />
           </i>

@@ -12,8 +12,7 @@ const NotFound = () => {
       <div className="gradient">
         <Container>
           <Image src={error404} className="img-fluid mb-4 w-50" alt="" />
-          <h2 className="mb-0 mt-4 text-white">Halaman Tidak Ditemukan</h2>
-          <p className="mt-2 text-white">Halaman yang diminta tidak tersedia</p>
+          <h2 className="my-4 text-white">Halaman Tidak Ditemukan</h2>
           <Button className="bg-white text-primary d-inline-flex align-items-center" onClick={() => navigate(-1)}>
             Kembali
           </Button>

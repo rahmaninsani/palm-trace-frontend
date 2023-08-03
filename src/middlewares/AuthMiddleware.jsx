@@ -3,27 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GetMe } from "../features/authSlice";
+import { endpointConstant } from "../constants";
 
-const RequireAuth = ({ allowedRoles, children }) => {
+const AuthMiddleware = ({ allowedRoles = [], children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isError } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(GetMe());
-  }, [dispatch, isError, navigate]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isError) {
-      navigate("/login");
+      navigate(endpointConstant.login, { replace: true });
     }
 
     if (user && !allowedRoles.includes(user.role)) {
-      navigate(`/`);
+      navigate(endpointConstant.tidakDitemukan, { replace: true });
     }
-  }, [isError, navigate, user, allowedRoles]);
+  }, [isError, user, navigate]);
 
   return children;
 };
 
-export default RequireAuth;
+export default AuthMiddleware;

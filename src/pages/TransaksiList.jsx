@@ -2,10 +2,9 @@ import React, { memo } from "react";
 import { Nav, Tab, Button } from "react-bootstrap";
 import { useLocation, useParams, Link } from "react-router-dom";
 
+import { endpointConstant } from "../constants";
 import { TransaksiCard } from "../components/partials/dashboard";
 import { Card } from "../components/elements";
-
-import endpoint from "../constants/endpoint";
 import { formatTime } from "../utils";
 import { transaksiService } from "../services";
 

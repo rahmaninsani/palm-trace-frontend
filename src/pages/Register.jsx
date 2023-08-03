@@ -13,7 +13,7 @@ import { authService } from "../services";
 import auth5 from "../assets/images/auth/05.png";
 
 const Register = memo(() => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, message } = useSelector((state) => state.auth);
 

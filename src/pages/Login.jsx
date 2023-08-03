@@ -5,17 +5,15 @@ import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { roleConstant, endpointConstant, messageConstant } from "../constants";
+import { endpointConstant, messageConstant } from "../constants";
 import { authSchema } from "../validations";
 import { LoginUser, reset } from "../features/authSlice";
 import { Card, Alert, ButtonLoading } from "../components/elements";
 import auth1 from "../assets/images/auth/01.png";
 
 const Login = memo(() => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isSuccess, isError, message } = useSelector((state) => state.auth);
-
+  const { isLoading, isError, message } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -27,20 +25,10 @@ const Login = memo(() => {
   };
 
   useEffect(() => {
-    if (user && isSuccess) {
-      let home = endpointConstant.dashboard;
-
-      if (user.role === roleConstant.dinas) {
-        home = endpointConstant.referensiHarga;
-      }
-
-      navigate(home, { replace: true });
-    }
-
     if (message !== messageConstant.registerSuccess) {
       dispatch(reset());
     }
-  }, [user, isSuccess, navigate, dispatch]);
+  }, [dispatch]);
 
   return (
     <>
@@ -53,7 +41,7 @@ const Login = memo(() => {
                   <Card.Body>
                     <h2 className="mb-4 text-center">Login</h2>
                     <Form onSubmit={handleSubmit(onSubmit)}>
-                      {isError && <Alert type="danger" message={message} />}
+                      {isError && message && <Alert type="danger" message={message} />}
                       {!isError && message && <Alert type="success" message={message} />}
                       <Row>
                         <Col lg="12">

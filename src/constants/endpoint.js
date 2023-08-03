@@ -20,6 +20,8 @@ const endpoint = {
   laporan: "/laporan",
 
   profil: "/profil",
+
+  tidakDitemukan: "/tidak-ditemukan",
 };
 
 export default endpoint;

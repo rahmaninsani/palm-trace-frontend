@@ -1,24 +1,24 @@
 import React from "react";
 
-import endpoint from "../constants/endpoint";
-import { CheckUser } from "../utils";
+import { endpointConstant } from "../constants";
+import { IsLoggedInMiddleware } from "../middlewares";
 import { Register, Login } from "../pages";
 
 const AuthRouter = [
   {
-    path: endpoint.register,
+    path: endpointConstant.register,
     element: (
-      <CheckUser>
+      <IsLoggedInMiddleware>
         <Register />
-      </CheckUser>
+      </IsLoggedInMiddleware>
     ),
   },
   {
-    path: endpoint.login,
+    path: endpointConstant.login,
     element: (
-      <CheckUser>
+      <IsLoggedInMiddleware>
         <Login />
-      </CheckUser>
+      </IsLoggedInMiddleware>
     ),
   },
 ];

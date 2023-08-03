@@ -1,23 +1,22 @@
 import React from "react";
 
-import role from "../constants/role";
-import endpoint from "../constants/endpoint";
-import { RequireAuth } from "../utils";
+import { roleConstant, endpointConstant } from "../constants";
+import AuthMiddleware from "../middlewares/AuthMiddleware"; // Perubahan di sini
 import DashboardLayout from "../layout/DashboardLayout";
 import { Dashboard } from "../pages";
 
-const allowedRoles = [role.pks, role.koperasi, role.petani];
+const allowedRoles = [roleConstant.pks, roleConstant.koperasi, roleConstant.petani];
 const DashboardRouter = [
   {
-    path: endpoint.dashboard,
+    path: endpointConstant.dashboard,
     element: (
-      <RequireAuth allowedRoles={allowedRoles}>
+      <AuthMiddleware allowedRoles={allowedRoles}>
         <DashboardLayout />
-      </RequireAuth>
+      </AuthMiddleware>
     ),
     children: [
       {
-        path: endpoint.dashboard,
+        path: endpointConstant.dashboard,
         element: <Dashboard />,
       },
     ],

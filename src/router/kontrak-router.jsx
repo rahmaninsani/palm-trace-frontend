@@ -1,47 +1,46 @@
 import React from "react";
 
-import role from "../constants/role";
-import endpoint from "../constants/endpoint";
-import { RequireAuth } from "../utils";
+import { roleConstant, endpointConstant } from "../constants";
+import { AuthMiddleware } from "../middlewares";
 import DashboardLayout from "../layout/DashboardLayout";
 import { KontrakList, KontrakAdd, KontrakDetail, DeliveryOrderDetail, DeliveryOrderAdd, TransaksiAdd, TransaksiDetail } from "../pages";
 
-const allowedRoles = [role.pks, role.koperasi, role.petani];
+const allowedRoles = [roleConstant.pks, roleConstant.koperasi, roleConstant.petani];
 const KontrakRouter = [
   {
-    path: endpoint.kontrak,
+    path: endpointConstant.kontrak,
     element: (
-      <RequireAuth allowedRoles={allowedRoles}>
+      <AuthMiddleware allowedRoles={allowedRoles}>
         <DashboardLayout />
-      </RequireAuth>
+      </AuthMiddleware>
     ),
     children: [
       {
-        path: endpoint.kontrak,
+        path: endpointConstant.kontrak,
         element: <KontrakList />,
       },
       {
-        path: endpoint.kontrakTambah,
+        path: endpointConstant.kontrakTambah,
         element: <KontrakAdd />,
       },
       {
-        path: endpoint.kontrakDetail,
+        path: endpointConstant.kontrakDetail,
         element: <KontrakDetail />,
       },
       {
-        path: endpoint.deliveryOrderTambah,
+        path: endpointConstant.deliveryOrderTambah,
         element: <DeliveryOrderAdd />,
       },
       {
-        path: endpoint.deliveryOrderDetail,
+        path: endpointConstant.deliveryOrderDetail,
         element: <DeliveryOrderDetail />,
       },
       {
-        path: endpoint.transaksiTambah,
+        path: endpointConstant.transaksiTambah,
         element: <TransaksiAdd />,
       },
       {
-        path: endpoint.transaksiDetail,
+        path: endpointConstant.transaksiDetail,
         element: <TransaksiDetail />,
       },
     ],

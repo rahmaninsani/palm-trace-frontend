@@ -3,16 +3,15 @@ import { useSelector } from "react-redux";
 import { useLocation, useParams, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
+import { endpointConstant } from "../constants";
 import { Card, Progress } from "../components/elements";
 import { Table } from "../components/partials/dashboard";
-
-import endpoint from "../constants/endpoint";
 import { formatTime } from "../utils";
 import { deliveryOrderService } from "../services";
 
 const DeliveryOrderList = memo(() => {
   const { pathname } = useLocation();
-  const { user, isError } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { idKontrak } = useParams();
   const [deliveryOrder, setDeliveryOrder] = useState([]);
 
@@ -40,7 +39,7 @@ const DeliveryOrderList = memo(() => {
 
         {user && user.role === "pks" && (
           <div className="card-action">
-            <Button variant="primary" href={endpoint.deliveryOrderTambah}>
+            <Button variant="primary" href={endpointConstant.deliveryOrderTambah}>
               Tambah
             </Button>
           </div>
