@@ -13,6 +13,12 @@ const schemaError = (errors) => {
       case "string.email":
         err.message = `${err.local.label} tidak valid`;
         break;
+      case "any.only":
+        err.message = `${err.local.label} tidak valid`;
+        break;
+      case "string.pattern.base":
+        err.message = `${err.local.label} tidak valid`;
+        break;
       default:
         break;
     }

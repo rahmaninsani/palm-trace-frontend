@@ -8,7 +8,7 @@ import Scrollbar from "smooth-scrollbar";
 import { Logo } from "../../../elements";
 
 const Sidebar = memo(() => {
-  const appName = "Palm Safe";
+  const appName = "Palm Trace";
 
   const minisidebar = () => {
     document.getElementsByTagName("ASIDE")[0].classList.toggle("sidebar-mini");

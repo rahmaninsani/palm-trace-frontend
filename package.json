@@ -1,8 +1,9 @@
 {
-  "name": "palm-safe",
-  "private": true,
-  "version": "0.0.0",
+  "name": "palm-trace",
+  "version": "1.0.0",
+  "description": "Palm Trace Frontend",
   "type": "module",
+  "main": "src/main.jsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Row, Col, Image, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
+
+import { roleConstant, endpointConstant, messageConstant } from "../constants";
 import { authSchema } from "../validations";
-
-import role from "../constants/role";
-import endpoint from "../constants/endpoint";
 import { LoginUser, reset } from "../features/authSlice";
-import { Card, ButtonLoading } from "../components/elements";
-
+import { Card, Alert, ButtonLoading } from "../components/elements";
 import auth1 from "../assets/images/auth/01.png";
 
-const Login = () => {
+const Login = memo(() => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isLoading, isSuccess, isError, message } = useSelector((state) => state.auth);
@@ -22,7 +20,7 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ resolver: joiResolver(authSchema.login) });
+  } = useForm({ resolver: joiResolver(authSchema.login), mode: "all" });
 
   const onSubmit = (data) => {
     dispatch(LoginUser(data));
@@ -30,16 +28,18 @@ const Login = () => {
 
   useEffect(() => {
     if (user && isSuccess) {
-      let home = endpoint.dashboard;
+      let home = endpointConstant.dashboard;
 
-      if (user.role === role.dinas) {
-        home = endpoint.referensiHarga;
+      if (user.role === roleConstant.dinas) {
+        home = endpointConstant.referensiHarga;
       }
 
       navigate(home, { replace: true });
     }
 
-    dispatch(reset());
+    if (message !== messageConstant.registerSuccess) {
+      dispatch(reset());
+    }
   }, [user, isSuccess, navigate, dispatch]);
 
   return (
@@ -53,7 +53,8 @@ const Login = () => {
                   <Card.Body>
                     <h2 className="mb-4 text-center">Login</h2>
                     <Form onSubmit={handleSubmit(onSubmit)}>
-                      {isError && <p className="text-danger text-center">{message}</p>}
+                      {isError && <Alert type="danger" message={message} />}
+                      {!isError && message && <Alert type="success" message={message} />}
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
@@ -70,6 +71,7 @@ const Login = () => {
                           </Form.Group>
                         </Col>
                       </Row>
+
                       <div className="d-flex justify-content-center">
                         {isLoading ? (
                           <ButtonLoading />
@@ -82,7 +84,7 @@ const Login = () => {
 
                       <p className="mt-3 text-center">
                         Belum mempunyai akun?{" "}
-                        <Link to="/register" className="text-underline">
+                        <Link to={endpointConstant.register} className="text-underline">
                           Registrasi
                         </Link>
                       </p>
@@ -109,6 +111,6 @@ const Login = () => {
       </section>
     </>
   );
-};
+});
 
 export default Login;

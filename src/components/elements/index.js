@@ -17,3 +17,4 @@ export { default as RoundedAvatar } from "./RoundedAvatar";
 export { default as Card } from "./Card";
 export { default as Progress } from "./Progress";
 export { default as ButtonLoading } from "./ButtonLoading";
+export { default as Alert } from "./Alert";

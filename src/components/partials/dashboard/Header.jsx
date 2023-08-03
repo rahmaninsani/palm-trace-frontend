@@ -56,7 +56,7 @@ const Header = memo(() => {
         <Container fluid className="navbar-inner">
           <Link to={`/${role}`} className="navbar-brand">
             <Logo color={true} />
-            <h4 className="logo-title">Palm Safe</h4>
+            <h4 className="logo-title">Palm Trace</h4>
           </Link>
 
           <div className="sidebar-toggle" data-toggle="sidebar" data-active="true" onClick={minisidebar}>

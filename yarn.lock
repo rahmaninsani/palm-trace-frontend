@@ -10536,9 +10536,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"palm-safe@workspace:.":
+"palm-trace@workspace:.":
   version: 0.0.0-use.local
-  resolution: "palm-safe@workspace:."
+  resolution: "palm-trace@workspace:."
   dependencies:
     "@fortawesome/fontawesome-free": ^6.4.0
     "@fullcalendar/bootstrap": ^6.1.6

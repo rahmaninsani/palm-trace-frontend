@@ -1,56 +1,56 @@
-import React, { useState } from "react";
-import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import React, { memo, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
 
+import { roleConstant, endpointConstant, messageConstant } from "../constants";
+import { authSchema } from "../validations";
+import { reset, setMessage } from "../features/authSlice";
+import { Card, Alert, ButtonLoading } from "../components/elements";
 import { authService } from "../services";
-
-import { Card } from "../components/elements";
 import auth5 from "../assets/images/auth/05.png";
 
-const Register = () => {
+const Register = memo(() => {
   let navigate = useNavigate();
-  const { isLoading } = useSelector((state) => state.auth);
-  const [msg, setMsg] = useState("");
-  const options = [
-    {
-      id: "petani",
-      value: "Petani",
-    },
-    {
-      id: "koperasi",
-      value: "Koperasi",
-    },
-    {
-      id: "pks",
-      value: "Pabrik Kelapa Sawit",
-    },
-  ];
-  const [registerValue, setRegisterValue] = useState({
-    role: "",
-    nama: "",
-    alamat: "",
-    nomorTelepon: "",
-    email: "",
-    password: "",
-  });
+  const dispatch = useDispatch();
+  const { isLoading, message } = useSelector((state) => state.auth);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterValue({ ...registerValue, [name]: value });
-  };
+  useEffect(() => {
+    dispatch(reset());
+  }, []);
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ resolver: joiResolver(authSchema.register), mode: "all" });
+
+  const onSubmit = async (data) => {
     try {
-      await authService.register(registerValue);
-      navigate("/login");
+      await authService.register(data);
+      dispatch(setMessage(messageConstant.registerSuccess));
+      navigate(endpointConstant.login, { replace: true });
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.errors);
-      }
+      dispatch(setMessage(error.response.data.message));
     }
   };
+
+  const roles = [
+    {
+      id: roleConstant.petani,
+      description: "Petani",
+    },
+    {
+      id: roleConstant.koperasi,
+      description: "Koperasi",
+    },
+    {
+      id: roleConstant.pks,
+      description: "Pabrik Kelapa Sawit",
+    },
+  ];
 
   return (
     <>
@@ -66,54 +66,66 @@ const Register = () => {
                 <Card className="card-transparent auth-card shadow-none d-flex justify-content-center mb-0">
                   <Card.Body>
                     <h2 className="mb-4 text-center">Registrasi</h2>
-                    <p className="text-danger text-center">{msg}</p>
-                    <Form onSubmit={handleOnSubmit}>
+                    {message && <Alert type="danger" message={message} />}
+                    <Form onSubmit={handleSubmit(onSubmit)}>
                       <Row>
                         <Form.Group className="col-sm-12 form-group">
-                          <Form.Label>Jenis Akun</Form.Label>
-                          <select className="form-select mb-3 shadow-none" name="role" value={registerValue.role} onChange={handleInputChange}>
+                          <Form.Label htmlFor="role">Jenis Akun</Form.Label>
+                          <Form.Control as="select" type="select" id="role" className="form-select shadow-none" isInvalid={!!errors.role} {...register("role")}>
                             <option defaultValue>Pilih Jenis Akun</option>
-                            {options.map((value) => (
-                              <option value={value.id} key={value.value}>
-                                {value.value}
+                            {roles.map((role) => (
+                              <option key={role.id} value={role.id}>
+                                {role.description}
                               </option>
                             ))}
-                          </select>
+                          </Form.Control>
+                          {errors.role && <Form.Control.Feedback type="invalid">{errors.role.message}</Form.Control.Feedback>}
                         </Form.Group>
 
                         <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="nama">Nama</Form.Label>
-                          <Form.Control type="text" name="nama" value={registerValue.nama} onChange={handleInputChange} />
+                          <Form.Control type="text" id="nama" isInvalid={!!errors.nama} {...register("nama")} />
+                          {errors.nama && <Form.Control.Feedback type="invalid">{errors.nama.message}</Form.Control.Feedback>}
                         </Form.Group>
 
                         <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="alamat">Alamat</Form.Label>
-                          <Form.Control type="text" name="alamat" value={registerValue.alamat} onChange={handleInputChange} />
+                          <Form.Control type="text" id="alamat" isInvalid={!!errors.alamat} {...register("alamat")} />
+                          {errors.alamat && <Form.Control.Feedback type="invalid">{errors.alamat.message}</Form.Control.Feedback>}
                         </Form.Group>
 
                         <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="nomorTelepon">Nomor Telepon</Form.Label>
-                          <Form.Control type="text" name="nomorTelepon" value={registerValue.nomorTelepon} onChange={handleInputChange} />
+                          <Form.Control type="tel" id="nomorTelepon" isInvalid={!!errors.nomorTelepon} {...register("nomorTelepon")} />
+                          {errors.nomorTelepon && <Form.Control.Feedback type="invalid">{errors.nomorTelepon.message}</Form.Control.Feedback>}
                         </Form.Group>
 
                         <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="email">Email</Form.Label>
-                          <Form.Control type="email" name="email" value={registerValue.email} onChange={handleInputChange} />
+                          <Form.Control type="email" id="email" isInvalid={!!errors.email} {...register("email")} />
+                          {errors.email && <Form.Control.Feedback type="invalid">{errors.email.message}</Form.Control.Feedback>}
                         </Form.Group>
 
                         <Form.Group className="col-sm-12 form-group">
                           <Form.Label htmlFor="password">Password</Form.Label>
-                          <Form.Control type="password" name="password" value={registerValue.password} onChange={handleInputChange} />
+                          <Form.Control type="password" id="password" isInvalid={!!errors.password} {...register("password")} />
+                          {errors.password && <Form.Control.Feedback type="invalid">{errors.password.message}</Form.Control.Feedback>}
                         </Form.Group>
                       </Row>
+
                       <div className="d-flex justify-content-center">
-                        <Button type="submit" variant="btn btn-primary">
-                          {isLoading ? "Loading..." : "Daftar"}
-                        </Button>
+                        {isLoading ? (
+                          <ButtonLoading />
+                        ) : (
+                          <Button type="submit" variant="btn btn-primary" disabled={!isValid}>
+                            Daftar
+                          </Button>
+                        )}
                       </div>
+
                       <p className="mt-3 text-center">
                         Sudah mempunyai akun?{" "}
-                        <Link to="/login" className="text-underline">
+                        <Link to={endpointConstant.login} className="text-underline">
                           Login
                         </Link>
                       </p>
@@ -137,6 +149,6 @@ const Register = () => {
       </section>
     </>
   );
-};
+});
 
 export default Register;
