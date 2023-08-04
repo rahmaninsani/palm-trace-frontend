@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+import React, { memo, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Nav, Tab, Button } from "react-bootstrap";
 import { useLocation, useParams, Link } from "react-router-dom";
 
@@ -9,7 +10,7 @@ import { formatTime } from "../utils";
 import { transaksiService } from "../services";
 
 const TransaksiList = memo(() => {
-  const { pathname } = useLocation();
+  const { user } = useSelector((state) => state.auth);
   const { idKontrak, idDeliveryOrder } = useParams();
   const [transaksi, setTransaksi] = useState([]);
 
@@ -22,7 +23,7 @@ const TransaksiList = memo(() => {
       const response = await transaksiService.findAll({ idKontrak, idDeliveryOrder });
       setTransaksi(response.data);
     } catch (error) {
-      console.error("Gagal mengambil data transaksi: ", error);
+      console.log(error);
     }
   };
 
@@ -52,18 +53,24 @@ const TransaksiList = memo(() => {
               </Nav.Item>
             </Nav>
           </div>
-          <div className="card-action">
-            <Button variant="primary" href={`${pathname}/tambah`}>
-              Tambah
-            </Button>
-          </div>
+          {user && user.role === "koperasi" && (
+            <div className="card-action">
+              <Button variant="primary" href={`${endpointConstant.kontrak}/${idKontrak}/${idDeliveryOrder}/tambah`}>
+                Tambah
+              </Button>
+            </div>
+          )}
         </Card.Header>
 
         <Card.Body>
-          <Tab.Content className="transaksi-content">
-            {/* Perlu Konfirmasi */}
-            {/* <TransaksiCard tabKey="perlu-konfirmasi" transactions={transactions["perluKonfirmasi"]} /> */}
-          </Tab.Content>
+          {transaksi.length > 0 ? (
+            <Tab.Content className="transaksi-content">
+              {/* Perlu Konfirmasi */}
+              {/* <TransaksiCard tabKey="perlu-konfirmasi" transactions={transactions["perluKonfirmasi"]} /> */}
+            </Tab.Content>
+          ) : (
+            <p className="text-center">Tida ada transaksi</p>
+          )}
         </Card.Body>
       </Tab.Container>
     </Card>

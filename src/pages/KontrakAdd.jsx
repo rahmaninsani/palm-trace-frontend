@@ -51,7 +51,9 @@ const KontrakAdd = memo(() => {
         harga: data.harga,
         kuantitas: data.kuantitas,
       };
+
       await kontrakService.create(payload);
+
       dispatch(setMessage(messageConstant.kontrakSuccess));
       navigate(endpointConstant.kontrak, { replace: true });
     } catch (error) {

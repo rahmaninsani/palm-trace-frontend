@@ -1,12 +1,12 @@
 import { api } from "../config";
 
 const create = async (payload) => {
-  const result = await api.post(`/kontrak/${payload.idKontrak}/delivery-order`, payload.formValue);
+  const result = await api.post(`/kontrak/${payload.idKontrak}/delivery-order`, payload.data);
   return result.data;
 };
 
 const confirm = async (payload) => {
-  const result = await api.put(`/kontrak/${payload.idKontrak}/delivery-order/${payload.idDeliveryOrder}`, payload.formValue);
+  const result = await api.put(`/kontrak/${payload.idKontrak}/delivery-order/${payload.idDeliveryOrder}`, payload.data);
   return result.data;
 };
 

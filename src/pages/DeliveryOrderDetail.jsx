@@ -1,26 +1,26 @@
-import React, { useState, useEffect, memo } from "react";
-import { useSelector } from "react-redux";
+import React, { memo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
-import { roleConstant } from "../constants";
-import TransaksiList from "./TransaksiList";
+import { roleConstant, messageConstant } from "../constants";
+import { setMessage } from "../features/authSlice";
 import { Card, Progress } from "../components/elements";
+import { FormKonfirmasi } from "../components/partials";
+import TransaksiList from "./TransaksiList";
 import { formatTime, formatCurrency } from "../utils";
 import { deliveryOrderService } from "../services";
 
 const DeliveryOrderDetail = memo(() => {
   const pageTitle = "Detail Delivery Order";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isError, message } = useSelector((state) => state.auth);
   const { setTitle } = useOutletContext();
-  const { user, isError } = useSelector((state) => state.auth);
   const { idKontrak, idDeliveryOrder } = useParams();
   const [deliveryOrderDetail, setDeliveryOrderDetail] = useState({});
   const [showModalPesan, setShowModalPesan] = useState(false);
-  const [formValue, setFormValue] = useState({
-    status: -1,
-    pesan: "",
-  });
 
   useEffect(() => {
     setTitle(pageTitle);
@@ -36,31 +36,48 @@ const DeliveryOrderDetail = memo(() => {
     }
   };
 
-  const onInputChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormValue((prevState) => ({
-      ...prevState,
-      [name]: name === "status" && value > 0 ? parseFloat(value) : value,
-    }));
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      await deliveryOrderService.confirm({ idKontrak, idDeliveryOrder, formValue });
-      navigate(0);
+      const payload = {
+        idKontrak,
+        idDeliveryOrder,
+        data,
+      };
+
+      await deliveryOrderService.confirm(payload);
+
+      dispatch(setMessage(messageConstant.deliveryOrderConfirm));
+      findOneDeliveryOrder();
     } catch (error) {
-      console.log(error);
+      dispatch(setMessage(error.response.data.message));
     }
   };
+
+  useEffect(() => {
+    if (isError && message) {
+      toast.error(message, {
+        toastId: "error",
+        position: toast.POSITION.TOP_RIGHT,
+        onClose: () => dispatch(setMessage("")),
+      });
+    }
+
+    if (!isError && message) {
+      toast.success(message, {
+        toastId: "success",
+        position: toast.POSITION.TOP_RIGHT,
+        onClose: () => dispatch(setMessage("")),
+      });
+    }
+  }, [isError, message]);
 
   const pemenuhanPercentage = (deliveryOrderDetail?.kuantitasTerpenuhi / deliveryOrderDetail?.kuantitas) * 100;
 
   return (
     <>
-      {/* Detail Kontrak */}
+      <ToastContainer />
+
+      {/* Detail Delivery Order */}
       <Card>
         <Card.Header>
           <div className="card-action">
@@ -72,7 +89,7 @@ const DeliveryOrderDetail = memo(() => {
 
         <Card.Body>
           <Row>
-            {/* Kontrak */}
+            {/* Delivery Order */}
             <Col md="4">
               <div className="mt-2">
                 <h6 className="mb-1">Nomor</h6>
@@ -168,41 +185,7 @@ const DeliveryOrderDetail = memo(() => {
       </Card>
 
       {/* Konfirmasi */}
-      {user && user.role === roleConstant.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && (
-        <Card>
-          <Card.Header className="mx-auto">
-            <h5>Konfirmasi</h5>
-          </Card.Header>
-
-          <hr className="hr-horizontal" />
-
-          <Form onSubmit={onSubmit}>
-            <Card.Body>
-              <Row>
-                <Form.Group className="col-sm-12 form-group">
-                  <Form.Label htmlFor="status">Status</Form.Label>
-                  <select className="form-select mb-3 shadow-none" id="status" name="status" value={formValue.status} onChange={onInputChange}>
-                    <option defaultValue>Pilih Status</option>
-                    <option value={1}>Setuju</option>
-                    <option value={2}>Tolak</option>
-                  </select>
-                </Form.Group>
-
-                <Form.Group className="col-sm-12 form-group">
-                  <Form.Label htmlFor="pesan">Pesan</Form.Label>
-                  <Form.Control as="textarea" rows={4} id="pesan" name="pesan" value={formValue.pesan} onChange={onInputChange} />
-                </Form.Group>
-              </Row>
-            </Card.Body>
-
-            <Card.Footer className="text-center">
-              <Button type="submit" variant="btn btn-primary">
-                Simpan
-              </Button>
-            </Card.Footer>
-          </Form>
-        </Card>
-      )}
+      {user && user.role === roleConstant.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && <FormKonfirmasi onSubmit={onSubmit} />}
 
       {/* Daftar Transaksi */}
       {deliveryOrderDetail?.status === "Disetujui" && <TransaksiList />}
