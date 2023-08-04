@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useOutletContext, Link } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
@@ -34,7 +34,7 @@ const KontrakList = memo(() => {
   useEffect(() => {
     if (isError && message) {
       toast.error(message, {
-        toastId: "kontrakError",
+        toastId: "error",
         position: toast.POSITION.TOP_RIGHT,
         onClose: () => dispatch(setMessage("")),
       });
@@ -42,7 +42,7 @@ const KontrakList = memo(() => {
 
     if (!isError && message) {
       toast.success(message, {
-        toastId: "kontrakSuccess",
+        toastId: "success",
         position: toast.POSITION.TOP_RIGHT,
         onClose: () => dispatch(setMessage("")),
       });

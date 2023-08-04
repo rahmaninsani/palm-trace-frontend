@@ -1,13 +1,13 @@
 import React, { memo } from "react";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import { Row, Col, Tab } from "react-bootstrap";
 
-import { Card } from "../../elements";
+import { endpointConstant } from "../../../constants";
 import { formatCurrency } from "../../../utils";
+import { Card } from "../../elements";
 
 const TransaksiCard = memo(({ tabKey, transactions }) => {
-  const { pathname } = useLocation();
+  const { idKontrak, idDeliveryOrder } = useParams();
 
   return (
     <Tab.Pane eventKey={tabKey} id={`transaksi-${tabKey}`}>
@@ -19,7 +19,7 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
                 <span className="h6">{transaction.nomor}</span>
                 <span className="ms-2 fs-6">{transaction.tanggal}</span>
               </div>
-              <h6 className={`text-${transaction.status === "Ditolak" ? "danger" : transaction.status === "Selesai" ? "success" : "info"}`}>{transaction.status}</h6>
+              <h6 className={`text-${transaction.status.toLowerCase().includes("ditolak") ? "danger" : transaction.status === "Selesai" ? "success" : "info"}`}>{transaction.status}</h6>
             </div>
 
             <hr className="hr-vertical" />
@@ -27,7 +27,7 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 <h6>Petani</h6>
-                <p>{transaction.petani}</p>
+                <p>{transaction.namaPetani}</p>
               </div>
             </div>
 
@@ -40,15 +40,7 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
                     <h6>Kuantitas</h6>
                   </Col>
                   <Col sm="6">
-                    <p>{transaction.kuantitas} kg</p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm="6">
-                    <h6>Harga Per Kg</h6>
-                  </Col>
-                  <Col sm="6">
-                    <p>Rp{formatCurrency(transaction.harga)}</p>
+                    <p>{transaction.totalKuantitas} kg</p>
                   </Col>
                 </Row>
                 <Row>
@@ -62,7 +54,7 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
               </Col>
 
               <Col md="6" className="text-end">
-                <Link to={`${pathname}/${transaction.nomor}`}>Lihat Detail Transaksi</Link>
+                <Link to={`${endpointConstant.kontrak}/${idKontrak}/${idDeliveryOrder}/${transaction.id}`}>Lihat Detail Transaksi</Link>
               </Col>
             </Row>
           </Card.Body>

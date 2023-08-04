@@ -5,10 +5,10 @@ import { Form, Modal, Button, InputGroup, Table } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { messageConstant } from "../constants";
+import { endpointConstant, messageConstant } from "../constants";
 import { transaksiSchema } from "../validations";
 import { setMessage } from "../features/authSlice";
-import { Card, ButtonLoading, EditIcon, DeleteIcon } from "../components/elements";
+import { Card, EditIcon, DeleteIcon } from "../components/elements";
 import { formatCurrency } from "../utils";
 import { transaksiService } from "../services";
 
@@ -137,7 +137,7 @@ const TransaksiAdd = memo(() => {
       await transaksiService.create(payload);
 
       dispatch(setMessage(messageConstant.transaksiSuccess));
-      navigate(-1, { replace: true });
+      navigate(`${endpointConstant.kontrak}/${idKontrak}/${idDeliveryOrder}`, { replace: true });
     } catch (error) {
       dispatch(setMessage(error.response.data.message));
     }
@@ -146,7 +146,7 @@ const TransaksiAdd = memo(() => {
   return (
     <>
       <Card>
-        <Card.Header className="d-flex justify-content-between align-transaksiItems-center">
+        <Card.Header className="d-flex justify-content-between align-items-center">
           <div className="header-title">
             <h4 className="card-title">Item Transaksi</h4>
           </div>
@@ -185,8 +185,8 @@ const TransaksiAdd = memo(() => {
                       <td className="text-end">{formatCurrency(item.kuantitas)} kg</td>
                       <td className="text-end">Rp{formatCurrency(item.harga)}</td>
                       <td className="text-end">Rp{formatCurrency(item.kuantitas * item.harga)}</td>
-                      <td className="text-center">
-                        <div className="flex align-transaksiItems-center list-user-action">
+                      <td className="text-end">
+                        <div className="flex align-items-center list-user-action">
                           <Button variant="warning" size="sm" className="btn-icon" onClick={() => setSelectedItem(item)}>
                             <EditIcon />
                           </Button>{" "}
