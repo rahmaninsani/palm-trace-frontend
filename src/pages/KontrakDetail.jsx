@@ -70,7 +70,7 @@ const KontrakDetail = memo(() => {
     }
   }, [isError, message]);
 
-  const pemenuhanPercentage = (kontrakDetail?.kuantitasTerpenuhi / kontrakDetail?.kuantitas) * 100;
+  const pemenuhanPercentage = parseFloat(((kontrakDetail?.kuantitasTerpenuhi / kontrakDetail?.kuantitas) * 100).toFixed(2));
 
   return (
     <>
@@ -178,7 +178,7 @@ const KontrakDetail = memo(() => {
         {kontrakDetail?.status === "Disetujui" && (
           <Card.Footer>
             <h6 className="mb-3">Pemenuhan {pemenuhanPercentage}%</h6>
-            <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={pemenuhanPercentage} minvalue={0} maxvalue={100} style={{ height: "6px" }} />
+            <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={pemenuhanPercentage} minvalue={0} maxvalue={100} style={{ height: "12px" }} />
           </Card.Footer>
         )}
       </Card>

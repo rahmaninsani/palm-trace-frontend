@@ -62,7 +62,7 @@ const DeliveryOrderList = memo(() => {
                       <div className="mb-2 d-flex align-items-center">
                         <h6>{(item.kuantitasTerpenuhi / item.kuantitas) * 100}%</h6>
                       </div>
-                      <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={(item.kuantitasTerpenuhi / item.kuantitas) * 100} minvalue={0} maxvalue={100} style={{ height: "4px" }} />
+                      <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={parseFloat(((item.kuantitasTerpenuhi / item.kuantitas) * 100).toFixed(2))} minvalue={0} maxvalue={100} style={{ height: "8px" }} />
                     </div>
                   )}
                 </td>

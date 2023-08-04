@@ -80,9 +80,9 @@ const TransaksiList = memo(() => {
           <Card.Body>
             {transaksi ? (
               <Tab.Content className="transaksi-content">
-                {transaksi.berlangsung && <TransaksiCard tabKey="berlangsung" transactions={transaksi.berlangsung} />}
-                {transaksi.berhasil && <TransaksiCard tabKey="berhasil" transactions={transaksi.berhasil} />}
-                {transaksi.tidakBerhasil && <TransaksiCard tabKey="tidakBerhasil" transactions={transaksi.tidakBerhasil} />}
+                {transaksi.berlangsung && <TransaksiCard tabKey="berlangsung" transactions={transaksi.berlangsung} user={user} />}
+                {transaksi.berhasil && <TransaksiCard tabKey="berhasil" transactions={transaksi.berhasil} user={user} />}
+                {transaksi.tidakBerhasil && <TransaksiCard tabKey="tidakBerhasil" transactions={transaksi.tidakBerhasil} user={user} />}
               </Tab.Content>
             ) : (
               <div className="text-center">

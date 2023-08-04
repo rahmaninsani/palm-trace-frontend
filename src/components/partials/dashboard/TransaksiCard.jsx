@@ -1,12 +1,12 @@
 import React, { memo } from "react";
-import { useLocation, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Row, Col, Tab } from "react-bootstrap";
 
 import { endpointConstant } from "../../../constants";
 import { formatCurrency } from "../../../utils";
 import { Card } from "../../elements";
 
-const TransaksiCard = memo(({ tabKey, transactions }) => {
+const TransaksiCard = memo(({ tabKey, transactions, user }) => {
   const { idKontrak, idDeliveryOrder } = useParams();
 
   return (
@@ -19,7 +19,9 @@ const TransaksiCard = memo(({ tabKey, transactions }) => {
                 <span className="h6">{transaction.nomor}</span>
                 <span className="ms-2 fs-6">{transaction.tanggal}</span>
               </div>
-              <h6 className={`text-${transaction.status.toLowerCase().includes("ditolak") ? "danger" : transaction.status === "Selesai" ? "success" : "info"}`}>{transaction.status}</h6>
+              <h6 className={`text-${transaction.status.toLowerCase().includes("ditolak") ? "danger" : transaction.status === "Selesai" ? "success" : transaction.status.toLowerCase().includes(user.role) ? "warning" : "info"}`}>
+                {transaction.status}
+              </h6>
             </div>
 
             <hr className="hr-vertical" />

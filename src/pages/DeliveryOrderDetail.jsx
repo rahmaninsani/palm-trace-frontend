@@ -71,7 +71,7 @@ const DeliveryOrderDetail = memo(() => {
     }
   }, [isError, message]);
 
-  const pemenuhanPercentage = (deliveryOrderDetail?.kuantitasTerpenuhi / deliveryOrderDetail?.kuantitas) * 100;
+  const pemenuhanPercentage = parseFloat(((deliveryOrderDetail?.kuantitasTerpenuhi / deliveryOrderDetail?.kuantitas) * 100).toFixed(2));
 
   return (
     <>
@@ -179,7 +179,7 @@ const DeliveryOrderDetail = memo(() => {
         {deliveryOrderDetail?.status === "Disetujui" && (
           <Card.Footer>
             <h6 className="mb-3">Pemenuhan {pemenuhanPercentage}%</h6>
-            <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={pemenuhanPercentage} minvalue={0} maxvalue={100} style={{ height: "6px" }} />
+            <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={pemenuhanPercentage} minvalue={0} maxvalue={100} style={{ height: "12px" }} />
           </Card.Footer>
         )}
       </Card>
