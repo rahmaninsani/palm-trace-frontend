@@ -1,40 +1,28 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { memo, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Row, Form, Button, InputGroup } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
 
-import { Card } from "../components/elements";
+import { endpointConstant, messageConstant } from "../constants";
+import { kontrakSchema } from "../validations";
+import { setMessage, reset } from "../features/authSlice";
+import { Card, ButtonLoading } from "../components/elements";
 import { formatCurrency } from "../utils";
-
 import { userService, kontrakService } from "../services";
 
 const KontrakAdd = memo(() => {
   const pageTitle = "Tambah Kontrak";
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
   const { setTitle } = useOutletContext();
   const [koperasi, setKoperasi] = useState([]);
-  const [totalHarga, setTotalHarga] = useState(0);
-  const [formValue, setFormValue] = useState({
-    idKoperasi: "",
-    tanggalMulai: "",
-    tanggalSelesai: "",
-    kuantitas: 0,
-    harga: 0,
-  });
-
-  useEffect(() => {
-    const kuantitas = formValue.kuantitas;
-    const harga = formValue.harga;
-    let calculatedTotalHarga = 0;
-
-    if (kuantitas > 0 && harga > 0) {
-      calculatedTotalHarga = kuantitas * harga;
-    }
-
-    setTotalHarga(calculatedTotalHarga);
-  }, [formValue.kuantitas, formValue.harga]);
 
   useEffect(() => {
     setTitle(pageTitle);
+    dispatch(reset());
     findAllKoperasi();
   }, []);
 
@@ -47,95 +35,127 @@ const KontrakAdd = memo(() => {
     }
   };
 
-  const onInputChange = (event) => {
-    const { name, value } = event.target;
+  const {
+    register,
+    setValue,
+    getValues,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({ resolver: joiResolver(kontrakSchema.create), mode: "all" });
 
-    setFormValue((prevState) => ({
-      ...prevState,
-      [name]: (name === "kuantitas" && value > 0) || (name === "harga" && value > 0) ? parseFloat(value) : value,
-    }));
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      await kontrakService.create(formValue);
-      navigate("/pks/kontrak");
+      const payload = {
+        idKoperasi: data.idKoperasi,
+        tanggalMulai: data.tanggalMulai,
+        tanggalSelesai: data.tanggalSelesai,
+        harga: data.harga,
+        kuantitas: data.kuantitas,
+      };
+      await kontrakService.create(payload);
+      dispatch(setMessage(messageConstant.kontrakSuccess));
+      navigate(endpointConstant.kontrak, { replace: true });
     } catch (error) {
-      console.log(error);
+      dispatch(setMessage(error.response.data.message));
     }
   };
 
   return (
-    <>
-      <Card>
-        <Form onSubmit={onSubmit}>
-          <Card.Body>
-            <Row>
-              {/* Select Mitra */}
-              <Form.Group className="col-sm-12 form-group">
-                <Form.Label htmlFor="idKoperasi"> Mitra</Form.Label>
-                <select className="form-select mb-3 shadow-none" id="idKoperasi" name="idKoperasi" value={formValue.idKoperasi} onChange={onInputChange}>
-                  <option defaultValue>Pilih Mitra</option>
-                  {koperasi &&
-                    koperasi.map((item) => (
-                      <option value={item.idAkun} key={item.idAkun}>
-                        {item.nama} - {item.alamat}
-                      </option>
-                    ))}
-                </select>
-              </Form.Group>
+    <Card>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Card.Body>
+          <Row>
+            <Form.Group className="col-sm-12 form-group">
+              <Form.Label htmlFor="idKoperasi"> Mitra</Form.Label>
+              <Form.Control as="select" type="select" id="idKoperasi" className="form-select shadow-none" isInvalid={!!errors.idKoperasi} {...register("idKoperasi")}>
+                <option defaultValue>Pilih Mitra</option>
+                {koperasi &&
+                  koperasi.map((item) => (
+                    <option key={item.idAkun} value={item.idAkun}>
+                      {item.nama} - {item.alamat}
+                    </option>
+                  ))}
+              </Form.Control>
+              {errors.idKoperasi && <Form.Control.Feedback type="invalid">{errors.idKoperasi.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-              {/* Tanggal Mulai */}
-              <Form.Group className="col-md-6 form-group">
-                <Form.Label htmlFor="tanggalMulai">Tanggal Mulai</Form.Label>
-                <Form.Control type="date" id="tanggalMulai" name="tanggalMulai" value={formValue.tanggalMulai} onChange={onInputChange} min={new Date().toISOString().split("T")[0]} />
-              </Form.Group>
+            <Form.Group className="col-md-6 form-group">
+              <Form.Label htmlFor="tanggalMulai">Tanggal Mulai</Form.Label>
+              <Form.Control type="date" id="tanggalMulai" isInvalid={!!errors.tanggalMulai} {...register("tanggalMulai")} min={new Date().toISOString().split("T")[0]} />
+              {errors.tanggalMulai && <Form.Control.Feedback type="invalid">{errors.tanggalMulai.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-              {/* Tanggal Selesai */}
-              <Form.Group className="col-md-6 form-group">
-                <Form.Label htmlFor="tanggalSelesai">Tanggal Selesai</Form.Label>
-                <Form.Control type="date" id="tanggalSelesai" name="tanggalSelesai" value={formValue.tanggalSelesai} onChange={onInputChange} min={new Date().toISOString().split("T")[0]} />
-              </Form.Group>
+            <Form.Group className="col-md-6 form-group">
+              <Form.Label htmlFor="tanggalSelesai">Tanggal Selesai</Form.Label>
+              <Form.Control type="date" id="tanggalSelesai" isInvalid={!!errors.tanggalSelesai} {...register("tanggalSelesai")} min={new Date().toISOString().split("T")[0]} />
+              {errors.tanggalSelesai && <Form.Control.Feedback type="invalid">{errors.tanggalSelesai.message}</Form.Control.Feedback>}
+            </Form.Group>
 
-              {/* Kuantitas (kg) */}
-              <Form.Group className="col-md-6 form-group">
-                <Form.Label htmlFor="kuantitas">Kuantitas</Form.Label>
-                <InputGroup>
-                  <Form.Control type="number" id="kuantitas" name="kuantitas" value={formValue.kuantitas} onChange={onInputChange} placeholder="Kuantitas" />
-                  <InputGroup.Text>kg</InputGroup.Text>
-                </InputGroup>
-              </Form.Group>
+            <Form.Group className="col-md-6 form-group">
+              <Form.Label htmlFor="kuantitas">Kuantitas</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="number"
+                  id="kuantitas"
+                  isInvalid={!!errors.kuantitas}
+                  {...register("kuantitas", {
+                    onChange: (event) => {
+                      const [harga] = getValues(["harga"]);
+                      if (event.target.value > 0 && harga > 0) {
+                        const totalHarga = parseFloat(event.target.value) * parseFloat(harga);
+                        setValue("totalHarga", formatCurrency(totalHarga));
+                      }
+                    },
+                  })}
+                />
+                <InputGroup.Text>kg</InputGroup.Text>
+                {errors.kuantitas && <Form.Control.Feedback type="invalid">{errors.kuantitas.message}</Form.Control.Feedback>}
+              </InputGroup>
+            </Form.Group>
 
-              {/* Harga Per kg */}
-              <Form.Group className="col-md-6 form-group">
-                <Form.Label htmlFor="harga">Harga Per Kilogram</Form.Label>
-                <InputGroup>
-                  <InputGroup.Text>Rp</InputGroup.Text>
-                  <Form.Control type="number" id="harga" name="harga" value={formValue.harga} onChange={onInputChange} placeholder="Harga" />
-                </InputGroup>
-              </Form.Group>
+            <Form.Group className="col-md-6 form-group">
+              <Form.Label htmlFor="harga">Harga Per Kilogram</Form.Label>
+              <InputGroup>
+                <InputGroup.Text>Rp</InputGroup.Text>
+                <Form.Control
+                  type="number"
+                  id="harga"
+                  isInvalid={!!errors.harga}
+                  {...register("harga", {
+                    onChange: (event) => {
+                      const [kuantitas] = getValues(["kuantitas"]);
+                      if (event.target.value > 0 && kuantitas > 0) {
+                        const totalHarga = parseFloat(event.target.value) * parseFloat(kuantitas);
+                        setValue("totalHarga", formatCurrency(totalHarga));
+                      }
+                    },
+                  })}
+                />
+                {errors.harga && <Form.Control.Feedback type="invalid">{errors.harga.message}</Form.Control.Feedback>}
+              </InputGroup>
+            </Form.Group>
 
-              {/* Total Harga */}
-              <Form.Group className="col-md-6 form-group">
-                <Form.Label htmlFor="totalHarga">Total Harga</Form.Label>
-                <InputGroup>
-                  <InputGroup.Text>Rp</InputGroup.Text>
-                  <Form.Control type="text" id="totalHarga" name="totalHarga" value={formatCurrency(totalHarga)} disabled />
-                </InputGroup>
-              </Form.Group>
-            </Row>
-          </Card.Body>
+            <Form.Group className="col-md-6 form-group">
+              <Form.Label htmlFor="totalHarga">Total Harga</Form.Label>
+              <InputGroup>
+                <InputGroup.Text>Rp</InputGroup.Text>
+                <Form.Control type="text" id="totalHarga" {...register("totalHarga")} disabled />
+              </InputGroup>
+            </Form.Group>
+          </Row>
+        </Card.Body>
 
-          <Card.Footer className="text-center">
-            <Button type="submit" variant="btn btn-primary">
+        <Card.Footer className="text-center">
+          {isLoading ? (
+            <ButtonLoading />
+          ) : (
+            <Button type="submit" variant="btn btn-primary" disabled={!isValid}>
               Simpan
             </Button>
-          </Card.Footer>
-        </Form>
-      </Card>
-    </>
+          )}
+        </Card.Footer>
+      </Form>
+    </Card>
   );
 });
 

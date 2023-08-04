@@ -19,6 +19,15 @@ const schemaError = (errors) => {
       case "string.pattern.base":
         err.message = `${err.local.label} tidak valid`;
         break;
+      case "number.base":
+        err.message = `${err.local.label} tidak valid`;
+        break;
+      case "number.min":
+        err.message = `${err.local.label} paling sedikit ${err.local.limit}`;
+        break;
+      case "date.base":
+        err.message = `${err.local.label} tidak valid`;
+        break;
       default:
         break;
     }
