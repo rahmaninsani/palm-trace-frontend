@@ -3,7 +3,7 @@ import moment from "moment/min/moment-with-locales";
 moment.locale("id");
 
 const formatTime = (datetime) => {
-  if (datetime?.split("-").length === 2) return moment(datetime).format("MMMM YYYY");
+  if (datetime?.split("-")[2] === "01T00:00:00.000Z") return moment(datetime).format("MMMM YYYY");
 
   const gmt = datetime?.split("+")[1];
   if (!gmt) return moment(datetime).format("DD MMMM YYYY");

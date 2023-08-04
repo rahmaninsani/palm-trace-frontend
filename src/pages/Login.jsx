@@ -7,7 +7,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 
 import { endpointConstant, messageConstant } from "../constants";
 import { authSchema } from "../validations";
-import { LoginUser, reset } from "../features/authSlice";
+import { LoginUser, setMessage, reset } from "../features/authSlice";
 import { Card, Alert, ButtonLoading } from "../components/elements";
 import auth1 from "../assets/images/auth/01.png";
 
@@ -21,6 +21,7 @@ const Login = memo(() => {
   } = useForm({ resolver: joiResolver(authSchema.login), mode: "all" });
 
   const onSubmit = (data) => {
+    dispatch(setMessage(""));
     dispatch(LoginUser(data));
   };
 

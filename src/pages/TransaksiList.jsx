@@ -53,7 +53,7 @@ const TransaksiList = memo(() => {
               </Nav.Item>
             </Nav>
           </div>
-          {user && user.role === "koperasi" && (
+          {user && user.role === "petani" && (
             <div className="card-action">
               <Button variant="primary" href={`${endpointConstant.kontrak}/${idKontrak}/${idDeliveryOrder}/tambah`}>
                 Tambah
