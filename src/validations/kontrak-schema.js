@@ -11,5 +11,10 @@ const create = Joi.object({
   totalHarga: Joi.string().label("Total harga").error(schemaError),
 });
 
-const kontrakSchema = { create };
+const confirm = Joi.object({
+  status: Joi.number().valid(1, 2).required().label("Status").error(schemaError),
+  pesan: Joi.string().required().label("Pesan").error(schemaError),
+});
+
+const kontrakSchema = { create, confirm };
 export default kontrakSchema;

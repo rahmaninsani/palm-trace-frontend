@@ -7,7 +7,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 
 import { endpointConstant, messageConstant } from "../constants";
 import { kontrakSchema } from "../validations";
-import { setMessage, reset } from "../features/authSlice";
+import { setMessage } from "../features/authSlice";
 import { Card, ButtonLoading } from "../components/elements";
 import { formatCurrency } from "../utils";
 import { userService, kontrakService } from "../services";
@@ -22,7 +22,6 @@ const KontrakAdd = memo(() => {
 
   useEffect(() => {
     setTitle(pageTitle);
-    dispatch(reset());
     findAllKoperasi();
   }, []);
 
@@ -67,7 +66,7 @@ const KontrakAdd = memo(() => {
           <Row>
             <Form.Group className="col-sm-12 form-group">
               <Form.Label htmlFor="idKoperasi"> Mitra</Form.Label>
-              <Form.Control as="select" type="select" id="idKoperasi" className="form-select shadow-none" isInvalid={!!errors.idKoperasi} {...register("idKoperasi")}>
+              <Form.Control as="select" type="select" className="form-select shadow-none" id="idKoperasi" isInvalid={!!errors.idKoperasi} {...register("idKoperasi")}>
                 <option defaultValue>Pilih Mitra</option>
                 {koperasi &&
                   koperasi.map((item) => (

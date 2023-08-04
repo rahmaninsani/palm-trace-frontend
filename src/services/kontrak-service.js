@@ -6,7 +6,7 @@ const create = async (payload) => {
 };
 
 const confirm = async (payload) => {
-  const result = await api.put(`/kontrak/${payload.idKontrak}`, payload.formValue);
+  const result = await api.put(`/kontrak/${payload.idKontrak}`, payload.data);
   return result.data;
 };
 

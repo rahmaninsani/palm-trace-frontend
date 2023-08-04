@@ -1,6 +1,6 @@
-import React, { useEffect, memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 import { endpointConstant } from "../constants";
@@ -10,7 +10,6 @@ import { formatTime } from "../utils";
 import { deliveryOrderService } from "../services";
 
 const DeliveryOrderList = memo(() => {
-  const { pathname } = useLocation();
   const { user } = useSelector((state) => state.auth);
   const { idKontrak } = useParams();
   const [deliveryOrder, setDeliveryOrder] = useState([]);
@@ -24,7 +23,7 @@ const DeliveryOrderList = memo(() => {
       const response = await deliveryOrderService.findAll({ idKontrak });
       setDeliveryOrder(response.data);
     } catch (error) {
-      console.error("Gagal mengambil data DO: ", error);
+      console.log(error);
     }
   };
 
@@ -46,26 +45,30 @@ const DeliveryOrderList = memo(() => {
         )}
       </Card.Header>
       <Card.Body>
-        <Table headings={headings}>
-          {deliveryOrder?.map((item) => (
-            <tr key={item.id}>
-              <td>{item.nomor}</td>
-              <td>{formatTime(item.periode)}</td>
-              <td>{item.namaKoperasi}</td>
-              <td className={`text-${item.status === "Menunggu Konfirmasi" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
-              <td>{item.kuantitas} kg</td>
-              <td>
-                <div className="mb-2 d-flex align-items-center">
-                  <h6>{(item.kuantitasTerpenuhi / item.kuantitas) * 100}%</h6>
-                </div>
-                <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={(item.kuantitasTerpenuhi / item.kuantitas) * 100} minvalue={0} maxvalue={100} style={{ height: "4px" }} />
-              </td>
-              <td>
-                <Link to={`${pathname}/${item.id}`}>Detail</Link>
-              </td>
-            </tr>
-          ))}
-        </Table>
+        {deliveryOrder.length > 0 ? (
+          <Table headings={headings}>
+            {deliveryOrder?.map((item) => (
+              <tr key={item.id}>
+                <td>{item.nomor}</td>
+                <td>{formatTime(item.periode)}</td>
+                <td>{item.namaKoperasi}</td>
+                <td className={`text-${item.status === "Menunggu Konfirmasi" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
+                <td>{item.kuantitas} kg</td>
+                <td>
+                  <div className="mb-2 d-flex align-items-center">
+                    <h6>{(item.kuantitasTerpenuhi / item.kuantitas) * 100}%</h6>
+                  </div>
+                  <Progress softcolors="primary" color="primary" className="shadow-none w-100" value={(item.kuantitasTerpenuhi / item.kuantitas) * 100} minvalue={0} maxvalue={100} style={{ height: "4px" }} />
+                </td>
+                <td>
+                  <Link to={`${endpointConstant.kontrak}/${idKontrak}/${item.id}`}>Detail</Link>
+                </td>
+              </tr>
+            ))}
+          </Table>
+        ) : (
+          <p className="text-center">Tida ada delivery order</p>
+        )}
       </Card.Body>
     </Card>
   );
