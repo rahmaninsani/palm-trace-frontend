@@ -69,7 +69,9 @@ const TransaksiList = memo(() => {
               {/* <TransaksiCard tabKey="perlu-konfirmasi" transactions={transactions["perluKonfirmasi"]} /> */}
             </Tab.Content>
           ) : (
-            <p className="text-center">Tida ada transaksi</p>
+            <div className="text-center">
+              <p className="text-muted">Belum ada transaksi</p>
+            </div>
           )}
         </Card.Body>
       </Tab.Container>

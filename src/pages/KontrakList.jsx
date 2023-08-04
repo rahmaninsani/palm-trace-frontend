@@ -97,7 +97,9 @@ const KontrakList = memo(() => {
                   ))}
                 </Table>
               ) : (
-                <p className="text-center">Tida ada kontrak</p>
+                <div className="text-center">
+                  <p className="text-muted">Belum ada kontrak</p>
+                </div>
               )}
             </Card.Body>
           </Card>

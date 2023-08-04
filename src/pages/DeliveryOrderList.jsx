@@ -73,7 +73,9 @@ const DeliveryOrderList = memo(() => {
             ))}
           </Table>
         ) : (
-          <p className="text-center">Tida ada delivery order</p>
+          <div className="text-center">
+            <p className="text-muted">Belum ada delivery order</p>
+          </div>
         )}
       </Card.Body>
     </Card>
