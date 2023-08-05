@@ -10,7 +10,7 @@ import { transaksiSchema } from "../validations";
 import { Card } from "../components/elements";
 import { FormKonfirmasi, FormPengiriman, FormPenerimaan, FormPembayaran } from "../components/partials";
 import { formatCurrency } from "../utils";
-import { transaksiService } from "../services";
+import { transaksiService, pengirimanService, penerimaanService, pembayaranService } from "../services";
 
 import buktiBayar1 from "../assets/images/buktibayar1.jpg";
 import buktiBayar2 from "../assets/images/buktibayar2.jpg";
@@ -78,6 +78,60 @@ const TransaksiDetail = memo(() => {
       await transaksiService.confirm(payload);
 
       dispatch(setMessage(messageConstant.transaksiConfirm));
+      findOneTransaksi();
+    } catch (error) {
+      dispatch(setMessage(error.response.data.message));
+    }
+  };
+
+  const onSubmitPengiriman = async (data) => {
+    try {
+      const payload = {
+        idKontrak,
+        idDeliveryOrder,
+        idTransaksi,
+        data,
+      };
+
+      await pengirimanService.create(payload);
+
+      dispatch(setMessage(messageConstant.pengirimanSuccess));
+      findOneTransaksi();
+    } catch (error) {
+      dispatch(setMessage(error.response.data.message));
+    }
+  };
+
+  const onSubmitPenerimaan = async (data) => {
+    try {
+      const payload = {
+        idKontrak,
+        idDeliveryOrder,
+        idTransaksi,
+        data,
+      };
+
+      await penerimaanService.create(payload);
+
+      dispatch(setMessage(messageConstant.penerimaanSuccess));
+      findOneTransaksi();
+    } catch (error) {
+      dispatch(setMessage(error.response.data.message));
+    }
+  };
+
+  const onSubmitPembayaran = async (data) => {
+    try {
+      const payload = {
+        idKontrak,
+        idDeliveryOrder,
+        idTransaksi,
+        data,
+      };
+
+      await pembayaranService.create(payload);
+
+      dispatch(setMessage(messageConstant.pembayaranSuccess));
       findOneTransaksi();
     } catch (error) {
       dispatch(setMessage(error.response.data.message));
@@ -395,22 +449,22 @@ const TransaksiDetail = memo(() => {
           {user && user.role === roleConstant.pks && transaksiDetail.status === "Menunggu Konfirmasi Pabrik Kelapa Sawit" && <FormKonfirmasi onSubmit={onSubmitKonfirmasi} schema={transaksiSchema.confirm} />}
 
           {/* Pengiriman Petani */}
-          {user && user.role === roleConstant.petani && transaksiDetail.status === "Menunggu Dikirim Petani" && <FormPengiriman onSubmit={onSubmitKonfirmasi} />}
+          {user && user.role === roleConstant.petani && transaksiDetail.status === "Menunggu Dikirim Petani" && <FormPengiriman onSubmit={onSubmitPengiriman} />}
 
           {/* Pengiriman Koperasi */}
-          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Diterima Koperasi" && <FormPengiriman onSubmit={onSubmitKonfirmasi} />}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Diterima Koperasi" && <FormPengiriman onSubmit={onSubmitPengiriman} />}
 
           {/* Penerimaan Koperasi */}
-          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dikirim Petani" && <FormPenerimaan onSubmit={onSubmitKonfirmasi} />}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dikirim Petani" && <FormPenerimaan onSubmit={onSubmitPenerimaan} />}
 
           {/* Penerimaan Pabrik Kelapa Sawit */}
-          {user && user.role === roleConstant.pks && transaksiDetail.status === "Dikirim Koperasi" && <FormPenerimaan onSubmit={onSubmitKonfirmasi} />}
+          {user && user.role === roleConstant.pks && transaksiDetail.status === "Dikirim Koperasi" && <FormPenerimaan onSubmit={onSubmitPenerimaan} />}
 
           {/* Pembayaran Pabrik Kelapa Sawit */}
-          {user && user.role === roleConstant.pks && transaksiDetail.status === "Diterima Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitKonfirmasi} />}
+          {user && user.role === roleConstant.pks && transaksiDetail.status === "Diterima Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} />}
 
           {/* Pembayaran Koperasi */}
-          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dibayar Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitKonfirmasi} />}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dibayar Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} />}
         </Col>
       </Row>
     </>
