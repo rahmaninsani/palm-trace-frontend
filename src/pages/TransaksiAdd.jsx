@@ -26,7 +26,7 @@ const TransaksiAdd = memo(() => {
 
   useEffect(() => {
     setTitle(pageTitle);
-  }, [setTitle]);
+  }, []);
 
   const {
     control,
@@ -278,7 +278,7 @@ const TransaksiAdd = memo(() => {
                 control={control}
                 render={({ field }) => (
                   <InputGroup>
-                    <Form.Control {...field} type="number" min={1} isInvalid={!!errors.kuantitas} />
+                    <Form.Control {...field} type="number" min="1" isInvalid={!!errors.kuantitas} />
                     <InputGroup.Text>kg</InputGroup.Text>
                     {errors.kuantitas && <Form.Control.Feedback type="invalid">{errors.kuantitas.message}</Form.Control.Feedback>}
                   </InputGroup>
@@ -295,7 +295,7 @@ const TransaksiAdd = memo(() => {
                 render={({ field }) => (
                   <InputGroup>
                     <InputGroup.Text>Rp</InputGroup.Text>
-                    <Form.Control {...field} type="number" min={1} isInvalid={!!errors.harga} />
+                    <Form.Control {...field} type="number" min="1" isInvalid={!!errors.harga} />
                     {errors.harga && <Form.Control.Feedback type="invalid">{errors.harga.message}</Form.Control.Feedback>}
                   </InputGroup>
                 )}

@@ -386,7 +386,7 @@ const TransaksiDetail = memo(() => {
                   <Form.Group className="col-sm-12 form-group">
                     <Form.Label htmlFor="totalKuantitas">Total Kuantitas</Form.Label>
                     <InputGroup>
-                      <Form.Control type="number" id="totalKuantitas" placeholder="Total Kuantitas" />
+                      <Form.Control type="number" min="1" id="totalKuantitas" placeholder="Total Kuantitas" />
                       <InputGroup.Text>kg</InputGroup.Text>
                     </InputGroup>
                   </Form.Group>
@@ -435,7 +435,7 @@ const TransaksiDetail = memo(() => {
                     <Form.Label htmlFor="jumlahBayar">Jumlah Bayar</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>Rp</InputGroup.Text>
-                      <Form.Control type="number" id="jumlahBayar" placeholder="Jumlah Bayar" />
+                      <Form.Control type="number" min="1" id="jumlahBayar" placeholder="Jumlah Bayar" />
                     </InputGroup>
                   </Form.Group>
 

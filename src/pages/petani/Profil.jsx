@@ -160,7 +160,7 @@ const Profil = memo(() => {
                 <Form.Group className="col-sm-12 form-group">
                   <Form.Label htmlFor="luas">Luas</Form.Label>
                   <InputGroup>
-                    <Form.Control type="number" id="luas" name="luas" value={addKebunValue.luas} onChange={handleInputChange} />
+                    <Form.Control type="number" min="1" id="luas" name="luas" value={addKebunValue.luas} onChange={handleInputChange} />
                     <InputGroup.Text>Ha</InputGroup.Text>
                   </InputGroup>
                 </Form.Group>

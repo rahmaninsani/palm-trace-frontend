@@ -76,7 +76,7 @@ const DeliveryOrderAdd = memo(() => {
             <Form.Group className="col-md-6 form-group">
               <Form.Label htmlFor="rendemen">Rendemen</Form.Label>
               <InputGroup>
-                <Form.Control type="number" id="rendemen" isInvalid={!!errors.rendemen} {...register("rendemen")} />
+                <Form.Control type="number" min="1" id="rendemen" isInvalid={!!errors.rendemen} {...register("rendemen")} />
                 <InputGroup.Text>%</InputGroup.Text>
                 {errors.rendemen && <Form.Control.Feedback type="invalid">{errors.rendemen.message}</Form.Control.Feedback>}
               </InputGroup>
@@ -87,6 +87,7 @@ const DeliveryOrderAdd = memo(() => {
               <InputGroup>
                 <Form.Control
                   type="number"
+                  min="1"
                   id="kuantitas"
                   isInvalid={!!errors.kuantitas}
                   {...register("kuantitas", {
@@ -110,6 +111,7 @@ const DeliveryOrderAdd = memo(() => {
                 <InputGroup.Text>Rp</InputGroup.Text>
                 <Form.Control
                   type="number"
+                  min="1"
                   id="harga"
                   isInvalid={!!errors.harga}
                   {...register("harga", {

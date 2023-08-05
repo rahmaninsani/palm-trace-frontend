@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { roleConstant, messageConstant } from "../constants";
 import { setMessage } from "../features/authSlice";
+import { deliveryOrderSchema } from "../validations";
 import { Card, Progress } from "../components/elements";
 import { FormKonfirmasi } from "../components/partials";
 import TransaksiList from "./TransaksiList";
@@ -185,7 +186,7 @@ const DeliveryOrderDetail = memo(() => {
       </Card>
 
       {/* Konfirmasi */}
-      {user && user.role === roleConstant.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && <FormKonfirmasi onSubmit={onSubmit} />}
+      {user && user.role === roleConstant.koperasi && deliveryOrderDetail?.status === "Menunggu Konfirmasi" && <FormKonfirmasi onSubmit={onSubmit} schema={deliveryOrderSchema.confirm} />}
 
       {/* Daftar Transaksi */}
       {deliveryOrderDetail?.status === "Disetujui" && <TransaksiList />}

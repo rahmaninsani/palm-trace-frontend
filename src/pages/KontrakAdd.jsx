@@ -97,6 +97,7 @@ const KontrakAdd = memo(() => {
               <InputGroup>
                 <Form.Control
                   type="number"
+                  min="1"
                   id="kuantitas"
                   isInvalid={!!errors.kuantitas}
                   {...register("kuantitas", {
@@ -120,6 +121,7 @@ const KontrakAdd = memo(() => {
                 <InputGroup.Text>Rp</InputGroup.Text>
                 <Form.Control
                   type="number"
+                  min="1"
                   id="harga"
                   isInvalid={!!errors.harga}
                   {...register("harga", {

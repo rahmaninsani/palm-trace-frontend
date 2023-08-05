@@ -13,6 +13,9 @@ const schemaError = (errors) => {
       case "string.email":
         err.message = `${err.local.label} tidak valid`;
         break;
+      case "string.base":
+        err.message = `${err.local.label} tidak valid`;
+        break;
       case "any.only":
         err.message = `${err.local.label} tidak valid`;
         break;

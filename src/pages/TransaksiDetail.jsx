@@ -1,33 +1,28 @@
-import React, { useState, useEffect, memo } from "react";
-import { useLocation, useOutletContext, Link } from "react-router-dom";
-import { Row, Col, Button, Modal, Form, Image, InputGroup } from "react-bootstrap";
+import React, { memo, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { Row, Col, Image, Modal, Button, Table } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 
+import { roleConstant, messageConstant } from "../constants";
+import { setMessage } from "../features/authSlice";
+import { transaksiSchema } from "../validations";
 import { Card } from "../components/elements";
-import { DetailTransaksiTable } from "../components/partials/dashboard";
+import { FormKonfirmasi, FormPengiriman, FormPenerimaan, FormPembayaran } from "../components/partials";
+import { formatCurrency } from "../utils";
+import { transaksiService } from "../services";
 
 import buktiBayar1 from "../assets/images/buktibayar1.jpg";
 import buktiBayar2 from "../assets/images/buktibayar2.jpg";
 
 const TransaksiDetail = memo(() => {
   const pageTitle = "Detail Transaksi";
-  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isError, message } = useSelector((state) => state.auth);
   const { setTitle } = useOutletContext();
-
-  const headings = ["Alamat Kebun", "Luas Kebun", "Umur Tanam", "Kuantitas"];
-  const products = [
-    {
-      alamat: "Jl Kebun Sawit I",
-      luas: "2",
-      umur: "10",
-      kuantitas: "250",
-    },
-    {
-      alamat: "Jl Kebun Sawit II",
-      luas: "4",
-      umur: "10",
-      kuantitas: "750",
-    },
-  ];
+  const { idKontrak, idDeliveryOrder, idTransaksi } = useParams();
+  const [transaksiDetail, setTransaksiDetail] = useState({});
 
   const [showModalTransaksiDibuat, setShowModalTransaksiDibuat] = useState(false);
   const handleShowModalTransaksiDibuat = () => setShowModalTransaksiDibuat(true);
@@ -59,10 +54,58 @@ const TransaksiDetail = memo(() => {
 
   useEffect(() => {
     setTitle(pageTitle);
-  }, [setTitle]);
+    findOneTransaksi();
+  }, []);
+
+  const findOneTransaksi = async () => {
+    try {
+      const response = await transaksiService.findOne({ idKontrak, idDeliveryOrder, idTransaksi });
+      setTransaksiDetail(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onSubmitKonfirmasi = async (data) => {
+    try {
+      const payload = {
+        idKontrak,
+        idDeliveryOrder,
+        idTransaksi,
+        data,
+      };
+
+      await transaksiService.confirm(payload);
+
+      dispatch(setMessage(messageConstant.transaksiConfirm));
+      findOneTransaksi();
+    } catch (error) {
+      dispatch(setMessage(error.response.data.message));
+    }
+  };
+
+  useEffect(() => {
+    if (isError && message) {
+      toast.error(message, {
+        toastId: "error",
+        position: toast.POSITION.TOP_RIGHT,
+        onClose: () => dispatch(setMessage("")),
+      });
+    }
+
+    if (!isError && message) {
+      toast.success(message, {
+        toastId: "success",
+        position: toast.POSITION.TOP_RIGHT,
+        onClose: () => dispatch(setMessage("")),
+      });
+    }
+  }, [isError, message]);
 
   return (
     <>
+      <ToastContainer />
+
       <Row>
         <Col xl="4" lg="4">
           <Card>
@@ -274,147 +317,100 @@ const TransaksiDetail = memo(() => {
 
         <Col xl="8" lg="8">
           <Card>
+            <Card.Header>
+              <div className="card-action">
+                <Button variant="primary" size="sm" onClick={() => navigate(-1)}>
+                  ← Kembali
+                </Button>
+              </div>
+            </Card.Header>
+
             <Card.Body>
               <div className="d-flex justify-content-between align-items-center">
                 <div>
                   <h6 className="mb-1">Nomor</h6>
-                  <p>TRX0001</p>
+                  <p>{transaksiDetail.nomor}</p>
                 </div>
                 <div>
                   <h6 className="mb-1">Nama Petani</h6>
-                  <p>Bob</p>
+                  <p>{transaksiDetail.namaPetani}</p>
                 </div>
                 <div>
                   <h6 className="mb-1">Nomor Telepon</h6>
-                  <p>+628123456789</p>
+                  <p>{transaksiDetail.nomorTeleponPetani}</p>
                 </div>
               </div>
-              <DetailTransaksiTable headings={headings}>
-                {products?.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.alamat}</td>
-                    <td>{item.luas} Ha</td>
-                    <td>{item.umur} Tahun</td>
-                    <td>{item.kuantitas} kg</td>
-                  </tr>
-                ))}
-              </DetailTransaksiTable>
+
+              <div className="table-responsive">
+                <Table responsive striped id="datatable" data-toggle="data-table">
+                  <thead>
+                    <tr>
+                      <th>Kebun</th>
+                      <th className="text-end">Umur Tanam</th>
+                      <th className="text-end">Kuantitas</th>
+                      <th className="text-end">Harga</th>
+                      <th className="text-end">Subtotal</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {transaksiDetail.transaksiItems?.map((item, index) => (
+                      <tr key={index}>
+                        <td>
+                          <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => console.log("OK")}>
+                            Lihat
+                          </p>
+                        </td>
+                        <td className="text-end">{item.umurTanam} Tahun</td>
+                        <td className="text-end">{formatCurrency(item.kuantitas)} kg</td>
+                        <td className="text-end">Rp{formatCurrency(item.harga)}</td>
+                        <td className="text-end">Rp{formatCurrency(item.kuantitas * item.harga)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+
+                  <tfoot>
+                    <tr className="text-end">
+                      <td colSpan="4">
+                        <h6>Total Kuantitas</h6>
+                      </td>
+                      <td>{formatCurrency(transaksiDetail.totalKuantitas)} kg</td>
+                    </tr>
+                    <tr className="text-end">
+                      <td colSpan="4">
+                        <h6>Total Harga</h6>
+                      </td>
+                      <td>Rp{formatCurrency(transaksiDetail.totalHarga)}</td>
+                    </tr>
+                  </tfoot>
+                </Table>
+              </div>
             </Card.Body>
           </Card>
 
-          <Card>
-            <Card.Header className="mx-auto">
-              <h5>Konfirmasi</h5>
-            </Card.Header>
+          {/* Konfirmasi Koperasi */}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Menunggu Konfirmasi Koperasi" && <FormKonfirmasi onSubmit={onSubmitKonfirmasi} schema={transaksiSchema.confirm} />}
 
-            <hr className="hr-horizontal" />
+          {/* Konfirmasi Pabrik Kelapa Sawit */}
+          {user && user.role === roleConstant.pks && transaksiDetail.status === "Menunggu Konfirmasi Pabrik Kelapa Sawit" && <FormKonfirmasi onSubmit={onSubmitKonfirmasi} schema={transaksiSchema.confirm} />}
 
-            <Card.Body>
-              <Row>
-                <Form.Group className="col-sm-12 form-group">
-                  <Form.Label>Status</Form.Label>
-                  <select className="form-select mb-3 shadow-none">
-                    <option defaultValue>Pilih Status</option>
-                    <option value={1}>Setuju</option>
-                    <option value={2}>Tolak</option>
-                  </select>
-                </Form.Group>
+          {/* Pengiriman Petani */}
+          {user && user.role === roleConstant.petani && transaksiDetail.status === "Menunggu Dikirim Petani" && <FormPengiriman onSubmit={onSubmitKonfirmasi} />}
 
-                <Form.Group className="col-sm-12 form-group">
-                  <Form.Label htmlFor="pesan">Pesan</Form.Label>
-                  <Form.Control as="textarea" rows={4} id="pesan" />
-                </Form.Group>
-              </Row>
-            </Card.Body>
+          {/* Pengiriman Koperasi */}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Diterima Koperasi" && <FormPengiriman onSubmit={onSubmitKonfirmasi} />}
 
-            <Card.Footer className="text-center">
-              <Button type="submit" variant="btn btn-primary">
-                Simpan
-              </Button>
-            </Card.Footer>
-          </Card>
+          {/* Penerimaan Koperasi */}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dikirim Petani" && <FormPenerimaan onSubmit={onSubmitKonfirmasi} />}
 
-          <Card>
-            <Card.Header className="mx-auto">
-              <h5>Penerimaan</h5>
-            </Card.Header>
+          {/* Penerimaan Pabrik Kelapa Sawit */}
+          {user && user.role === roleConstant.pks && transaksiDetail.status === "Dikirim Koperasi" && <FormPenerimaan onSubmit={onSubmitKonfirmasi} />}
 
-            <hr className="hr-horizontal" />
+          {/* Pembayaran Pabrik Kelapa Sawit */}
+          {user && user.role === roleConstant.pks && transaksiDetail.status === "Diterima Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitKonfirmasi} />}
 
-            <Form>
-              <Card.Body>
-                <Row>
-                  <Form.Group className="col-sm-12 form-group">
-                    <Form.Label htmlFor="totalKuantitas">Total Kuantitas</Form.Label>
-                    <InputGroup>
-                      <Form.Control type="number" id="totalKuantitas" placeholder="Total Kuantitas" />
-                      <InputGroup.Text>kg</InputGroup.Text>
-                    </InputGroup>
-                  </Form.Group>
-                </Row>
-              </Card.Body>
-              <Card.Footer className="text-center">
-                <Button type="submit" variant="btn btn-primary">
-                  Simpan
-                </Button>
-              </Card.Footer>
-            </Form>
-          </Card>
-
-          <Card>
-            <Card.Header className="mx-auto">
-              <h5>Pembayaran</h5>
-            </Card.Header>
-
-            <hr className="hr-horizontal" />
-
-            <Form>
-              <Card.Body>
-                <Row>
-                  <Col md="4">
-                    <div>
-                      <h6 className="mb-1">Koperasi</h6>
-                      <p>KUD Sawit</p>
-                    </div>
-                  </Col>
-
-                  <Col md="4">
-                    <div>
-                      <h6 className="mb-1">Nama Bank</h6>
-                      <p>BRI</p>
-                    </div>
-                  </Col>
-
-                  <Col md="4">
-                    <div>
-                      <h6 className="mb-1">Nomor Rekening</h6>
-                      <p>00000001</p>
-                    </div>
-                  </Col>
-
-                  <Form.Group className="col-sm-12 form-group">
-                    <Form.Label htmlFor="jumlahBayar">Jumlah Bayar</Form.Label>
-                    <InputGroup>
-                      <InputGroup.Text>Rp</InputGroup.Text>
-                      <Form.Control type="number" id="jumlahBayar" placeholder="Jumlah Bayar" />
-                    </InputGroup>
-                  </Form.Group>
-
-                  <Form.Group className="col-sm-12 form-group">
-                    <Form.Label htmlFor="buktiBayar" className="custom-file-input">
-                      Bukti Pembayaran
-                    </Form.Label>
-                    <Form.Control type="file" id="buktiBayar" />
-                  </Form.Group>
-                </Row>
-              </Card.Body>
-              <Card.Footer className="text-center">
-                <Button type="submit" variant="btn btn-primary">
-                  Simpan
-                </Button>
-              </Card.Footer>
-            </Form>
-          </Card>
+          {/* Pembayaran Koperasi */}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dibayar Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitKonfirmasi} />}
         </Col>
       </Row>
     </>

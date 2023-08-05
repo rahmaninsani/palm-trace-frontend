@@ -148,7 +148,7 @@ const ReferensiHarga = memo(() => {
                       <Form.Label htmlFor="harga">Harga Per Kilogram</Form.Label>
                       <InputGroup>
                         <InputGroup.Text>Rp</InputGroup.Text>
-                        <Form.Control type="number" name="harga" value={updateValue.harga} onChange={handleInputChange} placeholder="Harga" />
+                        <Form.Control type="number" min="1" name="harga" value={updateValue.harga} onChange={handleInputChange} placeholder="Harga" />
                       </InputGroup>
                     </Form.Group>
                   </Modal.Body>

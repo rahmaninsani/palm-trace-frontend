@@ -36,7 +36,7 @@ const TransaksiAdd = memo(() => {
             <Form.Group className="col-md-6 form-group">
               <Form.Label htmlFor="umurTanam">Umur Tanam</Form.Label>
               <InputGroup>
-                <Form.Control type="number" id="umurTanam" />
+                <Form.Control type="number" min="1" id="umurTanam" />
                 <InputGroup.Text>Tahun</InputGroup.Text>
               </InputGroup>
             </Form.Group>
@@ -45,7 +45,7 @@ const TransaksiAdd = memo(() => {
             <Form.Group className="col-md-6 form-group">
               <Form.Label htmlFor="kuantitas">Kuantitas</Form.Label>
               <InputGroup>
-                <Form.Control type="number" id="kuantitas" />
+                <Form.Control type="number" min="1" id="kuantitas" />
                 <InputGroup.Text>kg</InputGroup.Text>
               </InputGroup>
             </Form.Group>
@@ -55,7 +55,7 @@ const TransaksiAdd = memo(() => {
               <Form.Label htmlFor="harga">Harga Per Kilogram</Form.Label>
               <InputGroup>
                 <InputGroup.Text>Rp</InputGroup.Text>
-                <Form.Control type="number" id="harga" />
+                <Form.Control type="number" min="1" id="harga" />
               </InputGroup>
             </Form.Group>
           </Row>

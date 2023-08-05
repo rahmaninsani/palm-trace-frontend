@@ -4,16 +4,15 @@ import { Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { kontrakSchema } from "../../validations";
 import { Card, ButtonLoading } from "../../components/elements";
 
-const FormKonfirmasi = ({ onSubmit }) => {
+const FormKonfirmasi = ({ onSubmit, schema }) => {
   const { isLoading } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ resolver: joiResolver(kontrakSchema.confirm), mode: "all" });
+  } = useForm({ resolver: joiResolver(schema), mode: "all" });
 
   return (
     <Card>
