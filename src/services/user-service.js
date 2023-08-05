@@ -10,8 +10,15 @@ const findAll = async (payload) => {
   return result.data;
 };
 
+const findOne = async () => {
+  const result = await api.get("/users/profil");
+
+  return result.data;
+};
+
 const userService = {
   findAll,
+  findOne,
 };
 
 export default userService;

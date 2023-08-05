@@ -19,6 +19,9 @@ const schemaError = (errors) => {
       case "any.only":
         err.message = `${err.local.label} tidak valid`;
         break;
+      case "any.invalid":
+        err.message = `${err.local.label} tidak valid`;
+        break;
       case "string.pattern.base":
         err.message = `${err.local.label} tidak valid`;
         break;
@@ -31,6 +34,7 @@ const schemaError = (errors) => {
       case "date.base":
         err.message = `${err.local.label} tidak valid`;
         break;
+
       default:
         break;
     }

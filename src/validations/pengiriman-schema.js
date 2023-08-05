@@ -9,7 +9,7 @@ const create = Joi.object({
     .min(10)
     .max(20)
     .required()
-    .label("Nomor telepon sopit")
+    .label("Nomor telepon sopir")
     .error(schemaError),
   namaKendaraan: Joi.string().min(1).required().label("Nama kendaraan").error(schemaError),
   nomorPolisiKendaraan: Joi.string().min(1).required().label("Nomor polisi kendaraan").error(schemaError),
