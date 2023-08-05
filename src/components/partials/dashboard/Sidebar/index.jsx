@@ -1,14 +1,15 @@
 import React, { useEffect, memo } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import SidebarItem from "./SidebarItem";
 
-//scrollbar
 import Scrollbar from "smooth-scrollbar";
-
+import SidebarItem from "./SidebarItem";
 import { Logo } from "../../../elements";
 
 const Sidebar = memo(() => {
   const appName = "Palm Trace";
+  const { user } = useSelector((state) => state.auth);
+  const home = user && user.role === "dinas" ? "/referensi-harga" : "/dashboard";
 
   const minisidebar = () => {
     document.getElementsByTagName("ASIDE")[0].classList.toggle("sidebar-mini");
@@ -52,7 +53,7 @@ const Sidebar = memo(() => {
     <>
       <aside className={"sidebar sidebar-white sidebar-base sidebar-default navs-rounded-all"} data-sidebar="responsive">
         <div className="sidebar-header d-flex align-items-center justify-content-start">
-          <Link to={"/"} className="navbar-brand">
+          <Link to={home} className="navbar-brand">
             <Logo />
             <h4 className="logo-title">{appName}</h4>
           </Link>

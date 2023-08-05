@@ -8,23 +8,29 @@ import { GetMe } from "../features/authSlice";
 const IsLoggedInMiddleware = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isSuccess } = useSelector((state) => state.auth);
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(GetMe());
   }, [dispatch]);
 
   useEffect(() => {
-    if (user || isSuccess) {
-      let home = endpointConstant.dashboard;
-
-      if (user.role === roleConstant.dinas) {
-        home = endpointConstant.referensiHarga;
-      }
-
-      navigate(home, { replace: true });
+    if (isLoading) {
+      return;
     }
-  }, [user, isSuccess, navigate]);
+
+    if (!user) {
+      navigate(endpointConstant.login, { replace: true });
+      return;
+    }
+
+    let home = endpointConstant.dashboard;
+    if (user.role === roleConstant.dinas) {
+      home = endpointConstant.referensiHarga;
+    }
+
+    navigate(home, { replace: true });
+  }, [isLoading, user, navigate]);
 
   return children;
 };

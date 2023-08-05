@@ -33,6 +33,7 @@ const Header = memo(() => {
 
   const nama = user && user.nama;
   const role = user && user.role;
+  const home = user && user.role === "dinas" ? "/referensi-harga" : "/dashboard";
   const roleDisplay = {
     petani: "Petani",
     koperasi: "Koperasi",
@@ -43,7 +44,7 @@ const Header = memo(() => {
   const handleOnLogout = () => {
     dispatch(LogoutUser());
     dispatch(reset());
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   const minisidebar = () => {
@@ -54,7 +55,7 @@ const Header = memo(() => {
     <>
       <Navbar expand="lg" variant="light" className={`nav iq-navbar default`}>
         <Container fluid className="navbar-inner">
-          <Link to={`/${role}`} className="navbar-brand">
+          <Link to={home} className="navbar-brand">
             <Logo color={true} />
             <h4 className="logo-title">Palm Trace</h4>
           </Link>
