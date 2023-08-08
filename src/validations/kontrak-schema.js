@@ -3,7 +3,11 @@ import Joi from "joi";
 import schemaError from "./error";
 
 const create = Joi.object({
-  idKoperasi: Joi.string().max(200).required().label("Mitra").error(schemaError),
+  idKoperasi: Joi.string()
+    .pattern(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/)
+    .required()
+    .label("Koperasi")
+    .error(schemaError),
   tanggalMulai: Joi.date().required().label("Tanggal mulai").error(schemaError),
   tanggalSelesai: Joi.date().required().label("Tanggal selesai").error(schemaError),
   kuantitas: Joi.number().min(1).required().label("Kuantitas").error(schemaError),

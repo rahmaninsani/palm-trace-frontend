@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { roleConstant, endpointConstant } from "../constants";
 import { GetMe } from "../features/authSlice";
@@ -8,6 +8,7 @@ import { GetMe } from "../features/authSlice";
 const IsLoggedInMiddleware = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -20,8 +21,13 @@ const IsLoggedInMiddleware = ({ children }) => {
     }
 
     if (!user) {
-      navigate(endpointConstant.login, { replace: true });
-      return;
+      if (pathname === endpointConstant.login) {
+        navigate(endpointConstant.login, { replace: true });
+      } else if (pathname === endpointConstant.register) {
+        navigate(endpointConstant.register, { replace: true });
+      } else {
+        navigate(endpointConstant.tidakDitemukan, { replace: true });
+      }
     }
 
     if (user) {

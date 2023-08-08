@@ -40,6 +40,7 @@
     "react-accessible-treeview": "^2.4.0",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.7.4",
+    "react-bootstrap-typeahead": "^6.2.3",
     "react-circular-progressbar": "^2.1.0",
     "react-countup": "^6.4.2",
     "react-cropper": "^2.3.3",

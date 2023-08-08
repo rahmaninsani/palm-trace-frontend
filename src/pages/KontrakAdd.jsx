@@ -67,7 +67,7 @@ const KontrakAdd = memo(() => {
         <Card.Body>
           <Row>
             <Form.Group className="col-sm-12 form-group">
-              <Form.Label htmlFor="idKoperasi"> Mitra</Form.Label>
+              <Form.Label htmlFor="idKoperasi">Mitra</Form.Label>
               <Form.Control as="select" type="select" className="form-select shadow-none" id="idKoperasi" isInvalid={!!errors.idKoperasi} {...register("idKoperasi")}>
                 <option defaultValue>Pilih Mitra</option>
                 {koperasi &&

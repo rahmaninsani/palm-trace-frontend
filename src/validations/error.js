@@ -29,12 +29,14 @@ const schemaError = (errors) => {
         err.message = `${err.local.label} tidak valid`;
         break;
       case "number.min":
-        err.message = `${err.local.label} paling sedikit ${err.local.limit}`;
+        err.message = `${err.local.label} paling sedikit ${err.local.limit} karakter`;
+        break;
+      case "number.max":
+        err.message = `${err.local.label} paling banyak ${err.local.limit} karakter`;
         break;
       case "date.base":
         err.message = `${err.local.label} tidak valid`;
         break;
-
       default:
         break;
     }

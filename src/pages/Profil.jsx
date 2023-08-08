@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { roleConstant } from "../constants";
 import { setMessage } from "../features/authSlice";
-import { ProfilDinas, ProfilPks, ProfilKoperasi } from "../components/partials";
+import { ProfilDinas, ProfilPks, ProfilKoperasi, ProfilPetani } from "../components/partials";
 import { Card, Alert } from "../components/elements";
 
 const Profil = memo(() => {
@@ -60,6 +60,7 @@ const Profil = memo(() => {
         {user && user.role === roleConstant.dinas && <ProfilDinas />}
         {user && user.role === roleConstant.pks && <ProfilPks />}
         {user && user.role === roleConstant.koperasi && <ProfilKoperasi />}
+        {user && user.role === roleConstant.petani && <ProfilPetani />}
       </Card>
     </>
   );

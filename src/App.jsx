@@ -8,6 +8,7 @@ import "./assets/scss/customizer.scss";
 
 // CSS
 import "react-toastify/dist/ReactToastify.css";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 import router from "./router";
 
