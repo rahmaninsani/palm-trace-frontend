@@ -24,12 +24,13 @@ const IsLoggedInMiddleware = ({ children }) => {
       return;
     }
 
-    let home = endpointConstant.dashboard;
-    if (user.role === roleConstant.dinas) {
-      home = endpointConstant.referensiHarga;
+    if (user) {
+      if (user.role === roleConstant.dinas) {
+        navigate(endpointConstant.referensiHarga, { replace: true });
+      } else {
+        navigate(endpointConstant.dashboard, { replace: true });
+      }
     }
-
-    navigate(home, { replace: true });
   }, [isLoading, user, navigate]);
 
   return children;

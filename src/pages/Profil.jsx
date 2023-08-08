@@ -1,14 +1,16 @@
 import React, { useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 import { roleConstant } from "../constants";
 import { setMessage } from "../features/authSlice";
-import { ProfilPks } from "../components/partials";
+import { ProfilDinas, ProfilPks, ProfilKoperasi } from "../components/partials";
+import { Card, Alert } from "../components/elements";
 
 const Profil = memo(() => {
   const pageTitle = "Profil";
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, isError, message } = useSelector((state) => state.auth);
   const { setTitle } = useOutletContext();
@@ -30,7 +32,14 @@ const Profil = memo(() => {
       toast.success(message, {
         toastId: "success",
         position: toast.POSITION.TOP_RIGHT,
-        onClose: () => dispatch(setMessage("")),
+        autoClose: 3000,
+        onClose: () => {
+          dispatch(setMessage(""));
+
+          setTimeout(() => {
+            navigate(0);
+          }, 3000);
+        },
       });
     }
   }, [isError, message]);
@@ -39,7 +48,19 @@ const Profil = memo(() => {
     <>
       <ToastContainer />
 
-      {user && user.role === roleConstant.pks && <ProfilPks />}
+      <Card>
+        {user && !user.profilLengkap && (
+          <Card.Header className="d-flex justify-content-between align-items-center">
+            <div className="col-sm-12">
+              <Alert type="warning" message="Lengkapi profil terlebih dahulu" />
+            </div>
+          </Card.Header>
+        )}
+
+        {user && user.role === roleConstant.dinas && <ProfilDinas />}
+        {user && user.role === roleConstant.pks && <ProfilPks />}
+        {user && user.role === roleConstant.koperasi && <ProfilKoperasi />}
+      </Card>
     </>
   );
 });

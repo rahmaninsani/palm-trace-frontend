@@ -4,13 +4,13 @@ import { Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { messageConstant, bankConstant } from "../../constants";
+import { messageConstant } from "../../constants";
 import { userSchema } from "../../validations";
 import { setMessage } from "../../features/authSlice";
-import { Card } from "../../components/elements";
+import { Card } from "../elements";
 import { userService } from "../../services";
 
-const ProfilPks = memo(() => {
+const ProfilDinas = memo(() => {
   const dispatch = useDispatch();
   const [profil, setProfil] = useState([]);
 
@@ -33,18 +33,15 @@ const ProfilPks = memo(() => {
     setValue,
     formState: { errors, isValid },
   } = useForm({
-    resolver: joiResolver(userSchema.updatePks),
+    resolver: joiResolver(userSchema.updateDinas),
     mode: "all",
   });
 
   useEffect(() => {
     if (Object.keys(profil).length > 0) {
       setValue("nama", profil.nama);
-      setValue("siup", profil.siup || "");
       setValue("alamat", profil.alamat);
       setValue("nomorTelepon", profil.nomorTelepon);
-      setValue("namaBank", profil.namaBank);
-      setValue("nomorRekening", profil.nomorRekening);
       setValue("email", profil.email);
     }
   }, [profil, setValue]);
@@ -67,15 +64,9 @@ const ProfilPks = memo(() => {
       <Card.Body>
         <Row>
           <Form.Group className="col-sm-12 form-group">
-            <Form.Label htmlFor="nama">Nama Usaha</Form.Label>
+            <Form.Label htmlFor="nama">Nama Dinas</Form.Label>
             <Form.Control type="text" id="nama" isInvalid={!!errors.nama} {...register("nama")} />
             {errors.nama && <Form.Control.Feedback type="invalid">{errors.nama.message}</Form.Control.Feedback>}
-          </Form.Group>
-
-          <Form.Group className="col-sm-12 form-group">
-            <Form.Label htmlFor="siup">Nomor Surat Izin Usaha Perdagangan (SIUP)</Form.Label>
-            <Form.Control type="text" id="siup" isInvalid={!!errors.siup} {...register("siup")} />
-            {errors.siup && <Form.Control.Feedback type="invalid">{errors.siup.message}</Form.Control.Feedback>}
           </Form.Group>
 
           <Form.Group className="col-sm-12 form-group">
@@ -88,25 +79,6 @@ const ProfilPks = memo(() => {
             <Form.Label htmlFor="alamat">Alamat</Form.Label>
             <Form.Control as="textarea" rows={4} id="alamat" isInvalid={!!errors.alamat} {...register("alamat")} />
             {errors.alamat && <Form.Control.Feedback type="invalid">{errors.alamat.message}</Form.Control.Feedback>}
-          </Form.Group>
-
-          <Form.Group className="col-md-6 form-group">
-            <Form.Label htmlFor="namaBank">Nama Bank</Form.Label>
-            <Form.Control as="input" list="bankList" type="text" className="form-select shadow-none" id="namaBank" isInvalid={!!errors.namaBank} {...register("namaBank")} />
-            <datalist id="bankList">
-              {bankConstant.map((bank) => (
-                <option key={bank.code} value={bank.name}>
-                  {bank.code}
-                </option>
-              ))}
-            </datalist>
-            {errors.namaBank && <Form.Control.Feedback type="invalid">{errors.namaBank.message}</Form.Control.Feedback>}
-          </Form.Group>
-
-          <Form.Group className="col-md-6 form-group">
-            <Form.Label htmlFor="nomorRekening">Nomor Rekening</Form.Label>
-            <Form.Control type="text" id="nomorRekening" isInvalid={!!errors.nomorRekening} {...register("nomorRekening")} />
-            {errors.nomorRekening && <Form.Control.Feedback type="invalid">{errors.nomorRekening.message}</Form.Control.Feedback>}
           </Form.Group>
 
           <Form.Group className="col-md-6 form-group">
@@ -132,4 +104,4 @@ const ProfilPks = memo(() => {
   );
 });
 
-export default ProfilPks;
+export default ProfilDinas;

@@ -1,5 +1,6 @@
 import React, { memo, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 import { Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -7,10 +8,10 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { messageConstant, bankConstant } from "../../constants";
 import { userSchema } from "../../validations";
 import { setMessage } from "../../features/authSlice";
-import { Card } from "../../components/elements";
+import { Card } from "../elements";
 import { userService } from "../../services";
 
-const ProfilPks = memo(() => {
+const ProfilKoperasi = memo(() => {
   const dispatch = useDispatch();
   const [profil, setProfil] = useState([]);
 
@@ -33,7 +34,7 @@ const ProfilPks = memo(() => {
     setValue,
     formState: { errors, isValid },
   } = useForm({
-    resolver: joiResolver(userSchema.updatePks),
+    resolver: joiResolver(userSchema.updateKoperasi),
     mode: "all",
   });
 
@@ -132,4 +133,4 @@ const ProfilPks = memo(() => {
   );
 });
 
-export default ProfilPks;
+export default ProfilKoperasi;
