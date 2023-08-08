@@ -1,8 +1,8 @@
 import React, { memo, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useOutletContext } from "react-router-dom";
 import { Row, Form, Button } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
 import { messageConstant, bankConstant } from "../../constants";
@@ -29,6 +29,7 @@ const ProfilKoperasi = memo(() => {
   };
 
   const {
+    control,
     register,
     handleSubmit,
     setValue,
@@ -93,14 +94,24 @@ const ProfilKoperasi = memo(() => {
 
           <Form.Group className="col-md-6 form-group">
             <Form.Label htmlFor="namaBank">Nama Bank</Form.Label>
-            <Form.Control as="input" list="bankList" type="text" className="form-select shadow-none" id="namaBank" isInvalid={!!errors.namaBank} {...register("namaBank")} />
-            <datalist id="bankList">
-              {bankConstant.map((bank) => (
-                <option key={bank.code} value={bank.name}>
-                  {bank.code}
-                </option>
-              ))}
-            </datalist>
+            <Controller
+              name="namaBank"
+              control={control}
+              render={({ field }) => (
+                <Typeahead
+                  {...field}
+                  id="namaBank"
+                  options={bankConstant.map((bank) => bank.name)}
+                  labelKey="label"
+                  selected={field.value ? [field.value] : []}
+                  value={field.value}
+                  onChange={(selected) => field.onChange(selected[0])}
+                  placeholder="Pilih nama bank..."
+                  allowNew={false}
+                  isInvalid={!!errors.namaBank}
+                />
+              )}
+            />
             {errors.namaBank && <Form.Control.Feedback type="invalid">{errors.namaBank.message}</Form.Control.Feedback>}
           </Form.Group>
 

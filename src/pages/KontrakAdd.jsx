@@ -2,7 +2,8 @@ import React, { memo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Row, Form, Button, InputGroup } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
 import { endpointConstant, messageConstant } from "../constants";
@@ -19,6 +20,7 @@ const KontrakAdd = memo(() => {
   const { isLoading } = useSelector((state) => state.auth);
   const { setTitle } = useOutletContext();
   const [koperasi, setKoperasi] = useState([]);
+  const [selectedKoperasi, setSelectedKoperasi] = useState("");
 
   useEffect(() => {
     setTitle(pageTitle);
@@ -35,6 +37,7 @@ const KontrakAdd = memo(() => {
   };
 
   const {
+    control,
     register,
     setValue,
     getValues,
@@ -68,15 +71,28 @@ const KontrakAdd = memo(() => {
           <Row>
             <Form.Group className="col-sm-12 form-group">
               <Form.Label htmlFor="idKoperasi">Mitra</Form.Label>
-              <Form.Control as="select" type="select" className="form-select shadow-none" id="idKoperasi" isInvalid={!!errors.idKoperasi} {...register("idKoperasi")}>
-                <option defaultValue>Pilih Mitra</option>
-                {koperasi &&
-                  koperasi.map((item) => (
-                    <option key={item.idAkun} value={item.idAkun}>
-                      {item.nama} - {item.alamat}
-                    </option>
-                  ))}
-              </Form.Control>
+              <Controller
+                name="idKoperasi"
+                control={control}
+                render={({ field }) => (
+                  <Typeahead
+                    {...field}
+                    id="idKoperasi"
+                    options={koperasi.map((item) => ({
+                      id: item.idAkun,
+                      label: `${item.nama} - ${item.alamat}`,
+                    }))}
+                    labelKey="label"
+                    selected={selectedKoperasi ? [selectedKoperasi] : []}
+                    onChange={(selected) => {
+                      setSelectedKoperasi(selected[0]);
+                      field.onChange(selected[0] ? selected[0].id : "");
+                    }}
+                    placeholder="Pilih mitra..."
+                    allowNew={false}
+                  />
+                )}
+              />
               {errors.idKoperasi && <Form.Control.Feedback type="invalid">{errors.idKoperasi.message}</Form.Control.Feedback>}
             </Form.Group>
 

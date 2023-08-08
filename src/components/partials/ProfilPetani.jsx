@@ -46,7 +46,6 @@ const ProfilPetani = memo(() => {
     register,
     handleSubmit,
     setValue,
-    trigger,
     formState: { errors, isValid },
   } = useForm({
     resolver: joiResolver(userSchema.updatePetani),
