@@ -1,15 +1,12 @@
 import React, { memo, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Row, Button, Form, Modal, InputGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Table, Button } from "react-bootstrap";
 
-import { endpointConstant, messageConstant, bankConstant } from "../../constants";
+import { endpointConstant } from "../../constants";
 import { Card } from "../elements";
-import { TableKebun } from "./dashboard";
 import { kebunService } from "../../services";
-import { formatTime } from "../../utils";
 
 const ProfilPetaniKebun = memo(() => {
-  const dispatch = useDispatch();
   const [kebun, setKebun] = useState([]);
 
   useEffect(() => {
@@ -28,8 +25,6 @@ const ProfilPetaniKebun = memo(() => {
     }
   };
 
-  const headings = ["Alamat", "Luas", "Nomor RSPO", ""];
-
   return (
     <Card>
       <Card.Header className="d-flex justify-content-between align-items-center">
@@ -45,19 +40,35 @@ const ProfilPetaniKebun = memo(() => {
       </Card.Header>
 
       <Card.Body>
-        <TableKebun headings={headings}>
-          {kebun &&
-            kebun.map((item) => (
-              <tr key={item.id}>
-                <td>{item.alamat}</td>
-                <td>{item.luas} Ha</td>
-                <td>{item.nomorRspo}</td>
-                <td>
-                  <Button variant="link">Detail</Button>
-                </td>
-              </tr>
-            ))}
-        </TableKebun>
+        {kebun && kebun.length > 0 ? (
+          <div className="table-responsive border-bottom my-3">
+            <Table responsive striped id="datatable" data-toggle="data-table">
+              <thead>
+                <tr>
+                  <th>Alamat</th>
+                  <th>Luas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {kebun.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.alamat}</td>
+                    <td>{item.luas} Ha</td>
+                    <td>
+                      <Link to={`${endpointConstant.kebun}/${item.id}`}>Detail</Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr></tr>
+              </tfoot>
+            </Table>
+          </div>
+        ) : (
+          <div className="text-center">Belum ada data kebun</div>
+        )}
       </Card.Body>
     </Card>
   );
