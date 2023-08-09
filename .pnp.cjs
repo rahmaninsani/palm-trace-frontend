@@ -58,7 +58,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["immutability-helper", "npm:3.1.1"],\
             ["joi", "npm:17.9.2"],\
             ["jquery", "npm:3.7.0"],\
-            ["leaflet", "npm:1.9.3"],\
+            ["leaflet", "npm:1.9.4"],\
+            ["leaflet-geosearch", "npm:3.8.0"],\
             ["lodash", "npm:4.17.21"],\
             ["moment", "npm:2.29.4"],\
             ["nouislider-react", "virtual:763490423a16d22d13b0a7d8e5d9e1ca57e202201db12eb189e8aba944d573e81756a2e3a6a78ee56556eceee93e36f1c1e9544f46bd2a52e90b82837eacbfcc#npm:3.4.1"],\
@@ -3897,6 +3898,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@googlemaps/js-api-loader", [\
+        ["npm:1.16.2", {\
+          "packageLocation": "./.yarn/cache/@googlemaps-js-api-loader-npm-1.16.2-361944bb39-122ee57cc6.zip/node_modules/@googlemaps/js-api-loader/",\
+          "packageDependencies": [\
+            ["@googlemaps/js-api-loader", "npm:1.16.2"],\
+            ["fast-deep-equal", "npm:3.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@hapi/hoek", [\
         ["npm:9.3.0", {\
           "packageLocation": "./.yarn/cache/@hapi-hoek-npm-9.3.0-447eb8d274-4771c7a776.zip/node_modules/@hapi/hoek/",\
@@ -4591,7 +4602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/leaflet", null],\
             ["@types/react", "npm:18.2.6"],\
             ["@types/react-dom", "npm:18.2.4"],\
-            ["leaflet", "npm:1.9.3"],\
+            ["leaflet", "npm:1.9.4"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:763490423a16d22d13b0a7d8e5d9e1ca57e202201db12eb189e8aba944d573e81756a2e3a6a78ee56556eceee93e36f1c1e9544f46bd2a52e90b82837eacbfcc#npm:18.2.0"]\
           ],\
@@ -12983,10 +12994,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["leaflet", [\
-        ["npm:1.9.3", {\
-          "packageLocation": "./.yarn/cache/leaflet-npm-1.9.3-08e9e2d69b-f8bc33215e.zip/node_modules/leaflet/",\
+        ["npm:1.9.4", {\
+          "packageLocation": "./.yarn/cache/leaflet-npm-1.9.4-8d372b0fe6-bfc79f17a2.zip/node_modules/leaflet/",\
           "packageDependencies": [\
-            ["leaflet", "npm:1.9.3"]\
+            ["leaflet", "npm:1.9.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["leaflet-geosearch", [\
+        ["npm:3.8.0", {\
+          "packageLocation": "./.yarn/cache/leaflet-geosearch-npm-3.8.0-283d2acece-2bf7475156.zip/node_modules/leaflet-geosearch/",\
+          "packageDependencies": [\
+            ["leaflet-geosearch", "npm:3.8.0"],\
+            ["@googlemaps/js-api-loader", "npm:1.16.2"],\
+            ["leaflet", "npm:1.9.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14164,7 +14186,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["immutability-helper", "npm:3.1.1"],\
             ["joi", "npm:17.9.2"],\
             ["jquery", "npm:3.7.0"],\
-            ["leaflet", "npm:1.9.3"],\
+            ["leaflet", "npm:1.9.4"],\
+            ["leaflet-geosearch", "npm:3.8.0"],\
             ["lodash", "npm:4.17.21"],\
             ["moment", "npm:2.29.4"],\
             ["nouislider-react", "virtual:763490423a16d22d13b0a7d8e5d9e1ca57e202201db12eb189e8aba944d573e81756a2e3a6a78ee56556eceee93e36f1c1e9544f46bd2a52e90b82837eacbfcc#npm:3.4.1"],\
@@ -16942,7 +16965,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/leaflet", null],\
             ["@types/react", "npm:18.2.6"],\
             ["@types/react-dom", "npm:18.2.4"],\
-            ["leaflet", "npm:1.9.3"],\
+            ["leaflet", "npm:1.9.4"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:763490423a16d22d13b0a7d8e5d9e1ca57e202201db12eb189e8aba944d573e81756a2e3a6a78ee56556eceee93e36f1c1e9544f46bd2a52e90b82837eacbfcc#npm:18.2.0"]\
           ],\

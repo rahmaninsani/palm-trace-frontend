@@ -17,6 +17,7 @@ const messageConstant = {
   pembayaranSuccess: "Pembayaran berhasil dibuat",
 
   profilSuccess: "Profil berhasil diperbarui",
+  kebunSuccess: "Kebun berhasil ditambahkan",
 };
 
 export default messageConstant;

@@ -9,6 +9,8 @@ import "./assets/scss/customizer.scss";
 // CSS
 import "react-toastify/dist/ReactToastify.css";
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import "leaflet/dist/leaflet.css";
+import "leaflet-geosearch/dist/geosearch.css";
 
 import router from "./router";
 

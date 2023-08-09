@@ -11,4 +11,5 @@ export { default as TransaksiAdd } from "./TransaksiAdd";
 export { default as TransaksiDetail } from "./TransaksiDetail";
 export { default as Laporan } from "./Laporan";
 export { default as Profil } from "./Profil";
+export { default as KebunAdd } from "./KebunAdd";
 export { default as NotFound } from "./NotFound";

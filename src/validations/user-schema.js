@@ -111,5 +111,13 @@ const updatePetani = Joi.object({
     .error(schemaError),
 });
 
-const userSchema = { updatePks, updateKoperasi, updateDinas, updatePetani };
+const createKebunPetani = Joi.object({
+  latitude: Joi.number().min(-90).max(90).required().label("Latitude").error(schemaError),
+  longitude: Joi.number().min(-180).max(180).required().label("Longitude").error(schemaError),
+  alamat: Joi.string().min(1).required().label("Alamat").error(schemaError),
+  luas: Joi.number().min(1).required().label("Luas").error(schemaError),
+  kemampuanProduksiHarian: Joi.number().min(1).required().label("Kemampuan produksi harian").error(schemaError),
+});
+
+const userSchema = { updatePks, updateKoperasi, updateDinas, updatePetani, createKebunPetani };
 export default userSchema;

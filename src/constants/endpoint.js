@@ -20,6 +20,7 @@ const endpoint = {
   laporan: "/laporan",
 
   profil: "/profil",
+  kebunTambah: "/profil/kebun/tambah",
 
   tidakDitemukan: "/tidak-ditemukan",
 };

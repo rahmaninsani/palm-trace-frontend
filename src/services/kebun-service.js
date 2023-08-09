@@ -1,8 +1,7 @@
 import { api } from "../config";
 
 const create = async (payload) => {
-  payload.luas = parseFloat(payload.luas);
-  const result = await api.post("/users/kebun", payload);
+  const result = await api.post("/users/kebun", payload.data);
   return result.data;
 };
 
