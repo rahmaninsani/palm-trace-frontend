@@ -160,7 +160,6 @@ const KebunAdd = memo(() => {
         <Card.Header>
           <Container>
             <Row>
-              <h6 className="mb-2">Pilih lokasi kebun pada Maps</h6>
               <MapContainer
                 center={[location.lat, location.lng]}
                 zoom={13}
@@ -182,7 +181,7 @@ const KebunAdd = memo(() => {
                   <SetViewOnClick />
                 </Marker>
               </MapContainer>
-              <p className="mt-2 form-text text-info">Pindahkan marker untuk memilih</p>
+              <p className="mt-2 form-text text-info">Pilih lokasi kebun dengan memindahkan penanda peta</p>
             </Row>
           </Container>
         </Card.Header>
@@ -274,7 +273,7 @@ const KebunAdd = memo(() => {
 
             <Form.Group className="col-md-6 form-group">
               <Form.Label htmlFor="nomorSuratTandaBudidaya">Nomor Surat Tanda Budidaya</Form.Label>
-              <Form.Control id="nomorSuratTandaBudidaya" isInvalid={!!errors.nomorSuratKeteranganGantiRugi} {...register("nomorSuratTandaBudidaya")} />
+              <Form.Control id="nomorSuratTandaBudidaya" isInvalid={!!errors.nomorSuratTandaBudidaya} {...register("nomorSuratTandaBudidaya")} />
               {errors.nomorSuratTandaBudidaya && <Form.Control.Feedback type="invalid">{errors.nomorSuratTandaBudidaya.message}</Form.Control.Feedback>}
             </Form.Group>
 

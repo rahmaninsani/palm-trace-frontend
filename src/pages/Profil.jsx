@@ -63,7 +63,7 @@ const Profil = memo(() => {
         {user && user.role === roleConstant.petani && <ProfilPetani />}
       </Card>
 
-      {user && user.role === roleConstant.petani && <ProfilPetaniKebun />}
+      {user && user.role === roleConstant.petani && user.profilLengkap && <ProfilPetaniKebun />}
     </>
   );
 });

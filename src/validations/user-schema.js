@@ -152,12 +152,12 @@ const createKebunPetani = Joi.object({
   sertifikatHakMilik: Joi.any().custom(fileCustom).required().label("Sertifikat hak milik").error(schemaError),
   nomorSuratTandaBudidaya: Joi.string().min(1).required().label("Nomor surat tanda budidaya").error(schemaError),
   suratTandaBudidaya: Joi.any().custom(fileCustom).required().label("Surat tanda budidaya").error(schemaError),
-  nomorSertifikatRspo: Joi.string().min(1).required().label("Nomor sertifikat rspo").error(schemaError),
-  sertifikatRspo: Joi.any().custom(fileCustom).required().label("Sertifikat rspo").error(schemaError),
-  nomorSertifikatIspo: Joi.string().min(1).required().label("Nomor sertifikat ispo").error(schemaError),
-  sertifikatIspo: Joi.any().custom(fileCustom).required().label("Sertifikat ispo").error(schemaError),
-  nomorSertifikatIscc: Joi.string().min(1).required().label("Nomor sertifikat iscc").error(schemaError),
-  sertifikatIscc: Joi.any().custom(fileCustom).required().label("Sertifikat iscc").error(schemaError),
+  nomorSertifikatRspo: Joi.string().min(1).required().label("Nomor sertifikat RSPO").error(schemaError),
+  sertifikatRspo: Joi.any().custom(fileCustom).required().label("Sertifikat RSPO").error(schemaError),
+  nomorSertifikatIspo: Joi.string().min(1).required().label("Nomor sertifikat ISPO").error(schemaError),
+  sertifikatIspo: Joi.any().custom(fileCustom).required().label("Sertifikat ISPO").error(schemaError),
+  nomorSertifikatIscc: Joi.string().min(1).required().label("Nomor sertifikat ISCC").error(schemaError),
+  sertifikatIscc: Joi.any().custom(fileCustom).required().label("Sertifikat ISCC").error(schemaError),
 });
 
 const userSchema = { updatePks, updateKoperasi, updateDinas, updatePetani, createKebunPetani };
