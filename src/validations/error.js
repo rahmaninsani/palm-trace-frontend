@@ -1,3 +1,6 @@
+const fileExtensions = ["pdf", "jpg", "jpeg", "png"];
+const maxFileSize = 2 * 1024 * 1024;
+
 const schemaError = (errors) => {
   errors.forEach((err) => {
     switch (err.code) {
@@ -36,6 +39,15 @@ const schemaError = (errors) => {
         break;
       case "date.base":
         err.message = `${err.local.label} tidak valid`;
+        break;
+      case "fileSize.max":
+        err.message = `Ukuran file ${err.local.label.toLowerCase()} maksimal ${maxFileSize / 1024 / 1024} MB`;
+        break;
+      case "fileExtension.invalid":
+        err.message = `Ekstensi file ${err.local.label.toLowerCase()} yang diperbolehkan adalah ${fileExtensions.join(", ")}`;
+        break;
+      case "fileType.invalid":
+        err.message = `Tipe file ${err.local.label.toLowerCase()} yang diperbolehkan adalah ${fileExtensions.join(", ")}`;
         break;
       default:
         break;

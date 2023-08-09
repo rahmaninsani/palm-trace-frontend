@@ -24,7 +24,7 @@ const getReverseGeocode = async (lat, lng) => {
   }
 };
 
-const LocationMarker = ({ setLocation, setReverseGeocode }) => {
+const LocationMarker = ({ setLocation }) => {
   const map = useMapEvents({
     click() {
       map.locate();
@@ -37,7 +37,6 @@ const LocationMarker = ({ setLocation, setReverseGeocode }) => {
 
       setTimeout(async () => {
         const reverseGeocodeData = await getReverseGeocode(latlng.lat, latlng.lng);
-        setReverseGeocode(reverseGeocodeData);
         setLocation({
           lat: latlng.lat,
           lng: latlng.lng,
@@ -82,14 +81,6 @@ const KebunAdd = memo(() => {
   const { setTitle } = useOutletContext();
   const markerRef = useRef(null);
   const [location, setLocation] = useState({ lat: -6.2, lng: 106.816666, alamat: "Jakarta, Indonesia" });
-  const [reverseGeocode, setReverseGeocode] = useState({
-    address: {
-      village: "",
-      county: "",
-      state: "",
-      postcode: "",
-    },
-  });
 
   const {
     control,
@@ -116,13 +107,22 @@ const KebunAdd = memo(() => {
 
   const onSubmit = async (data) => {
     try {
-      const payload = { data };
-      console.log(payload.data);
+      const formData = new FormData();
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          if (data[key] instanceof FileList) {
+            formData.append(key, data[key][0]);
+          } else {
+            formData.append(key, data[key]);
+          }
+        }
+      }
 
-      // await kebunService.create(payload);
+      const payload = { data: formData };
+      await kebunService.create(payload);
 
-      // dispatch(setMessage(messageConstant.kebunSuccess));
-      // navigate(endpointConstant.profil, { replace: true });
+      dispatch(setMessage(messageConstant.kebunSuccess));
+      navigate(endpointConstant.profil, { replace: true });
     } catch (error) {
       dispatch(setMessage(error.response.data.message));
     }
@@ -143,7 +143,6 @@ const KebunAdd = memo(() => {
         if (marker != null) {
           const { lat, lng } = marker.getLatLng();
           const reverseGeocodeData = await getReverseGeocode(lat, lng);
-          setReverseGeocode(reverseGeocodeData);
           setLocation({
             lat: lat,
             lng: lng,
@@ -157,7 +156,7 @@ const KebunAdd = memo(() => {
 
   return (
     <Card>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Card.Header>
           <Container>
             <Row>
@@ -176,7 +175,7 @@ const KebunAdd = memo(() => {
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <SearchField />
                 <Marker position={[location.lat, location.lng]} draggable={true} ref={markerRef} eventHandlers={eventHandlers}>
-                  <LocationMarker setLocation={setLocation} setReverseGeocode={setReverseGeocode} />
+                  <LocationMarker setLocation={setLocation} />
                   <Popup>
                     <p className="text-primary">{location.alamat}</p>
                   </Popup>
@@ -275,16 +274,16 @@ const KebunAdd = memo(() => {
 
             <Form.Group className="col-md-6 form-group">
               <Form.Label htmlFor="nomorSuratTandaBudidaya">Nomor Surat Tanda Budidaya</Form.Label>
-              <Form.Control id="nomorSuratKeteranganGantiRugi" isInvalid={!!errors.nomorSuratKeteranganGantiRugi} {...register("nomorSuratKeteranganGantiRugi")} />
-              {errors.nomorSuratKeteranganGantiRugi && <Form.Control.Feedback type="invalid">{errors.nomorSuratKeteranganGantiRugi.message}</Form.Control.Feedback>}
+              <Form.Control id="nomorSuratTandaBudidaya" isInvalid={!!errors.nomorSuratKeteranganGantiRugi} {...register("nomorSuratTandaBudidaya")} />
+              {errors.nomorSuratTandaBudidaya && <Form.Control.Feedback type="invalid">{errors.nomorSuratTandaBudidaya.message}</Form.Control.Feedback>}
             </Form.Group>
 
             <Form.Group className="col-md-6 form-group">
               <Form.Label htmlFor="suratTandaBudidaya" className="custom-file-input">
                 Surat Tanda Budidaya
               </Form.Label>
-              <Form.Control type="file" id="suratKeteranganGantiRugi" isInvalid={!!errors.suratKeteranganGantiRugi} {...register("suratKeteranganGantiRugi")} />
-              {errors.suratKeteranganGantiRugi && <Form.Control.Feedback type="invalid">{errors.suratKeteranganGantiRugi.message}</Form.Control.Feedback>}
+              <Form.Control type="file" id="suratTandaBudidaya" isInvalid={!!errors.suratTandaBudidaya} {...register("suratTandaBudidaya")} />
+              {errors.suratTandaBudidaya && <Form.Control.Feedback type="invalid">{errors.suratTandaBudidaya.message}</Form.Control.Feedback>}
             </Form.Group>
 
             <Form.Group className="col-md-6 form-group">
@@ -316,7 +315,7 @@ const KebunAdd = memo(() => {
             </Form.Group>
 
             <Form.Group className="col-md-6 form-group">
-              <Form.Label htmlFor="nomorSertifikatIspo">Nomor Sertifikat ISCC</Form.Label>
+              <Form.Label htmlFor="nomorSertifikatIscc">Nomor Sertifikat ISCC</Form.Label>
               <Form.Control id="nomorSertifikatIscc" isInvalid={!!errors.nomorSertifikatIscc} {...register("nomorSertifikatIscc")} />
               {errors.nomorSertifikatIscc && <Form.Control.Feedback type="invalid">{errors.nomorSertifikatIscc.message}</Form.Control.Feedback>}
             </Form.Group>
