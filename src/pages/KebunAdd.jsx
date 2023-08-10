@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect, useMemo, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Container, Row, Form, Button, InputGroup } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "react-leaflet";
@@ -165,7 +165,7 @@ const KebunAdd = memo(() => {
                 zoom={13}
                 scrollWheelZoom={false}
                 style={{
-                  height: "400px",
+                  height: "500px",
                   width: "100%",
                   borderRadius: "12px",
                   overflow: "hidden",

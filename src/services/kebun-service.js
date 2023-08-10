@@ -10,9 +10,15 @@ const findAll = async () => {
   return result.data;
 };
 
+const findOne = async (payload) => {
+  const result = await api.get(`/users/kebun/${payload.idKebun}`);
+  return result.data;
+};
+
 const kebunService = {
   create,
   findAll,
+  findOne,
 };
 
 export default kebunService;
