@@ -134,13 +134,23 @@ const TransaksiDetail = memo(() => {
 
   const onSubmitPembayaran = async (data) => {
     try {
+      const formData = new FormData();
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          if (data[key] instanceof FileList) {
+            formData.append(key, data[key][0]);
+          } else {
+            formData.append(key, data[key]);
+          }
+        }
+      }
+
       const payload = {
         idKontrak,
         idDeliveryOrder,
         idTransaksi,
-        data,
+        data: formData,
       };
-
       await pembayaranService.create(payload);
 
       dispatch(setMessage(messageConstant.pembayaranSuccess));

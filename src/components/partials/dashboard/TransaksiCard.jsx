@@ -19,7 +19,17 @@ const TransaksiCard = memo(({ tabKey, transactions, user }) => {
                 <span className="h6">{transaction.nomor}</span>
                 <span className="ms-2 fs-6">{transaction.tanggal}</span>
               </div>
-              <h6 className={`text-${transaction.status.toLowerCase().includes("ditolak") ? "danger" : transaction.status === "Selesai" ? "success" : transaction.status.toLowerCase().includes(user.role) ? "warning" : "info"}`}>
+              <h6
+                className={`text-${
+                  transaction.status.toLowerCase().includes("ditolak")
+                    ? "danger"
+                    : transaction.status === "Selesai"
+                    ? "success"
+                    : transaction.status.toLowerCase().includes(user.role) || transaction.status.toLowerCase().includes("pabrik kelapa sawit")
+                    ? "warning"
+                    : "info"
+                }`}
+              >
                 {transaction.status}
               </h6>
             </div>

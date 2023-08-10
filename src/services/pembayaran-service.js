@@ -1,7 +1,7 @@
 import { api } from "../config";
 
 const create = async (payload) => {
-  const result = await api.post(`/kontrak/${payload.idKontrak}/delivery-order/${payload.idDeliveryOrder}/transaksi/${payload.idTransaksi}/pembayaran`);
+  const result = await api.post(`/kontrak/${payload.idKontrak}/delivery-order/${payload.idDeliveryOrder}/transaksi/${payload.idTransaksi}/pembayaran`, payload.data);
   return result.data;
 };
 

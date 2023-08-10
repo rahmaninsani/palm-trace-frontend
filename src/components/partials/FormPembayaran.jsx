@@ -18,7 +18,7 @@ const FormPembayaran = ({ onSubmit, data }) => {
   } = useForm({ resolver: joiResolver(pembayaranSchema.create), mode: "all" });
 
   useEffect(() => {
-    setValue("jumlahPembayaran", data.totalHargaDeliveryOrder);
+    setValue("jumlahPembayaran", user.role === "pks" ? data.totalHargaDeliveryOrder : data.totalHarga);
     setValue("namaPengirim", user.role === "pks" ? data.pks.nama : data.koperasi.nama);
     setValue("namaBankPengirim", user.role === "pks" ? data.pks.namaBank : data.koperasi.namaBank);
     setValue("nomorRekeningPengirim", user.role === "pks" ? data.pks.nomorRekening : data.koperasi.nomorRekening);
@@ -35,7 +35,7 @@ const FormPembayaran = ({ onSubmit, data }) => {
 
       <hr className="hr-horizontal" />
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
         <Card.Body>
           <Row>
             <Col md="4">
@@ -88,7 +88,7 @@ const FormPembayaran = ({ onSubmit, data }) => {
               <Form.Label htmlFor="jumlahPembayaran">Jumlah Pembayaran</Form.Label>
               <InputGroup>
                 <InputGroup.Text>Rp</InputGroup.Text>
-                <Form.Control type="number" id="jumlahPembayaran" isInvalid={!!errors.jumlahPembayaran} {...register("jumlahPembayaran")} readOnly disabled />
+                <Form.Control type="number" id="jumlahPembayaran" name="jumlahPembayaran" isInvalid={!!errors.jumlahPembayaran} {...register("jumlahPembayaran")} readOnly disabled />
                 {errors.jumlahPembayaran && <Form.Control.Feedback type="invalid">{errors.jumlahPembayaran.message}</Form.Control.Feedback>}
               </InputGroup>
             </Form.Group>
@@ -97,7 +97,7 @@ const FormPembayaran = ({ onSubmit, data }) => {
               <Form.Label htmlFor="buktiPembayaran" className="custom-file-input">
                 Bukti Pembayaran
               </Form.Label>
-              <Form.Control type="file" id="buktiPembayaran" isInvalid={!!errors.buktiPembayaran} {...register("buktiPembayaran")} />
+              <Form.Control type="file" id="buktiPembayaran" name="buktiPembayaran" isInvalid={!!errors.buktiPembayaran} {...register("buktiPembayaran")} />
               {errors.buktiPembayaran && <Form.Control.Feedback type="invalid">{errors.buktiPembayaran.message}</Form.Control.Feedback>}
             </Form.Group>
           </Row>
