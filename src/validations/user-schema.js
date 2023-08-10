@@ -8,7 +8,7 @@ const fileCustom = (value, helpers) => {
   if (!value) return helpers.error("any.invalid");
 
   if (value.length > 0) {
-    const fileExtensions = ["pdf", "jpg", "jpeg", "png"];
+    const fileExtensions = ["pdf"];
     const maxFileSize = 2 * 1024 * 1024;
     const { name: filename, size, type: mimetype } = value[0];
 
@@ -21,7 +21,7 @@ const fileCustom = (value, helpers) => {
       return helpers.error("fileSize.max");
     }
 
-    if (!mimetype.includes("image") && !mimetype.includes("pdf")) {
+    if (!mimetype.includes("pdf")) {
       return helpers.error("fileType.invalid");
     }
 

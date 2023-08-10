@@ -27,7 +27,7 @@ const DeliveryOrderList = memo(() => {
     }
   };
 
-  const headings = ["Nomor", "Periode", "Mitra", "Status", "Kuantitas", "Pemenuhan", ""];
+  const headings = ["Nomor", "Periode", "Status", "Kuantitas", "Pemenuhan", ""];
 
   return (
     <Card>
@@ -51,7 +51,6 @@ const DeliveryOrderList = memo(() => {
               <tr key={item.id}>
                 <td>{item.nomor}</td>
                 <td>{formatTime(item.periode)}</td>
-                <td>{item.namaKoperasi}</td>
                 <td className={`text-${item.status === "Menunggu Konfirmasi" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
                 <td>{item.kuantitas} kg</td>
                 <td>

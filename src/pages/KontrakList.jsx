@@ -75,7 +75,7 @@ const KontrakList = memo(() => {
                   {kontrak?.map((item) => (
                     <tr key={item.id}>
                       <td>{item.nomor}</td>
-                      <td>{item.namaKoperasi}</td>
+                      <td>{user.role === "pks" ? item.koperasi?.nama : item.pks?.nama}</td>
                       <td className={`text-${item.status === "Menunggu Konfirmasi" ? "warning" : item.status === "Disetujui" ? "success" : "danger"}`}>{item.status}</td>
                       <td>{item.kuantitas} kg</td>
                       <td>

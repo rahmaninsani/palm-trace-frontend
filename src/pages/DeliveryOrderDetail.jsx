@@ -102,7 +102,7 @@ const DeliveryOrderDetail = memo(() => {
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Pembuat</h6>
-                <p>{deliveryOrderDetail?.namaPks}</p>
+                <p>{deliveryOrderDetail.pks?.nama}</p>
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Periode</h6>
@@ -138,7 +138,7 @@ const DeliveryOrderDetail = memo(() => {
             <Col md="4">
               <div className="mt-2">
                 <h6 className="mb-1">Mitra</h6>
-                <p>{deliveryOrderDetail?.namaKoperasi}</p>
+                <p>{deliveryOrderDetail.koperasi?.nama}</p>
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Status</h6>

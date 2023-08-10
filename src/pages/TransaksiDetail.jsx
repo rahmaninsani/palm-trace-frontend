@@ -392,77 +392,81 @@ const TransaksiDetail = memo(() => {
             </Card.Header>
 
             <Card.Body>
-              <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  <h6 className="mb-1">Nomor</h6>
-                  <p>{transaksiDetail.nomor}</p>
-                </div>
-                <div>
-                  <h6 className="mb-1">Nama Petani</h6>
-                  <p>{transaksiDetail.namaPetani}</p>
-                </div>
-                <div>
-                  <h6 className="mb-1">Nomor Telepon</h6>
-                  <p>{transaksiDetail.nomorTeleponPetani}</p>
-                </div>
-              </div>
+              {transaksiDetail && (
+                <>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 className="mb-1">Nomor</h6>
+                      <p>{transaksiDetail.nomor}</p>
+                    </div>
+                    <div>
+                      <h6 className="mb-1">Nama Petani</h6>
+                      <p>{transaksiDetail.petani?.nama}</p>
+                    </div>
+                    <div>
+                      <h6 className="mb-1">Nomor Telepon</h6>
+                      <p>{transaksiDetail.petani?.nomorTelepon}</p>
+                    </div>
+                  </div>
 
-              <div className="table-responsive">
-                <Table responsive striped id="datatable" data-toggle="data-table">
-                  <thead>
-                    <tr>
-                      <th>Kebun</th>
-                      <th className="text-end">Umur Tanam</th>
-                      <th className="text-end">Kuantitas</th>
-                      <th className="text-end">Harga</th>
-                      <th className="text-end">Subtotal</th>
-                    </tr>
-                  </thead>
+                  <div className="table-responsive">
+                    <Table responsive striped id="datatable" data-toggle="data-table">
+                      <thead>
+                        <tr>
+                          <th>Kebun</th>
+                          <th className="text-end">Umur Tanam</th>
+                          <th className="text-end">Kuantitas</th>
+                          <th className="text-end">Harga</th>
+                          <th className="text-end">Subtotal</th>
+                        </tr>
+                      </thead>
 
-                  <tbody>
-                    {transaksiDetail.transaksiItems?.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => handleShowModalKebunDetail(item.idKebun)}>
-                            Lihat
-                          </p>
-                        </td>
-                        <td className="text-end">{item.umurTanam} Tahun</td>
-                        <td className="text-end">{formatCurrency(item.kuantitas)} kg</td>
-                        <td className="text-end">Rp{formatCurrency(item.harga)}</td>
-                        <td className="text-end">Rp{formatCurrency(item.kuantitas * item.harga)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
+                      <tbody>
+                        {transaksiDetail.transaksiItems?.map((item, index) => (
+                          <tr key={index}>
+                            <td>
+                              <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => handleShowModalKebunDetail(item.idKebun)}>
+                                Lihat
+                              </p>
+                            </td>
+                            <td className="text-end">{item.umurTanam} Tahun</td>
+                            <td className="text-end">{formatCurrency(item.kuantitas)} kg</td>
+                            <td className="text-end">Rp{formatCurrency(item.harga)}</td>
+                            <td className="text-end">Rp{formatCurrency(item.kuantitas * item.harga)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
 
-                  <tfoot>
-                    <tr className="text-end">
-                      <td colSpan="4">
-                        <h6>Total Kuantitas</h6>
-                      </td>
-                      <td>{formatCurrency(transaksiDetail.totalKuantitas)} kg</td>
-                    </tr>
-                    <tr className="text-end">
-                      <td colSpan="4">
-                        <h6>Total Harga</h6>
-                      </td>
-                      <td>Rp{formatCurrency(transaksiDetail.totalHarga)}</td>
-                    </tr>
-                    <tr className="text-end">
-                      <td colSpan="4">
-                        <h6>Harga Per Kg Delivery Order</h6>
-                      </td>
-                      <td>Rp{formatCurrency(transaksiDetail.hargaDeliveryOrder)}</td>
-                    </tr>
-                    <tr className="text-end">
-                      <td colSpan="4">
-                        <h6>Total Harga Delivery Order</h6>
-                      </td>
-                      <td>Rp{formatCurrency(transaksiDetail.totalHargaDeliveryOrder)}</td>
-                    </tr>
-                  </tfoot>
-                </Table>
-              </div>
+                      <tfoot>
+                        <tr className="text-end">
+                          <td colSpan="4">
+                            <h6>Total Kuantitas</h6>
+                          </td>
+                          <td>{formatCurrency(transaksiDetail.totalKuantitas)} kg</td>
+                        </tr>
+                        <tr className="text-end">
+                          <td colSpan="4">
+                            <h6>Total Harga</h6>
+                          </td>
+                          <td>Rp{formatCurrency(transaksiDetail.totalHarga)}</td>
+                        </tr>
+                        <tr className="text-end">
+                          <td colSpan="4">
+                            <h6>Harga Per Kg Delivery Order</h6>
+                          </td>
+                          <td>Rp{formatCurrency(transaksiDetail.hargaDeliveryOrder)}</td>
+                        </tr>
+                        <tr className="text-end">
+                          <td colSpan="4">
+                            <h6>Total Harga Delivery Order</h6>
+                          </td>
+                          <td>Rp{formatCurrency(transaksiDetail.totalHargaDeliveryOrder)}</td>
+                        </tr>
+                      </tfoot>
+                    </Table>
+                  </div>
+                </>
+              )}
             </Card.Body>
           </Card>
 
@@ -485,10 +489,10 @@ const TransaksiDetail = memo(() => {
           {user && user.role === roleConstant.pks && transaksiDetail.status === "Dikirim Koperasi" && <FormPenerimaan onSubmit={onSubmitPenerimaan} />}
 
           {/* Pembayaran Pabrik Kelapa Sawit */}
-          {user && user.role === roleConstant.pks && transaksiDetail.status === "Diterima Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} />}
+          {user && user.role === roleConstant.pks && transaksiDetail.status === "Diterima Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} data={transaksiDetail} />}
 
           {/* Pembayaran Koperasi */}
-          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dibayar Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} />}
+          {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dibayar Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} data={transaksiDetail} />}
         </Col>
       </Row>
 

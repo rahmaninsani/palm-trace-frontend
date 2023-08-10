@@ -63,8 +63,8 @@ const ProfilPetani = memo(() => {
       setValue("email", profil.email);
       setValue("idKoperasi", profil.idKoperasi);
 
-      if (profil.namaKoperasi === "Koperasi Admin") return;
-      setSelectedKoperasi(`${profil.namaKoperasi} - ${profil.alamatKoperasi}`);
+      if (profil.koperasi?.nama === "Koperasi Admin") return;
+      setSelectedKoperasi(`${profil.koperasi?.nama} - ${profil.alamatKoperasi}`);
     }
   }, [profil, setValue]);
 

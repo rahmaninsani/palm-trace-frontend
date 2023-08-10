@@ -101,7 +101,7 @@ const KontrakDetail = memo(() => {
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Pembuat</h6>
-                <p>{kontrakDetail?.namaPks}</p>
+                <p>{kontrakDetail?.pks?.nama}</p>
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Tanggal Mulai</h6>
@@ -137,7 +137,7 @@ const KontrakDetail = memo(() => {
             <Col md="4">
               <div className="mt-2">
                 <h6 className="mb-1">Mitra</h6>
-                <p>{kontrakDetail?.namaKoperasi}</p>
+                <p>{kontrakDetail?.koperasi?.nama}</p>
               </div>
               <div className="mt-2">
                 <h6 className="mb-1">Status</h6>
