@@ -2,6 +2,7 @@ import React, { memo, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { Form, Modal, Button, InputGroup, Table } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
 import { useForm, Controller } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 
@@ -9,8 +10,9 @@ import { endpointConstant, messageConstant } from "../constants";
 import { transaksiSchema } from "../validations";
 import { setMessage } from "../features/authSlice";
 import { Card, EditIcon, DeleteIcon } from "../components/elements";
+import { KebunDetailModal } from "../components/partials";
 import { formatCurrency } from "../utils";
-import { transaksiService } from "../services";
+import { transaksiService, kebunService } from "../services";
 
 const TransaksiAdd = memo(() => {
   const pageTitle = "Tambah Transaksi";
@@ -23,10 +25,10 @@ const TransaksiAdd = memo(() => {
   const [transaksiItems, setTransaksiItems] = useState([]);
   const [totalKuantitas, setTotalKuantitas] = useState(0);
   const [totalHarga, setTotalHarga] = useState(0);
-
-  useEffect(() => {
-    setTitle(pageTitle);
-  }, []);
+  const [kebun, setKebun] = useState([]);
+  const [selectedKebun, setSelectedKebun] = useState(null);
+  const [showModalKebunDetail, setShowModalKebunDetail] = useState(false);
+  const [selectedKebunId, setSelectedKebunId] = useState(null);
 
   const {
     control,
@@ -45,6 +47,23 @@ const TransaksiAdd = memo(() => {
     },
   });
 
+  useEffect(() => {
+    setTitle(pageTitle);
+    findAllKebun();
+  }, []);
+
+  const findAllKebun = async () => {
+    try {
+      const response = await kebunService.findAll();
+
+      if (!response.data) return setKebun([]);
+
+      setKebun(response.data);
+    } catch (error) {
+      console.error("Gagal mengambil data kebun: ", error);
+    }
+  };
+
   const handleShowModal = (data) => {
     if (data) {
       setValue("idKebun", data.idKebun);
@@ -60,6 +79,9 @@ const TransaksiAdd = memo(() => {
 
   const handleCloseModal = () => {
     setSelectedItem(null);
+    resetForm();
+    setSelectedKebun(null);
+    setSelectedKebun("");
     setShowModal(false);
   };
 
@@ -93,6 +115,12 @@ const TransaksiAdd = memo(() => {
 
   useEffect(() => {
     if (selectedItem) {
+      const kebunData = kebun.find((item) => item.id === selectedItem.idKebun);
+      setSelectedKebun({
+        id: kebunData.id,
+        label: `${kebunData.luas} Ha - ${kebunData.alamat}`,
+      });
+
       setValue("idKebun", selectedItem.idKebun);
       setValue("umurTanam", selectedItem.umurTanam);
       setValue("kuantitas", selectedItem.kuantitas);
@@ -143,6 +171,16 @@ const TransaksiAdd = memo(() => {
     }
   };
 
+  const handleShowModalKebunDetail = (id) => {
+    setSelectedKebunId(id);
+    setShowModalKebunDetail(true);
+  };
+
+  const handleCloseModalKebunDetail = () => {
+    setSelectedKebunId(null);
+    setShowModalKebunDetail(false);
+  };
+
   return (
     <>
       <Card>
@@ -177,7 +215,7 @@ const TransaksiAdd = memo(() => {
                   {transaksiItems?.map((item, index) => (
                     <tr key={index}>
                       <td>
-                        <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => console.log("OK")}>
+                        <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => handleShowModalKebunDetail(item.idKebun)}>
                           Lihat
                         </p>
                       </td>
@@ -231,87 +269,97 @@ const TransaksiAdd = memo(() => {
         )}
       </Card>
 
-      {/* Modal */}
-      <Modal scrollable={true} show={showModal} backdrop="static" keyboard={false} onHide={handleCloseModal}>
+      <Modal size="lg" scrollable={true} show={showModal} backdrop="static" keyboard={false} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title as="h5">{selectedItem ? "Ubah" : "Tambah"} Item Transaksi</Modal.Title>
         </Modal.Header>
 
-        <Form onSubmit={handleSubmit(handleTambahUbah)}>
-          <Modal.Body>
-            <Form.Group className="col-sm-12 form-group" controlId="idKebun">
-              <Form.Label>Kebun</Form.Label>
-              <Controller
-                id="idKebun"
-                name="idKebun"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <Form.Control {...field} type="text" isInvalid={!!errors.idKebun} />
-                    {errors.idKebun && <Form.Control.Feedback type="invalid">{errors.idKebun.message}</Form.Control.Feedback>}
-                  </>
-                )}
-              />
-            </Form.Group>
+        <Modal.Body>
+          <Form.Label>Kebun</Form.Label>
+          <Form.Group className="col-sm-12 form-group" controlId="idKebun">
+            <Controller
+              name="idKebun"
+              control={control}
+              render={({ field }) => (
+                <Typeahead
+                  {...field}
+                  id="idKebun"
+                  options={kebun.map((item) => ({
+                    id: item.id,
+                    label: `${item.luas} Ha - ${item.alamat}`,
+                  }))}
+                  labelKey="label"
+                  selected={selectedKebun ? [selectedKebun] : []}
+                  onChange={(selected) => {
+                    setSelectedKebun(selected[0]);
+                    field.onChange(selected[0] ? selected[0].id : "");
+                  }}
+                  placeholder="Pilih kebun..."
+                  allowNew={false}
+                />
+              )}
+            />
+          </Form.Group>
 
-            <Form.Group className="col-sm-12 form-group" controlId="umurTanam">
-              <Form.Label>Umur Tanam</Form.Label>
-              <Controller
-                id="umurTanam"
-                name="umurTanam"
-                control={control}
-                render={({ field }) => (
-                  <InputGroup>
-                    <Form.Control {...field} type="number" min="1" isInvalid={!!errors.umurTanam} />
-                    <InputGroup.Text>Tahun</InputGroup.Text>
-                    {errors.umurTanam && <Form.Control.Feedback type="invalid">{errors.umurTanam.message}</Form.Control.Feedback>}
-                  </InputGroup>
-                )}
-              />
-            </Form.Group>
+          <Form.Group className="col-sm-12 form-group" controlId="umurTanam">
+            <Form.Label>Umur Tanam</Form.Label>
+            <Controller
+              id="umurTanam"
+              name="umurTanam"
+              control={control}
+              render={({ field }) => (
+                <InputGroup>
+                  <Form.Control {...field} type="number" min="1" isInvalid={!!errors.umurTanam} />
+                  <InputGroup.Text>Tahun</InputGroup.Text>
+                  {errors.umurTanam && <Form.Control.Feedback type="invalid">{errors.umurTanam.message}</Form.Control.Feedback>}
+                </InputGroup>
+              )}
+            />
+          </Form.Group>
 
-            <Form.Group className="col-sm-12 form-group" controlId="kuantitas">
-              <Form.Label>Kuantitas</Form.Label>
-              <Controller
-                id="kuantitas"
-                name="kuantitas"
-                control={control}
-                render={({ field }) => (
-                  <InputGroup>
-                    <Form.Control {...field} type="number" min="1" isInvalid={!!errors.kuantitas} />
-                    <InputGroup.Text>kg</InputGroup.Text>
-                    {errors.kuantitas && <Form.Control.Feedback type="invalid">{errors.kuantitas.message}</Form.Control.Feedback>}
-                  </InputGroup>
-                )}
-              />
-            </Form.Group>
+          <Form.Group className="col-sm-12 form-group" controlId="kuantitas">
+            <Form.Label>Kuantitas</Form.Label>
+            <Controller
+              id="kuantitas"
+              name="kuantitas"
+              control={control}
+              render={({ field }) => (
+                <InputGroup>
+                  <Form.Control {...field} type="number" min="1" isInvalid={!!errors.kuantitas} />
+                  <InputGroup.Text>kg</InputGroup.Text>
+                  {errors.kuantitas && <Form.Control.Feedback type="invalid">{errors.kuantitas.message}</Form.Control.Feedback>}
+                </InputGroup>
+              )}
+            />
+          </Form.Group>
 
-            <Form.Group className="col-sm-12 form-group" controlId="harga">
-              <Form.Label>Harga</Form.Label>
-              <Controller
-                id="harga"
-                name="harga"
-                control={control}
-                render={({ field }) => (
-                  <InputGroup>
-                    <InputGroup.Text>Rp</InputGroup.Text>
-                    <Form.Control {...field} type="number" min="1" isInvalid={!!errors.harga} />
-                    {errors.harga && <Form.Control.Feedback type="invalid">{errors.harga.message}</Form.Control.Feedback>}
-                  </InputGroup>
-                )}
-              />
-            </Form.Group>
-          </Modal.Body>
+          <Form.Group className="col-sm-12 form-group" controlId="harga">
+            <Form.Label>Harga</Form.Label>
+            <Controller
+              id="harga"
+              name="harga"
+              control={control}
+              render={({ field }) => (
+                <InputGroup>
+                  <InputGroup.Text>Rp</InputGroup.Text>
+                  <Form.Control {...field} type="number" min="1" isInvalid={!!errors.harga} />
+                  {errors.harga && <Form.Control.Feedback type="invalid">{errors.harga.message}</Form.Control.Feedback>}
+                </InputGroup>
+              )}
+            />
+          </Form.Group>
+        </Modal.Body>
 
-          <Modal.Footer>
-            <div className="mx-auto">
-              <Button type="submit" variant="btn btn-primary" disabled={!isValid}>
-                {selectedItem ? "Simpan Perubahan" : "Tambah"}
-              </Button>
-            </div>
-          </Modal.Footer>
-        </Form>
+        <Modal.Footer>
+          <div className="mx-auto">
+            <Button type="submit" variant="btn btn-primary" disabled={!isValid} onClick={handleSubmit(handleTambahUbah)}>
+              {selectedItem ? "Simpan Perubahan" : "Tambah"}
+            </Button>
+          </div>
+        </Modal.Footer>
       </Modal>
+
+      <KebunDetailModal selectedKebunId={selectedKebunId} showModal={showModalKebunDetail} handleCloseModal={handleCloseModalKebunDetail} />
     </>
   );
 });

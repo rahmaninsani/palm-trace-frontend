@@ -3,9 +3,8 @@ import { Table, Button } from "react-bootstrap";
 
 import { endpointConstant } from "../../constants";
 import { Card } from "../elements";
-import { kebunService } from "../../services";
-
 import KebunDetailModal from "./KebunDetailModal";
+import { kebunService } from "../../services";
 
 const ProfilKebunPetani = memo(() => {
   const [kebun, setKebun] = useState([]);

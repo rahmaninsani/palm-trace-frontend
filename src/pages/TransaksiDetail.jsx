@@ -8,7 +8,7 @@ import { roleConstant, messageConstant } from "../constants";
 import { setMessage } from "../features/authSlice";
 import { transaksiSchema } from "../validations";
 import { Card } from "../components/elements";
-import { FormKonfirmasi, FormPengiriman, FormPenerimaan, FormPembayaran } from "../components/partials";
+import { FormKonfirmasi, FormPengiriman, FormPenerimaan, FormPembayaran, KebunDetailModal } from "../components/partials";
 import { formatCurrency } from "../utils";
 import { transaksiService, pengirimanService, penerimaanService, pembayaranService } from "../services";
 
@@ -23,6 +23,8 @@ const TransaksiDetail = memo(() => {
   const { setTitle } = useOutletContext();
   const { idKontrak, idDeliveryOrder, idTransaksi } = useParams();
   const [transaksiDetail, setTransaksiDetail] = useState({});
+  const [showModalKebunDetail, setShowModalKebunDetail] = useState(false);
+  const [selectedKebunId, setSelectedKebunId] = useState(null);
 
   const [showModalTransaksiDibuat, setShowModalTransaksiDibuat] = useState(false);
   const handleShowModalTransaksiDibuat = () => setShowModalTransaksiDibuat(true);
@@ -64,6 +66,16 @@ const TransaksiDetail = memo(() => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleShowModalKebunDetail = (id) => {
+    setSelectedKebunId(id);
+    setShowModalKebunDetail(true);
+  };
+
+  const handleCloseModalKebunDetail = () => {
+    setSelectedKebunId(null);
+    setShowModalKebunDetail(false);
   };
 
   const onSubmitKonfirmasi = async (data) => {
@@ -411,7 +423,7 @@ const TransaksiDetail = memo(() => {
                     {transaksiDetail.transaksiItems?.map((item, index) => (
                       <tr key={index}>
                         <td>
-                          <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => console.log("OK")}>
+                          <p className="text-primary" style={{ cursor: "pointer" }} onClick={() => handleShowModalKebunDetail(item.idKebun)}>
                             Lihat
                           </p>
                         </td>
@@ -435,6 +447,18 @@ const TransaksiDetail = memo(() => {
                         <h6>Total Harga</h6>
                       </td>
                       <td>Rp{formatCurrency(transaksiDetail.totalHarga)}</td>
+                    </tr>
+                    <tr className="text-end">
+                      <td colSpan="4">
+                        <h6>Harga Per Kg Delivery Order</h6>
+                      </td>
+                      <td>Rp{formatCurrency(transaksiDetail.hargaDeliveryOrder)}</td>
+                    </tr>
+                    <tr className="text-end">
+                      <td colSpan="4">
+                        <h6>Total Harga Delivery Order</h6>
+                      </td>
+                      <td>Rp{formatCurrency(transaksiDetail.totalHargaDeliveryOrder)}</td>
                     </tr>
                   </tfoot>
                 </Table>
@@ -467,6 +491,8 @@ const TransaksiDetail = memo(() => {
           {user && user.role === roleConstant.koperasi && transaksiDetail.status === "Dibayar Pabrik Kelapa Sawit" && <FormPembayaran onSubmit={onSubmitPembayaran} />}
         </Col>
       </Row>
+
+      <KebunDetailModal selectedKebunId={selectedKebunId} showModal={showModalKebunDetail} handleCloseModal={handleCloseModalKebunDetail} />
     </>
   );
 });
