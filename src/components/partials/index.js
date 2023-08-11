@@ -9,3 +9,4 @@ export { default as ProfilKoperasi } from "./ProfilKoperasi";
 export { default as ProfilPetani } from "./ProfilPetani";
 export { default as ProfilPetaniKebun } from "./ProfilPetaniKebun";
 export { default as KebunDetailModal } from "./KebunDetailModal";
+export { default as TransaksiTimeline } from "./TransaksiTimeline";

@@ -44,6 +44,30 @@ const penawaranTransaksi = {
 };
 
 const transaksi = {
+  menungguKonfirmasiKoperasi: {
+    number: 0,
+    string: "Menunggu Konfirmasi Koperasi",
+  },
+  menungguKonfirmasiPks: {
+    number: 1,
+    string: "Menunggu Konfirmasi Pabrik Kelapa Sawit",
+  },
+  disetujuiKoperasi: {
+    number: 2,
+    string: "Disetujui Koperasi",
+  },
+  disetujuiPks: {
+    number: 3,
+    string: "Disetujui Pabrik Kelapa Sawit",
+  },
+  ditolakKoperasi: {
+    number: 4,
+    string: "Ditolak Koperasi",
+  },
+  ditolakPks: {
+    number: 5,
+    string: "Ditolak Pabrik Kelapa Sawit",
+  },
   menungguDikirimPetani: {
     number: 6,
     string: "Menunggu Dikirim Petani",
@@ -72,7 +96,7 @@ const transaksi = {
     number: 12,
     string: "Dibayar Koperasi",
   },
-  seleseai: {
+  selesai: {
     number: 13,
     string: "Selesai",
   },

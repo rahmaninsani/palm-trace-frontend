@@ -1,19 +1,16 @@
 import React, { memo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { Row, Col, Image, Modal, Button, Table } from "react-bootstrap";
+import { Row, Col, Button, Table } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 
 import { roleConstant, messageConstant } from "../constants";
 import { setMessage } from "../features/authSlice";
 import { transaksiSchema } from "../validations";
 import { Card } from "../components/elements";
-import { FormKonfirmasi, FormPengiriman, FormPenerimaan, FormPembayaran, KebunDetailModal } from "../components/partials";
+import { TransaksiTimeline, FormKonfirmasi, FormPengiriman, FormPenerimaan, FormPembayaran, KebunDetailModal } from "../components/partials";
 import { formatCurrency } from "../utils";
 import { transaksiService, pengirimanService, penerimaanService, pembayaranService } from "../services";
-
-import buktiBayar1 from "../assets/images/buktibayar1.jpg";
-import buktiBayar2 from "../assets/images/buktibayar2.jpg";
 
 const TransaksiDetail = memo(() => {
   const pageTitle = "Detail Transaksi";
@@ -25,34 +22,6 @@ const TransaksiDetail = memo(() => {
   const [transaksiDetail, setTransaksiDetail] = useState({});
   const [showModalKebunDetail, setShowModalKebunDetail] = useState(false);
   const [selectedKebunId, setSelectedKebunId] = useState(null);
-
-  const [showModalTransaksiDibuat, setShowModalTransaksiDibuat] = useState(false);
-  const handleShowModalTransaksiDibuat = () => setShowModalTransaksiDibuat(true);
-  const handleCloseModalTransaksiDibuat = () => setShowModalTransaksiDibuat(false);
-
-  const [showModalDisetujuiKoperasi, setShowModalDisetujuiKoperasi] = useState(false);
-  const handleShowModalDisetujuiKoperasi = () => setShowModalDisetujuiKoperasi(true);
-  const handleCloseModalDisetujuiKoperasi = () => setShowModalDisetujuiKoperasi(false);
-
-  const [showModalDisetujuiPKS, setShowModalDisetujuiPKS] = useState(false);
-  const handleShowModalDisetujuiPKS = () => setShowModalDisetujuiPKS(true);
-  const handleCloseModalDisetujuiPKS = () => setShowModalDisetujuiPKS(false);
-
-  const [showModalDikirimPetani, setShowModalDikirimPetani] = useState(false);
-  const handleShowModalDikirimPetani = () => setShowModalDikirimPetani(true);
-  const handleCloseModalDikirimPetani = () => setShowModalDikirimPetani(false);
-
-  const [showModalDikirimKoperasi, setShowModalDikirimKoperasi] = useState(false);
-  const handleShowModalDikirimKoperasi = () => setShowModalDikirimKoperasi(true);
-  const handleCloseModalDikirimKoperasi = () => setShowModalDikirimKoperasi(false);
-
-  const [showModalPembayaranPKS, setShowModalPembayaranPKS] = useState(false);
-  const handleShowModalPembayaranPKS = () => setShowModalPembayaranPKS(true);
-  const handleCloseModalPembayaranPKS = () => setShowModalPembayaranPKS(false);
-
-  const [showModalPembayaranKoperasi, setShowModalPembayaranKoperasi] = useState(false);
-  const handleShowModalPembayaranKoperasi = () => setShowModalPembayaranKoperasi(true);
-  const handleCloseModalPembayaranKoperasi = () => setShowModalPembayaranKoperasi(false);
 
   useEffect(() => {
     setTitle(pageTitle);
@@ -184,211 +153,7 @@ const TransaksiDetail = memo(() => {
 
       <Row>
         <Col xl="4" lg="4">
-          <Card>
-            <Card.Body>
-              <div className="iq-timeline0 m-0 d-flex align-items-center justify-content-between position-relative">
-                <ul className="list-inline p-0 m-0">
-                  <li>
-                    <div className="timeline-dots1 border-success text-success">
-                      <svg width="24" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
-                      </svg>
-                    </div>
-                    <h6 className="float-left mb-1">Transaksi Selesai</h6>
-                    <small className="float-right mt-1">19 Mei 2023 14:00 WIB</small>
-                    <div className="d-inline-block w-100"></div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Koperasi Membayar Petani</h6>
-                    <small className="float-right mt-1">19 Mei 2023 14:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalPembayaranKoperasi}>
-                        Lihat Info Pembayaran
-                      </p>
-                      <Modal scrollable={true} show={showModalPembayaranKoperasi} backdrop="static" keyboard={false} onHide={handleCloseModalPembayaranKoperasi}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Info Pembayaran</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Image src={buktiBayar2} className="img img-fluid rounded" />
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">PKS Membayar Koperasi</h6>
-                    <small className="float-right mt-1">19 Mei 2023 13:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalPembayaranPKS}>
-                        Lihat Info Pembayaran
-                      </p>
-                      <Modal scrollable={true} show={showModalPembayaranPKS} backdrop="static" keyboard={false} onHide={handleCloseModalPembayaranPKS}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Info Pembayaran</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Image src={buktiBayar1} className="img img-fluid rounded" />
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Diterima PKS</h6>
-                    <small className="float-right mt-1">19 Mei 2023 12:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p>PKS menerima TBS</p>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Dikirim Koperasi</h6>
-                    <small className="float-right mt-1">19 Mei 2023 10:15 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalDikirimKoperasi}>
-                        Lihat Info Pengiriman
-                      </p>
-                      <Modal scrollable={true} show={showModalDikirimKoperasi} backdrop="static" keyboard={false} onHide={handleCloseModalDikirimKoperasi}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Info Pengiriman</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Row>
-                            <Col md="6">
-                              <h6 className="mb-1">Nama Sopir</h6>
-                              <p>David</p>
-                            </Col>
-                            <Col md="6">
-                              <h6 className="mb-1">Nomor Telepon</h6>
-                              <p>+628123456789</p>
-                            </Col>
-                            <Col md="6">
-                              <h6 className="mb-1">Kendaraan</h6>
-                              <p>Truk Daihatsu F8</p>
-                            </Col>
-                            <Col md="6">
-                              <h6 className="mb-1">Nomor Polisi</h6>
-                              <p>D 4592 ZBD</p>
-                            </Col>
-                          </Row>
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Diterima Koperasi</h6>
-                    <small className="float-right mt-1">19 Mei 2023 10:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p>Koperasi menerima TBS</p>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Dikirim Petani</h6>
-                    <small className="float-right mt-1">19 Mei 2023 09:15 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalDikirimPetani}>
-                        Lihat Info Pengiriman
-                      </p>
-                      <Modal scrollable={true} show={showModalDikirimPetani} backdrop="static" keyboard={false} onHide={handleCloseModalDikirimPetani}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Info Pengiriman</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Row>
-                            <Col md="6">
-                              <h6 className="mb-1">Nama Sopir</h6>
-                              <p>Charlie</p>
-                            </Col>
-                            <Col md="6">
-                              <h6 className="mb-1">Nomor Telepon</h6>
-                              <p>+628123456789</p>
-                            </Col>
-                            <Col md="6">
-                              <h6 className="mb-1">Kendaraan</h6>
-                              <p>Truk Hino A24</p>
-                            </Col>
-                            <Col md="6">
-                              <h6 className="mb-1">Nomor Polisi</h6>
-                              <p>D 6290 ZBA</p>
-                            </Col>
-                          </Row>
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Disetujui PKS</h6>
-                    <small className="float-right mt-1">19 Mei 2023 09:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalDisetujuiPKS}>
-                        Lihat Pesan
-                      </p>
-                      <Modal scrollable={true} show={showModalDisetujuiPKS} backdrop="static" keyboard={false} onHide={handleCloseModalDisetujuiPKS}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Pesan</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <p>Ok deal.</p>
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Disetujui Koperasi</h6>
-                    <small className="float-right mt-1">19 Mei 2023 08:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalDisetujuiKoperasi}>
-                        Lihat Pesan
-                      </p>
-                      <Modal scrollable={true} show={showModalDisetujuiKoperasi} backdrop="static" keyboard={false} onHide={handleCloseModalDisetujuiKoperasi}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Pesan</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <p>Oke Pak Bob. Segera kirim ya.</p>
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-
-                  <li>
-                    <div className="timeline-dots timeline-dot1 border-gray text-gray"></div>
-                    <h6 className="float-left mb-1">Transaksi Dibuat</h6>
-                    <small className="float-right mt-1">19 Mei 2023 07:00 WIB</small>
-                    <div className="d-inline-block w-100">
-                      <p className="text-primary" onClick={handleShowModalTransaksiDibuat}>
-                        Lihat Info Harga
-                      </p>
-                      <Modal scrollable={true} show={showModalTransaksiDibuat} backdrop="static" keyboard={false} onHide={handleCloseModalTransaksiDibuat}>
-                        <Modal.Header closeButton>
-                          <Modal.Title as="h5">Info Harga</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <p>
-                            Petani menawarkan TBS kepada koperasi dengan harga <span className="h6">Rp2.000/kg</span>
-                          </p>
-                        </Modal.Body>
-                      </Modal>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </Card.Body>
-          </Card>
+          <TransaksiTimeline data={transaksiDetail} />
         </Col>
 
         <Col xl="8" lg="8">
