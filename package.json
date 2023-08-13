@@ -5,6 +5,8 @@
   "type": "module",
   "main": "src/main.jsx",
   "scripts": {
+    "start": "pm2 serve dist/ 3001 --spa --name palm-trace-frontend",
+    "stop": "pm2 delete palm-trace-frontend",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
@@ -92,6 +94,7 @@
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "typescript": "^5.0.4",
-    "vite": "^4.3.4"
+    "vite": "^4.3.4",
+    "vite-plugin-remove-console": "^2.1.1"
   }
 }

@@ -106,6 +106,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["three", "npm:0.152.2"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"],\
             ["vite", "virtual:763490423a16d22d13b0a7d8e5d9e1ca57e202201db12eb189e8aba944d573e81756a2e3a6a78ee56556eceee93e36f1c1e9544f46bd2a52e90b82837eacbfcc#npm:4.3.7"],\
+            ["vite-plugin-remove-console", "npm:2.1.1"],\
             ["waypoints", "npm:4.0.1"],\
             ["web-vitals", "npm:3.3.1"]\
           ],\
@@ -14442,6 +14443,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["three", "npm:0.152.2"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=b5f058"],\
             ["vite", "virtual:763490423a16d22d13b0a7d8e5d9e1ca57e202201db12eb189e8aba944d573e81756a2e3a6a78ee56556eceee93e36f1c1e9544f46bd2a52e90b82837eacbfcc#npm:4.3.7"],\
+            ["vite-plugin-remove-console", "npm:2.1.1"],\
             ["waypoints", "npm:4.0.1"],\
             ["web-vitals", "npm:3.3.1"]\
           ],\
@@ -20252,6 +20254,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "stylus",\
             "sugarss",\
             "terser"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["vite-plugin-remove-console", [\
+        ["npm:2.1.1", {\
+          "packageLocation": "./.yarn/cache/vite-plugin-remove-console-npm-2.1.1-813128b49e-42ed99d639.zip/node_modules/vite-plugin-remove-console/",\
+          "packageDependencies": [\
+            ["vite-plugin-remove-console", "npm:2.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\

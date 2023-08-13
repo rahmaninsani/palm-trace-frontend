@@ -10848,6 +10848,7 @@ __metadata:
     three: ^0.152.2
     typescript: ^5.0.4
     vite: ^4.3.4
+    vite-plugin-remove-console: ^2.1.1
     waypoints: ^4.0.1
     web-vitals: ^3.3.1
   languageName: unknown
@@ -14889,6 +14890,13 @@ __metadata:
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: ae0123222c6df65b437669d63dfa8c36cee20a504101b2fcd97b8bf76f91259c17f9f2b4d70a1e3c6bbcee7f51b28392833adb6b2770b23b01abec84e369660b
+  languageName: node
+  linkType: hard
+
+"vite-plugin-remove-console@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "vite-plugin-remove-console@npm:2.1.1"
+  checksum: 42ed99d63928d3de29780adba0cf877c1fa1d2f6aa97e38026afaec080f46aecdfdf5391f8f3c7929035c6f0e7ce1f6545f9ea6b959e0091338373dea38c8aac
   languageName: node
   linkType: hard
 
