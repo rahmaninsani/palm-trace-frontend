@@ -93,7 +93,7 @@ const TransactionChart = ({ data }) => {
   const series = [
     {
       name: "Jumlah Transaksi",
-      data: [data.senin?.length, data.selasa?.length, data.rabu?.length, data.kamis?.length, data?.jumat?.length, data.sabtu?.length, data.minggu?.length] || [0, 0, 0, 0, 0, 0, 0],
+      data: [data?.senin.length || 0, data?.selasa.length || 0, data?.rabu.length || 0, data?.kamis.length || 0, data?.jumat.length || 0, data?.sabtu.length || 0, data?.minggu?.length || 0],
     },
   ];
 
@@ -205,7 +205,7 @@ const Dashboard = memo(() => {
                 <h4 className="card-title">Transaksi Minggu Ini</h4>
               </div>
             </div>
-            <div className="card-body">{transaksiThisWeek && <TransactionChart data={transaksiThisWeek} />}</div>
+            <div className="card-body">{<TransactionChart data={transaksiThisWeek} />}</div>
           </div>
         </Col>
       </Row>

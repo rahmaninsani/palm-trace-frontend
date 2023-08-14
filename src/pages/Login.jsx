@@ -9,7 +9,8 @@ import { endpointConstant, messageConstant } from "../constants";
 import { authSchema } from "../validations";
 import { LoginUser, reset } from "../features/authSlice";
 import { Card, Alert, ButtonLoading } from "../components/elements";
-import auth1 from "../assets/images/auth/01.png";
+import appLogoText from "../assets/images/app-logo-text.png";
+import appLogo from "../assets/images/app-logo.png";
 
 const Login = memo(() => {
   const dispatch = useDispatch();
@@ -81,18 +82,12 @@ const Login = memo(() => {
           </Col>
         </Row>
         <div className="sign-bg">
-          <svg width="280" height="230" viewBox="0 0 431 398" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.05">
-              <rect x="-157.085" y="193.773" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 -157.085 193.773)" fill="#3B8AFF" />
-              <rect x="7.46875" y="358.327" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 7.46875 358.327)" fill="#3B8AFF" />
-              <rect x="61.9355" y="138.545" width="310.286" height="77.5714" rx="38.7857" transform="rotate(45 61.9355 138.545)" fill="#3B8AFF" />
-              <rect x="62.3154" y="-190.173" width="543" height="77.5714" rx="38.7857" transform="rotate(45 62.3154 -190.173)" fill="#3B8AFF" />
-            </g>
-          </svg>
+          <Image src={appLogo} className="image-fluid gradient-main" style={{ width: "75%", opacity: 0.03 }} alt="images" />
         </div>
       </Col>
-      <Col md="6" className="d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
-        <Image src={auth1} className="Image-fluid gradient-main animated-scaleX" alt="images" />
+
+      <Col md="6" className="d-md-block d-none bg-white p-0 mt-n1 overflow-hidden text-center">
+        <Image src={appLogoText} className="image-fluid gradient-main" style={{ width: "75%" }} alt="images" />
       </Col>
     </Row>
   );

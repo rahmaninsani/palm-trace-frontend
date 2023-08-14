@@ -1,15 +1,13 @@
 import React, { memo, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, Dropdown, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 import { LogoutUser, reset } from "../../../features/authSlice";
 
 //img
 import avatars1 from "../../../assets/images/avatars/01.png";
-
-// logo
-import { Logo } from "../../elements";
+import appLogo from "../../../assets/images/app-logo.png";
 
 const CustomToggle = forwardRef(({ children, variant, onClick }, ref) => (
   <Link
@@ -56,7 +54,7 @@ const Header = memo(() => {
       <Navbar expand="lg" variant="light" className={`nav iq-navbar default`}>
         <Container fluid className="navbar-inner">
           <Link to={home} className="navbar-brand">
-            <Logo color={true} />
+            <Image src={appLogo} className="image-fluid gradient-main" style={{ width: "32px" }} alt="images" />
             <h4 className="logo-title">Palm Trace</h4>
           </Link>
 

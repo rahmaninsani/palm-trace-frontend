@@ -1,10 +1,11 @@
 import React, { useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Image } from "react-bootstrap";
 
 import Scrollbar from "smooth-scrollbar";
 import SidebarItem from "./SidebarItem";
-import { Logo } from "../../../elements";
+import appLogo from "../../../../assets/images/app-logo.png";
 
 const Sidebar = memo(() => {
   const appName = "Palm Trace";
@@ -54,7 +55,7 @@ const Sidebar = memo(() => {
       <aside className={"sidebar sidebar-white sidebar-base sidebar-default navs-rounded-all"} data-sidebar="responsive">
         <div className="sidebar-header d-flex align-items-center justify-content-start">
           <Link to={home} className="navbar-brand">
-            <Logo />
+            <Image src={appLogo} className="image-fluid gradient-main" style={{ width: "32px" }} alt="images" />
             <h4 className="logo-title">{appName}</h4>
           </Link>
           <div className="sidebar-toggle" data-toggle="sidebar" data-active="true" onClick={minisidebar}>

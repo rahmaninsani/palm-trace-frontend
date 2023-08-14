@@ -4,7 +4,7 @@ import schemaError from "./error";
 
 const create = Joi.object({
   periode: Joi.date().required().label("Periode").error(schemaError),
-  rendemen: Joi.number().min(1).required().label("Rendemen").error(schemaError),
+  rendemen: Joi.number().min(1).max(100).required().label("Rendemen").error(schemaError),
   kuantitas: Joi.number().min(1).required().label("Kuantitas").error(schemaError),
   harga: Joi.number().min(1).required().label("Harga").error(schemaError),
   totalHarga: Joi.string().label("Total harga").error(schemaError),

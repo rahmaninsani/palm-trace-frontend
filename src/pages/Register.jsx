@@ -10,7 +10,8 @@ import { authSchema } from "../validations";
 import { reset, setMessage } from "../features/authSlice";
 import { Card, Alert, ButtonLoading } from "../components/elements";
 import { authService } from "../services";
-import auth5 from "../assets/images/auth/05.png";
+import appLogoText from "../assets/images/app-logo-text.png";
+import appLogo from "../assets/images/app-logo.png";
 
 const Register = memo(() => {
   const navigate = useNavigate();
@@ -54,9 +55,9 @@ const Register = memo(() => {
 
   return (
     <Row className="m-0 align-items-center bg-white vh-100">
-      <div className="col-md-6 d-md-block d-none bg-primary p-0 mt-n1 vh-100 overflow-hidden">
-        <Image src={auth5} className="Image-fluid gradient-main animated-scaleX" alt="images" />
-      </div>
+      <Col md="6" className="d-md-block d-none bg-white p-0 mt-n1 overflow-hidden text-center">
+        <Image src={appLogoText} className="image-fluid gradient-main" style={{ width: "75%" }} alt="images" />
+      </Col>
 
       <Col md="6">
         <Row className="justify-content-center">
@@ -133,14 +134,7 @@ const Register = memo(() => {
           </Col>
         </Row>
         <div className="sign-bg sign-bg-right">
-          <svg width="280" height="230" viewBox="0 0 421 359" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g opacity="0.05">
-              <rect x="-15.0845" y="154.773" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 -15.0845 154.773)" fill="#3A57E8" />
-              <rect x="149.47" y="319.328" width="543" height="77.5714" rx="38.7857" transform="rotate(-45 149.47 319.328)" fill="#3A57E8" />
-              <rect x="203.936" y="99.543" width="310.286" height="77.5714" rx="38.7857" transform="rotate(45 203.936 99.543)" fill="#3A57E8" />
-              <rect x="204.316" y="-229.172" width="543" height="77.5714" rx="38.7857" transform="rotate(45 204.316 -229.172)" fill="#3A57E8" />
-            </g>
-          </svg>
+          <Image src={appLogo} className="image-fluid gradient-main" style={{ width: "75%", opacity: 0.02 }} alt="images" />
         </div>
       </Col>
     </Row>
