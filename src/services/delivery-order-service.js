@@ -20,11 +20,17 @@ const findOne = async (payload) => {
   return result.data;
 };
 
+const findAllByUser = async () => {
+  const result = await api.get(`/delivery-order`);
+  return result.data;
+};
+
 const deliveryOrderService = {
   create,
   confirm,
   findAll,
   findOne,
+  findAllByUser,
 };
 
 export default deliveryOrderService;

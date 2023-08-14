@@ -11,6 +11,10 @@ export { default as Graph } from "./Icons/Graph";
 export { default as Copy } from "./Icons/Copy";
 export { default as EditIcon } from "./Icons/EditIcon";
 export { default as DeleteIcon } from "./Icons/DeleteIcon";
+export { default as ArrowDownIcon } from "./Icons/ArrowDownIcon";
+export { default as ArrowUpIcon } from "./Icons/ArrowUpIcon";
+export { default as ArrowUpDownIcon } from "./Icons/ArrowUpDownIcon";
+export { default as DoneIcon } from "./Icons/DoneIcon";
 
 export { default as Logo } from "./Logo";
 export { default as Loader } from "./Loader";

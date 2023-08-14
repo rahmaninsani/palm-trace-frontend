@@ -4,11 +4,11 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-body">
-        <ul className="left-panel">
-          <p>2023</p>
-        </ul>
+        <div className="left-panel list-inline mb-0 p-0">
+          <p>Universitas Komputer Indonesia</p>
+        </div>
         <div className="right-panel">
-          <p>Sawit</p>
+          ©<script>2023</script> Palm Trace
         </div>
       </div>
     </footer>

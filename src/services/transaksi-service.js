@@ -20,11 +20,23 @@ const findOne = async (payload) => {
   return result.data;
 };
 
+const findAllByUser = async () => {
+  const result = await api.get(`/transaksi`);
+  return result.data;
+};
+
+const findAllByUserThisWeek = async () => {
+  const result = await api.get(`/transaksi/this-week`);
+  return result.data;
+};
+
 const transaksiService = {
   create,
   confirm,
   findAll,
   findOne,
+  findAllByUser,
+  findAllByUserThisWeek,
 };
 
 export default transaksiService;

@@ -13,6 +13,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "@react-pdf-viewer/core/lib/styles/index.css";
+import "aos/dist/aos.css";
 
 import router from "./router";
 
