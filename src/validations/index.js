@@ -6,3 +6,4 @@ export { default as transaksiSchema } from "./transaksi-schema";
 export { default as pengirimanSchema } from "./pengiriman-schema";
 export { default as penerimaanSchema } from "./penerimaan-schema";
 export { default as pembayaranSchema } from "./pembayaran-schema";
+export { default as laporanSchema } from "./laporan-schema";

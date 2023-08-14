@@ -39,7 +39,7 @@ const TransaksiCard = memo(({ tabKey, transactions, user }) => {
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 <h6>Petani</h6>
-                <p>{transaction.namaPetani}</p>
+                <p>{transaction.petani.nama}</p>
               </div>
             </div>
 

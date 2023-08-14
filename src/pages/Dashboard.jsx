@@ -194,7 +194,7 @@ const Dashboard = memo(() => {
 
         {user && transaksi && (
           <Col md="12" lg="4" data-aos="fade-up" data-aos-delay="700">
-            <CardItem title="Transaksi Berlangsung" start={0} end={transaksi.length} icon={<ArrowUpDownIcon />} />
+            <CardItem title="Transaksi Berlangsung" start={0} end={transaksi.berlangsung?.length} icon={<ArrowUpDownIcon />} />
           </Col>
         )}
 
