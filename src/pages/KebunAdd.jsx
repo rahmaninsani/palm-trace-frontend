@@ -7,7 +7,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from "re
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { endpointConstant, messageConstant, bankConstant } from "../constants";
+import { endpointConstant, messageConstant } from "../constants";
 import { userSchema } from "../validations";
 import { setMessage } from "../features/authSlice";
 import { Card } from "../components/elements";
